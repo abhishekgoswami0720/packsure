@@ -1,4 +1,7 @@
-"""Voice Lens: spoken results and spoken questions in Indian languages, using Google Gemini.
+"""Voice Lens: spoken results and spoken questions in Indian languages.
+
+Speech runs on Sarvam AI (Bulbul text-to-speech, Saaras speech-to-text) when VOICE_PROVIDER=sarvam
+and SARVAM_API_KEY are set, otherwise on Google Gemini. Summaries and answers are written by Gemini.
 
 - spoken_summary(): turns a scan result into 2-3 short sentences in the user's language.
 - synthesize(): Gemini text-to-speech -> playable audio (WAV), cached so a replay costs nothing.
@@ -37,6 +40,55 @@ TTS_MODELS = [m for m in [os.environ.get("GEMINI_TTS_MODEL"),
                           "gemini-3.8-flash-lite-tts", "gemini-3.8-flash-tts",
                           "gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"] if m]
 VOICE_NAME = os.environ.get("GEMINI_TTS_VOICE", "Kore")
+
+# Speech provider: "gemini" (default) or "sarvam" (Sarvam AI Bulbul TTS + Saaras STT; needs SARVAM_API_KEY).
+# The text itself (summaries, answers) always comes from Gemini.
+def _env(name: str, default: str = "") -> str:
+    if not os.environ.get(name):
+        env_file = Path(__file__).resolve().parent.parent / ".env"
+        if env_file.exists():
+            for line in env_file.read_text(encoding="utf-8").splitlines():
+                if line.strip().startswith(name + "="):
+                    os.environ[name] = line.split("=", 1)[1].strip().strip('"').strip("'")
+    return os.environ.get(name, default)
+
+
+SARVAM_KEY = _env("SARVAM_API_KEY")
+VOICE_PROVIDER = _env("VOICE_PROVIDER", "sarvam" if SARVAM_KEY else "gemini").lower()
+SARVAM_URL = "https://api.sarvam.ai"
+SARVAM_TTS_MODEL = _env("SARVAM_TTS_MODEL", "bulbul:v3")
+SARVAM_SPEAKER = _env("SARVAM_SPEAKER")
+SARVAM_STT_MODEL = _env("SARVAM_STT_MODEL", "saaras:v3")
+BCP47 = {"hi": "hi-IN", "en": "en-IN", "bn": "bn-IN", "mr": "mr-IN", "ta": "ta-IN", "te": "te-IN",
+         "gu": "gu-IN", "kn": "kn-IN", "ml": "ml-IN", "pa": "pa-IN"}
+
+
+def provider() -> str:
+    return "sarvam" if VOICE_PROVIDER == "sarvam" and SARVAM_KEY else "gemini"
+
+
+def _sarvam_tts(text: str, lang: str) -> bytes:
+    import base64
+    import httpx
+
+    body = {"text": text, "target_language_code": BCP47[lang], "model": SARVAM_TTS_MODEL}
+    if SARVAM_SPEAKER:
+        body["speaker"] = SARVAM_SPEAKER
+    r = httpx.post(f"{SARVAM_URL}/text-to-speech", json=body,
+                   headers={"api-subscription-key": SARVAM_KEY}, timeout=60)
+    r.raise_for_status()
+    return base64.b64decode("".join(r.json()["audios"]))
+
+
+def _sarvam_stt(audio: bytes, mime: str, lang: str) -> str:
+    import httpx
+
+    ext = {"audio/webm": "webm", "audio/ogg": "ogg", "audio/wav": "wav", "audio/mpeg": "mp3", "audio/mp4": "m4a"}.get(mime, "webm")
+    r = httpx.post(f"{SARVAM_URL}/speech-to-text", headers={"api-subscription-key": SARVAM_KEY},
+                   data={"model": SARVAM_STT_MODEL, "mode": "transcribe", "language_code": BCP47.get(lang, "unknown")},
+                   files={"file": (f"question.{ext}", audio, mime)}, timeout=60)
+    r.raise_for_status()
+    return (r.json().get("transcript") or "").strip()
 CACHE_DIR = Path(os.environ.get("VOICE_CACHE_DIR", Path(__file__).resolve().parent.parent / "data" / "voice_cache"))
 
 NOT_ADVICE = {
@@ -196,6 +248,14 @@ def synthesize(text: str, lang: str = "hi") -> dict:
     key = audio_key(text, lang)
     if cached_audio(key):
         return {"key": key, "cached": True}
+    if provider() == "sarvam":
+        try:
+            audio = _sarvam_tts(text, lang)
+            CACHE_DIR.mkdir(parents=True, exist_ok=True)
+            (CACHE_DIR / f"{key}.wav").write_bytes(audio)
+            return {"key": key, "cached": False, "provider": "sarvam", "model": SARVAM_TTS_MODEL}
+        except Exception:
+            pass  # fall back to Gemini TTS below
     client = get_genai_client()
     if not client:
         raise RuntimeError("Voice needs GEMINI_API_KEY in backend/.env")
@@ -215,7 +275,7 @@ def synthesize(text: str, lang: str = "hi") -> dict:
             ext = {"audio/wav": "wav", "audio/mpeg": "mp3", "audio/mp3": "mp3", "audio/ogg": "ogg"}.get(mime, "wav")
             CACHE_DIR.mkdir(parents=True, exist_ok=True)
             (CACHE_DIR / f"{key}.{ext}").write_bytes(audio)
-            return {"key": key, "cached": False, "model": model}
+            return {"key": key, "cached": False, "provider": "gemini", "model": model}
         except Exception as e:  # try the next model name
             errors.append(f"{model}: {e}")
     raise RuntimeError("Text-to-speech failed: " + " | ".join(errors))
@@ -232,6 +292,19 @@ def ask_by_voice(audio: bytes, mime: str, lang: str = "hi", product_context: dic
     from google.genai import types
 
     context = json.dumps(_facts(product_context), ensure_ascii=False) if product_context else "none"
+    mime = (mime or "audio/webm").split(";")[0]
+    if provider() == "sarvam":
+        try:
+            question = _sarvam_stt(audio, mime, lang)
+            if question:
+                prompt = (f"A shopper asked (by voice): {question}\n"
+                          f"Answer in {LANGUAGES[lang][1]} in at most 3 short, simple spoken sentences. "
+                          "Use the product facts if they help. For a disease or a child's health, give general "
+                          f"information only and say to ask a doctor. No markdown.\nProduct facts: {context}")
+                answer = (client.models.generate_content(model=DEFAULT_MODEL, contents=prompt).text or "").strip()
+                return {"lang": lang, "question": question, "answer": answer, "stt": "sarvam"}
+        except Exception:
+            pass  # fall back to Gemini listening below
     instruction = (
         "The audio is a shopper's spoken question about a packaged food product or its label. "
         f"Reply ONLY with JSON: {{\"question\": <exact transcript in the language spoken>, \"answer\": <answer>}}. "
@@ -242,7 +315,7 @@ def ask_by_voice(audio: bytes, mime: str, lang: str = "hi", product_context: dic
     )
     res = client.models.generate_content(
         model=DEFAULT_MODEL,
-        contents=[types.Part.from_bytes(data=audio, mime_type=(mime or "audio/webm").split(";")[0]), instruction],
+        contents=[types.Part.from_bytes(data=audio, mime_type=mime), instruction],
     )
     raw = (res.text or "").strip()
     m = re.search(r"\{.*\}", raw, re.S)
@@ -251,4 +324,4 @@ def ask_by_voice(audio: bytes, mime: str, lang: str = "hi", product_context: dic
     except json.JSONDecodeError:
         data = {}
     answer = (data.get("answer") or raw or "").strip()
-    return {"lang": lang, "question": (data.get("question") or "").strip(), "answer": answer}
+    return {"lang": lang, "question": (data.get("question") or "").strip(), "answer": answer, "stt": "gemini"}

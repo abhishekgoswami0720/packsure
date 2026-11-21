@@ -377,6 +377,7 @@ def voice_languages():
         "languages": [{"code": c, "native": n, "english": e} for c, (n, e) in voice_service.LANGUAGES.items()],
         "default": "hi",
         "guide": voice_service.GUIDE_LINES,
+        "speech_provider": voice_service.provider(),
     }
 
 

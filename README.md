@@ -6,7 +6,7 @@
 [![Google Gemini API](https://img.shields.io/badge/Google%20Gemini-3.1%20Flash--Lite-4285F4?style=flat&logo=google&logoColor=white)](https://ai.google.dev/)
 [![React Native Expo](https://img.shields.io/badge/React%20Native-Expo%2056-000020?style=flat&logo=expo&logoColor=white)](https://expo.dev/)
 [![LMPC Rules 2011](https://img.shields.io/badge/Compliance-Legal%20Metrology%202011-1B4332?style=flat)](legal/)
-[![Tests Passing](https://img.shields.io/badge/Tests-56%2F56%20Passing-2D6A4F?style=flat&logo=pytest&logoColor=white)](backend/tests/)
+[![Tests Passing](https://img.shields.io/badge/Tests-58%2F58%20Passing-2D6A4F?style=flat&logo=pytest&logoColor=white)](backend/tests/)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
@@ -62,7 +62,7 @@ Built for first-time smartphone users in Tier 2 and Tier 3 towns:
 * **Learns itself on first open**: pick a language from big buttons in its own script (हिन्दी, বাংলা, मराठी, தமிழ், తెలుగు, ગુજરાતી, ಕನ್ನಡ, മലയാളം, ਪੰਜਾਬੀ, English). A 4-step guide then explains the app **out loud**, with one large picture per step, and ends on the scanner. A **?** button replays it anytime.
 * **Speaks every result**: after a scan, the app says a 2-3 sentence verdict in the chosen language (score, hidden sugar, palm oil, misleading claims, missing label details), with the text on screen too.
 * **Hold the mic to ask**: the shopper asks a question by voice; Gemini transcribes it and answers in the same language, out loud.
-* **Google only**: text, transcription and speech come from the Gemini API (Gemini TTS models, set with `GEMINI_TTS_MODEL`). Generated audio is cached, so replays are instant; if speech is unavailable the phone's built-in voice reads the same text.
+* **Voice stack**: summaries and answers are written by **Google Gemini**. Speech uses **Sarvam AI** (Bulbul text-to-speech, Saaras speech-to-text, built for Indian languages) when `VOICE_PROVIDER=sarvam` and `SARVAM_API_KEY` are set, and **Gemini TTS** otherwise. Generated audio is cached, so replays are instant; if speech is unavailable the phone's built-in voice reads the same text.
 
 ### 6. 🎨 Dual-Mode Platform with 15 Natively-Integrated Stitch Screens
 TruthLens × PackSure integrates 15 production UI screens inspired by the Google Stitch designs, unified into a seamless single-page application with a live **Role Switcher** (Consumer Mode vs Enforcement Mode):
@@ -132,7 +132,7 @@ packsure/
 │   ├── tests/
 │   │   ├── test_truth_engine.py         # 26 unit tests (ingredients, claims, NOVA, nutrition)
 │   │   ├── test_legal_metrology.py      # 6 unit tests (Rule 6, Rule 7 Table I, in-force dates)
-│   │   ├── test_voice.py                # 7 tests (spoken summaries, audio, first-run guide)
+│   │   ├── test_voice.py                # 9 tests (spoken summaries, audio, Sarvam/Gemini speech, first-run guide)
 │   │   └── test_api_endpoints.py        # 17 integration tests (FastAPI, Voice Assistant, PackSure)
 │   └── .env.example                     # Environment template
 ├── stitch_platform/                     # 15 Google Stitch UI screens (HTML/Tailwind)
@@ -185,13 +185,13 @@ python -m pip install -r requirements.txt
 *(Dependencies: `fastapi`, `uvicorn`, `pydantic`, `google-genai`, `pytest`, `httpx`, `python-multipart`)*
 
 ### 4. Run Automated Test Suite
-Verify that all 56 test cases pass:
+Verify that all 58 test cases pass:
 ```bash
 python -m pytest tests/ -v
 ```
 Expected output:
 ```text
-============================= 56 passed ==============================
+============================= 58 passed ==============================
 ```
 
 ### 5. Launch the TruthLens Backend Server

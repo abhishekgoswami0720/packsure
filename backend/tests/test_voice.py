@@ -49,3 +49,24 @@ def test_guide_falls_back_to_hindi_without_gemini(monkeypatch):
     monkeypatch.setattr(voice_service, "get_genai_client", lambda: None)
     assert client.get("/api/voice/guide?lang=ta").json()["lang"] == "hi"
     assert client.get("/api/voice/guide?lang=en").json()["lines"][0].startswith("Hello")
+
+
+def test_provider_falls_back_to_gemini_without_sarvam_key(monkeypatch):
+    monkeypatch.setattr(voice_service, "SARVAM_KEY", "")
+    monkeypatch.setattr(voice_service, "VOICE_PROVIDER", "sarvam")
+    assert voice_service.provider() == "gemini"
+
+
+def test_sarvam_tts_used_and_cached(monkeypatch, tmp_path):
+    import base64
+    monkeypatch.setattr(voice_service, "SARVAM_KEY", "k")
+    monkeypatch.setattr(voice_service, "VOICE_PROVIDER", "sarvam")
+    monkeypatch.setattr(voice_service, "CACHE_DIR", tmp_path)
+    wav = voice_service._pcm_to_wav(bytes(480))
+    calls = []
+    def fake(text, lang):
+        calls.append((text, lang)); return wav
+    monkeypatch.setattr(voice_service, "_sarvam_tts", fake)
+    out = voice_service.synthesize("नमस्ते", "hi")
+    assert out["provider"] == "sarvam" and calls == [("नमस्ते", "hi")]
+    assert voice_service.synthesize("नमस्ते", "hi")["cached"] is True
