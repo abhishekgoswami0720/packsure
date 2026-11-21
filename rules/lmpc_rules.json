@@ -1,0 +1,320 @@
+{
+  "ruleset": "LMPC-2011",
+  "title": "Legal Metrology (Packaged Commodities) Rules, 2011 - label checks used by PackSure",
+  "version": "2026-11-21",
+  "text_as_of": "2026-02-13",
+  "source_text": "legal/text/lmpc-2011-consolidated-2026-02.txt",
+  "notes": [
+    "Built from the consolidated text 'as amended up to 13 February 2026' (Khaitan & Co. reading copy). Page numbers refer to that PDF.",
+    "Requirements are paraphrased for the checker. The source text is the authority; cite the notification in 'basis', not the reading copy.",
+    "The Second Amendment Rules 2026 (in force 1 Jul 2027) and Third Amendment Rules 2026 (Rules 4 and 27) do not change any check below.",
+    "Food packages: name/address of manufacturer (6(1)(a)) and date of manufacture (6(1)(d)) fall under FSSAI rules instead. PackSure flags these as 'verify' for food rather than 'fail'."
+  ],
+  "check_types": {
+    "presence": "a declaration of this kind must be found on the label",
+    "pattern": "the declaration must also match a required form (units, wording)",
+    "measurement": "a physical size measured from the photo with the reference marker",
+    "manual": "needs the inspector's judgement; PackSure only prompts"
+  },
+  "declarations": [
+    {
+      "id": "manufacturer_name_address",
+      "rule": "6(1)(a), 10(1)",
+      "title": "Name and complete address of manufacturer / packer / importer",
+      "requirement": "Name and complete address (street, city, state and PIN code) of the manufacturer; if the packer differs, both; for imported packages, the importer. Bare company name and address is presumed to be the manufacturer.",
+      "check": "pattern",
+      "look_for": ["Mfd. by", "Manufactured by", "Packed by", "Marketed by", "Imported by", "a 6-digit PIN code"],
+      "pattern_hint": "6-digit PIN code present in the address block",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "food", "effect": "verify", "reason": "Rule 6(1)(a) Explanation III: FSS Act 2006 and its rules apply instead."},
+        {"when": "electronic_product", "effect": "name_on_pack_address_may_be_qr", "reason": "Proviso to 6(1)(a): name on the package; address may be via QR code if the pack says so."},
+        {"when": "capacity_le_10cc", "effect": "identifying_mark_suffices", "reason": "Proviso to 10(1)."}
+      ],
+      "in_force_from": "2018-01-01",
+      "basis": "G.S.R. 629(E) dated 23-06-2017 (complete-address explanation); proviso by G.S.R. 456(E) dated 23-06-2023",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [5, 14]}
+    },
+    {
+      "id": "country_of_origin",
+      "rule": "6(1)(aa), 10(1) second proviso",
+      "title": "Country of origin, manufacture or assembly (imported products)",
+      "requirement": "Imported products must name the country of origin, manufacture or assembly. If made abroad and packed in India, the Indian packer or importer's name and complete address must be on the principal display panel.",
+      "check": "presence",
+      "look_for": ["Country of Origin", "Made in", "Manufactured in", "Assembled in"],
+      "applies_to": "imported",
+      "in_force_from": "2018-01-01",
+      "basis": "G.S.R. 629(E) dated 23-06-2017",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [5, 14]}
+    },
+    {
+      "id": "common_name",
+      "rule": "6(1)(b)",
+      "title": "Common or generic name of the commodity",
+      "requirement": "The common or generic name of the commodity; for multi-product packs, the name and number or quantity of each product.",
+      "check": "presence",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "electronic_product", "effect": "may_be_qr", "reason": "Proviso to 6(1)(b) (G.S.R. 456(E), 2023)."}
+      ],
+      "in_force_from": "2011-04-01",
+      "basis": "G.S.R. 202(E) dated 07-03-2011",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [5, 6]}
+    },
+    {
+      "id": "net_quantity",
+      "rule": "6(1)(c), 12, 13",
+      "title": "Net quantity in standard units",
+      "requirement": "Net quantity in SI units (g below 1 kg, kg at or above; ml below 1 L, L at or above; cm below 1 m, m at or above) or by number. No 'dozen', 'gross' or similar. No words that exaggerate or mislead about quantity. Multi-packs state number x quantity of each (e.g. 10 x 10 g).",
+      "check": "pattern",
+      "look_for": ["Net Wt.", "Net Weight", "Net Qty", "Net Quantity", "Net Vol.", "Net Content"],
+      "allowed_units": ["mg", "g", "kg", "ml", "mL", "l", "L", "cm", "m", "cm2", "dm2", "m2", "cm3", "m3", "N", "U", "number", "unit", "piece", "pair", "set"],
+      "non_standard_units": {"gm": "g", "gms": "g", "grm": "g", "Kg.": "kg", "KG": "kg", "ltr": "L", "lit": "L", "mtr": "m", "ML": "ml"},
+      "forbidden_words": ["dozen", "score", "gross", "great gross", "minimum", "not less than", "approximately", "about", "average"],
+      "applies_to": "all",
+      "in_force_from": "2011-04-01",
+      "basis": "G.S.R. 202(E) dated 07-03-2011; 13(5)(ii) substituted by G.S.R. 779(E) dated 02-11-2021 w.e.f. 01-10-2022",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [6, 15, 16, 17]}
+    },
+    {
+      "id": "month_year_of_manufacture",
+      "rule": "6(1)(d)",
+      "title": "Month and year of manufacture",
+      "requirement": "The month and year in which the commodity was manufactured, in words, numerals or both.",
+      "check": "presence",
+      "look_for": ["Mfg.", "Mfd.", "Date of Manufacture", "MFG Date", "Month & Year of Mfg."],
+      "applies_to": "all",
+      "overrides": [
+        {"when": "food", "effect": "verify", "reason": "Proviso: FSS Act 2006 and its rules apply."},
+        {"when": "cosmetic", "effect": "verify", "reason": "Proviso: Drugs and Cosmetics Rules, 1945 apply."},
+        {"when": "certified_seeds", "effect": "not_applicable", "reason": "Proviso: Seeds Act, 1966."},
+        {"when": "bidi_or_incense", "effect": "not_applicable", "reason": "Proviso (A)(i)."}
+      ],
+      "in_force_from": "2022-10-01",
+      "basis": "'or pre-packed or imported' omitted by G.S.R. 779(E) dated 02-11-2021 w.e.f. 01-10-2022",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [6, 7]}
+    },
+    {
+      "id": "best_before",
+      "rule": "6(1)(da)",
+      "title": "Best before / use by date",
+      "requirement": "If the commodity may become unfit for human consumption after a period, 'best before' or 'use by' date, month and year, unless another law provides for it.",
+      "check": "presence",
+      "look_for": ["Best Before", "Use By", "Expiry", "Exp."],
+      "applies_to": "perishable",
+      "in_force_from": "2018-01-01",
+      "basis": "Inserted by G.S.R. 629(E) dated 23-06-2017 w.e.f. 01-01-2018",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [6, 7]}
+    },
+    {
+      "id": "mrp",
+      "rule": "6(1)(e)",
+      "title": "Maximum retail price inclusive of all taxes, in Indian currency",
+      "requirement": "Retail sale price shown as the maximum retail price inclusive of all taxes, in Indian currency. A lower-MRP sticker may be added but must not cover the original MRP (6(3)).",
+      "check": "pattern",
+      "look_for": ["MRP", "M.R.P.", "Maximum Retail Price", "Rs.", "₹", "incl. of all taxes", "inclusive of all taxes"],
+      "pattern_hint": "price with Rs/₹ and the phrase 'inclusive of all taxes' (or 'incl. of all taxes')",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "alcohol", "effect": "verify", "reason": "First proviso: State Excise laws apply."},
+        {"when": "bidi_or_domestic_lpg", "effect": "not_applicable", "reason": "Proviso (C)."}
+      ],
+      "in_force_from": "2022-10-01",
+      "basis": "G.S.R. 629(E) 2017 (inclusive of all taxes); 'in Indian currency' by G.S.R. 779(E) dated 02-11-2021 w.e.f. 01-10-2022",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [7, 8]}
+    },
+    {
+      "id": "dimensions",
+      "rule": "6(1)(f), 14, 15",
+      "title": "Dimensions where size is relevant",
+      "requirement": "Where size matters (e.g. bed-sheets, towels, sarees), the dimensions of each piece; and the number of pieces.",
+      "check": "manual",
+      "applies_to": "size_relevant",
+      "in_force_from": "2011-04-01",
+      "basis": "G.S.R. 202(E) dated 07-03-2011",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [7, 17]}
+    },
+    {
+      "id": "consumer_care",
+      "rule": "6(2)",
+      "title": "Consumer care: name, address, telephone and e-mail",
+      "requirement": "Name, address, telephone number and e-mail address of the person or office to contact for consumer complaints. E-mail is mandatory, not optional.",
+      "check": "pattern",
+      "look_for": ["Consumer Care", "Customer Care", "For complaints", "Tel", "Ph", "Email", "@"],
+      "pattern_hint": "both a phone number and an e-mail address",
+      "applies_to": "all",
+      "in_force_from": "2016-01-01",
+      "basis": "Substituted by G.S.R. 385(E) dated 14-05-2015 w.e.f. 01-01-2016 ('if available' removed)",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [8]}
+    },
+    {
+      "id": "unit_sale_price",
+      "rule": "6(11)",
+      "title": "Unit sale price",
+      "requirement": "Unit sale price in rupees to two decimals: per gram if under 1 kg, per kg above; per ml / per litre; per cm / per metre; per number or unit. Not required where retail price equals unit sale price.",
+      "check": "pattern",
+      "look_for": ["Unit Sale Price", "USP", "per g", "per kg", "per ml", "per L", "per unit"],
+      "pattern_hint": "Rs/₹ amount with two decimals followed by 'per <unit>'",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "alcohol", "effect": "verify", "reason": "Proviso: State Excise laws apply."},
+        {"when": "mrp_equals_unit_price", "effect": "not_applicable", "reason": "Second proviso to 6(11)."}
+      ],
+      "in_force_from": "2024-01-01",
+      "basis": "Substituted by G.S.R. 226(E) dated 28-03-2022 w.e.f. 01-01-2024",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [10, 11]}
+    },
+    {
+      "id": "gm_marking",
+      "rule": "6(7)",
+      "title": "'GM' at top of panel for genetically modified food",
+      "requirement": "Every package of genetically modified food bears 'GM' at the top of its principal display panel.",
+      "check": "presence",
+      "applies_to": "gm_food",
+      "in_force_from": "2013-01-01",
+      "basis": "Inserted by G.S.R. 427(E) dated 05-06-2012 w.e.f. 01-01-2013",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [9]}
+    },
+    {
+      "id": "veg_nonveg_dot",
+      "rule": "6(8)",
+      "title": "Green / red-brown dot on cosmetics and toiletries",
+      "requirement": "Soap, shampoo, toothpaste and other cosmetics and toiletries show a green dot (vegetarian origin) or red/brown dot (non-vegetarian origin) at the top of the principal display panel.",
+      "check": "manual",
+      "applies_to": "cosmetic",
+      "in_force_from": "2014-07-01",
+      "basis": "Inserted by G.S.R. 137 dated 16-06-2014 w.e.f. 01-07-2014",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [9]}
+    }
+  ],
+  "presentation": [
+    {
+      "id": "numeral_height",
+      "rule": "7(2), Table I",
+      "title": "Minimum height of numerals and letters",
+      "requirement": "Every numeral and letter in the mandatory declarations must be at least the height in Table I for the principal display panel area.",
+      "check": "measurement",
+      "table_I": [
+        {"area_cm2_max": 50, "min_mm": 1.0, "min_mm_blown_moulded": 2.0},
+        {"area_cm2_max": 100, "min_mm": 1.5, "min_mm_blown_moulded": 3.0},
+        {"area_cm2_max": 500, "min_mm": 2.5, "min_mm_blown_moulded": 4.0},
+        {"area_cm2_max": 2500, "min_mm": 4.0, "min_mm_blown_moulded": 6.0},
+        {"area_cm2_max": null, "min_mm": 6.0, "min_mm_blown_moulded": 6.0}
+      ],
+      "boundaries": "Area A: row 1 is A <= 50; row 2 is 50 < A <= 100; row 3 is 100 < A <= 500; row 4 is 500 < A <= 2500; row 5 is A > 2500.",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "medical_device", "effect": "not_applicable", "reason": "Proviso: Medical Devices Rules 2017 apply (Amendment Rules 2025, w.e.f. 24-10-2025)."}
+      ],
+      "in_force_from": "2018-01-01",
+      "basis": "Rule 7(2) and Table I substituted by G.S.R. 629(E) dated 23-06-2017 w.e.f. 01-01-2018",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [11, 12]}
+    },
+    {
+      "id": "letter_width",
+      "rule": "7(3)",
+      "title": "Minimum width of letters and numerals",
+      "requirement": "Width of a letter or numeral at least one third of its height, except '1', 'i', 'I' and 'l'.",
+      "check": "measurement",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "medical_device", "effect": "not_applicable", "reason": "Proviso: Medical Devices Rules 2017 apply."}
+      ],
+      "in_force_from": "2018-01-01",
+      "basis": "Inserted by G.S.R. 629(E) dated 23-06-2017 w.e.f. 01-01-2018",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [11]}
+    },
+    {
+      "id": "panel_area_method",
+      "rule": "7(4)",
+      "title": "How the principal display panel area is computed",
+      "requirement": "Excluding top, bottom, can flanges, bottle shoulders and necks: rectangular side = height x width; cylindrical = 40% of height x circumference; other shapes = 40% of total surface or the area considered to be the panel.",
+      "check": "manual",
+      "formulas": {
+        "rectangular": "height_cm * width_cm",
+        "cylindrical": "0.40 * height_cm * circumference_cm",
+        "other": "0.40 * total_surface_cm2"
+      },
+      "applies_to": "all",
+      "in_force_from": "2018-01-01",
+      "basis": "Substituted by G.S.R. 629(E) dated 23-06-2017 w.e.f. 01-01-2018",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [12]}
+    },
+    {
+      "id": "other_law_size_exception",
+      "rule": "7(5)",
+      "title": "When another law also prescribes the label",
+      "requirement": "If another law also requires this information, Rule 7(1)-(4) do not apply EXCEPT the size of numbers and letters for net quantity, retail sale price, expiry / best before / use by date and consumer care details.",
+      "check": "manual",
+      "applies_to": "all",
+      "in_force_from": "2018-01-01",
+      "basis": "Substituted by G.S.R. 629(E) dated 23-06-2017 w.e.f. 01-01-2018",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [12]}
+    },
+    {
+      "id": "on_principal_display_panel",
+      "rule": "8(1)",
+      "title": "Declarations on the principal display panel; clear space around quantity",
+      "requirement": "Every declaration appears on the principal display panel. Around the net quantity: clear space above and below at least the numeral height, and left and right at least twice the numeral height.",
+      "check": "measurement",
+      "applies_to": "all",
+      "overrides": [
+        {"when": "medical_device", "effect": "not_applicable", "reason": "Amendment Rules 2025: Medical Devices Rules 2017 govern placement."}
+      ],
+      "in_force_from": "2011-04-01",
+      "basis": "G.S.R. 202(E) dated 07-03-2011",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [12, 13]}
+    },
+    {
+      "id": "legible_contrast_language",
+      "rule": "9",
+      "title": "Legible, contrasting, in Hindi or English",
+      "requirement": "Declarations legible and prominent; MRP and net quantity numerals in a colour that contrasts with the background (not required if blown/moulded on glass or plastic); not readable only through liquid; in Hindi (Devanagari) or English, other languages allowed in addition.",
+      "check": "manual",
+      "applies_to": "all",
+      "in_force_from": "2011-04-01",
+      "basis": "G.S.R. 202(E) dated 07-03-2011",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [13, 14]}
+    },
+    {
+      "id": "no_stickers_for_mandatory",
+      "rule": "6(3), 6(9)",
+      "title": "No stickers to alter mandatory declarations",
+      "requirement": "Stickers may not be used to alter or make mandatory declarations, except a lower-MRP sticker that does not hide the original MRP, and labels on imported packages.",
+      "check": "manual",
+      "applies_to": "all",
+      "in_force_from": "2015-05-14",
+      "basis": "6(9) inserted by G.S.R. 385(E) dated 14-05-2015",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [8, 9]}
+    }
+  ],
+  "scope": [
+    {
+      "id": "small_pack_exemption",
+      "rule": "26(a)",
+      "title": "Packages of 10 g / 10 ml or less are exempt",
+      "requirement": "The rules do not apply to packages of net weight or measure 10 g or 10 ml or less, EXCEPT tobacco products and (from 1 Feb 2026) pan masala.",
+      "exceptions": [
+        {"product": "tobacco", "in_force_from": "2016-01-01", "basis": "G.S.R. 385(E) dated 14-05-2015"},
+        {"product": "pan_masala", "in_force_from": "2026-02-01", "basis": "Second Amendment Rules 2025, G.S.R. 881(E) dated 02-12-2025"}
+      ],
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [24, 25]}
+    },
+    {
+      "id": "other_exemptions",
+      "rule": "26(b)-(f)",
+      "title": "Other exempt packages",
+      "requirement": "Fast food packed by restaurants/hotels; drugs under the Drugs (Price Control) Order 2013 (medical devices declared as drugs are not exempt); thread in coil for handloom weavers; loose garments/hosiery the buyer can inspect (but they must still show maker, consumer care, size and MRP).",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [25]}
+    },
+    {
+      "id": "ecommerce_listing",
+      "rule": "6(10), 6(10-A)",
+      "title": "E-commerce listings",
+      "requirement": "E-commerce entities display all 6(1) declarations except month/year of manufacture. From 1 Jul 2026, imported products must be filterable by country of origin.",
+      "in_force_from": "2018-01-01",
+      "basis": "6(10) by G.S.R. 629(E) 2017; 6(10-A) by Amendment Rules 2026, G.S.R. 128(E) dated 13-02-2026 w.e.f. 01-07-2026",
+      "source": {"doc": "lmpc-2011-consolidated-2026-02", "pages": [9, 10]}
+    }
+  ]
+}
