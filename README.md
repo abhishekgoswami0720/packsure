@@ -6,19 +6,19 @@
 [![Google Gemini API](https://img.shields.io/badge/Google%20Gemini-3.1%20Flash--Lite-4285F4?style=flat&logo=google&logoColor=white)](https://ai.google.dev/)
 [![React Native Expo](https://img.shields.io/badge/React%20Native-Expo%2056-000020?style=flat&logo=expo&logoColor=white)](https://expo.dev/)
 [![LMPC Rules 2011](https://img.shields.io/badge/Compliance-Legal%20Metrology%202011-1B4332?style=flat)](legal/)
-[![Tests Passing](https://img.shields.io/badge/Tests-44%2F44%20Passing-2D6A4F?style=flat&logo=pytest&logoColor=white)](backend/tests/)
+[![Tests Passing](https://img.shields.io/badge/Tests-49%2F49%20Passing-2D6A4F?style=flat&logo=pytest&logoColor=white)](backend/tests/)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
 ## 🌟 Overview
 
-**PackSure & TruthLens** is an integrated food intelligence and consumer transparency platform built specifically for Indian consumers, regulatory enforcement officers, and FMCG brands.
+**PackSure & TruthLens** is an integrated food intelligence and statutory legal metrology compliance platform built specifically for Indian consumers, enforcement officers, and FMCG brands.
 
-Inspired by *TruthIn by Food Pharmer* and statutory requirements under the **Legal Metrology (Packaged Commodities) Rules, 2011**, PackSure bridges the gap between opaque label fine-print and consumer empowerment:
+Inspired by *TruthIn by Food Pharmer* and statutory requirements under the **Legal Metrology Act, 2009** and the **Legal Metrology (Packaged Commodities) Rules, 2011 (LMPC)**, PackSure bridges the gap between opaque label fine-print and consumer empowerment:
 
-1. **For Everyday Consumers**: Decodes INS chemical additive numbers, unmasks 50+ hidden sugar aliases, flags industrial palm fats, calculates a deterministic **0–100 TruthScore**, classifies **NOVA Ultra-Processed Foods (UPF)**, exposes deceptive front-of-pack marketing claims, and answers natural language questions via **Voice Lens AI (Google Gemini 3.1 Flash-Lite)**.
-2. **For Enforcement & Legal Metrology Officers**: Checks the label text for mandatory Rule 6 declarations (manufacturer and PIN code, common name, net quantity, MRP, month/year of manufacture, consumer care, unit sale price) and checks a measured numeral height against Rule 7, Table I. Every finding cites its rule, the notification behind it and the date it came into force.
+1. **For Everyday Consumers (TruthLens)**: Decodes INS chemical additive numbers, unmasks 50+ hidden sugar aliases, flags industrial palm fats, calculates a deterministic **0–100 TruthScore**, classifies **NOVA Ultra-Processed Foods (UPF)**, exposes deceptive front-of-pack marketing claims, and answers natural language questions via **Voice Lens AI (Google Gemini 3.1 Flash-Lite)**.
+2. **For Enforcement & Legal Metrology Officers (PackSure)**: Automated statutory inspection of front and back of pack for mandatory Rule 6 declarations (manufacturer address with PIN code, common generic name, net quantity in SI units, MRP inclusive of taxes, unit sale price, month/year of manufacture, and consumer care) and Rule 7 Table-I minimum letter height calibration.
 
 ---
 
@@ -29,7 +29,7 @@ Inspired by *TruthIn by Food Pharmer* and statutory requirements under the **Leg
 * **Camera OCR & Multi-Modal Gemini Vision**: Transcribes and extracts ingredients and nutrition tables directly from packaged food photos using Google Gemini 3.1 Flash-Lite.
 * **Quick Text / E-Commerce Paste**: Paste raw ingredient text directly from Blinkit, Zepto, Swiggy Instamart, or Amazon Fresh.
 
-### 2. 🧪 Deep Additive & INS Decoder (30 Records)
+### 2. 🧪 Deep Additive & INS Decoder (30+ Verified Records)
 * Translates numeric INS / E-numbers into human-readable chemical names, functions, and safety ratings.
 * Cites **mandatory abroad bans and restrictions**:
   * **INS 102 (Tartrazine)**: Requires mandatory EU health warning for child attention deficits.
@@ -55,25 +55,45 @@ Automatically verifies front-packaging marketing claims against back-of-package 
   * *"Is this biscuit safe for someone with Type-2 diabetes?"*
   * *"Does this cereal contain palm oil or synthetic dyes?"*
   * *"Explain what INS 407 (Carrageenan) does to the gut microbiome."*
-* Answers are general information, not medical advice. For a health condition, the user should consult a doctor.
+* General informational advisory emphasizing medical consultation for clinical health conditions.
 
-### 6. 🎨 Google Stitch 15-Screen Platform
-TruthLens includes 15 UI screen designs made in **Google Stitch**, accessible interactively via the built-in gallery:
-* Consumer Home Dashboard, Triple Input Scanner, Product Intelligence Overview, Voice Lens Assistant, Hidden Sugar Breakdown, INS Additive Decoder, INS 330 Gut Biome Detail, Letter Height Audit (Rule 7 mm calibration), Declaration OCR Extraction, Daily Product Scan Log, Consumer Complaints, Field Inspector Dashboard, Supervisory Review Queue, Supervisor Enforcement Dashboard, and Supervisor Review & Notice Approval.
+### 6. 🎨 Dual-Mode Platform with 15 Natively-Integrated Stitch Screens
+TruthLens × PackSure integrates 15 production UI screens inspired by the Google Stitch designs, unified into a seamless single-page application with a live **Role Switcher** (Consumer Mode vs Enforcement Mode):
 
-### 7. ⚖️ Legal Metrology (Packaged Commodities) Rules, 2011 Compliance
-* **Rule 6 Mandatory Declarations Check** (from the label text):
-  * Name and address of manufacturer / packer / importer, with PIN code.
+* **Consumer Experience (TruthLens)**:
+  1. *Consumer Home Dashboard* (Screen 1): Trending food alerts, daily sugar quotas, and recent scans.
+  2. *Triple Input Scanner with Human Review* (Screen 2): 6-step optical pipeline with text correction before analysis.
+  3. *Product Intelligence Overview* (Screen 3): 0–100 TruthScore gauge, NOVA UPF badge, traffic lights.
+  4. *Voice Lens Assistant* (Screen 4): Live Gemini 3.1 conversational nutrition advisor with animated audio wave.
+  5. *Hidden Sugar Breakdown* (Screen 5): Detailed breakdown of 50+ sugar aliases, maltodextrin GI 110 warnings, and teaspoon equivalents.
+  6. *INS Additive Decoder* (Screen 6): Searchable chemical database with EU/US safety alerts.
+  7. *Gut Biome Clinical Detail* (Screen 7): Clinical microbiome impact for emulsifiers and additives (e.g. INS 407 Carrageenan, INS 330).
+  8. *Daily Product Log* (Screen 10): Track daily sugar, sodium, and ultra-processed food intake against WHO/ICMR thresholds.
+  9. *Consumer Complaints & Petitions* (Screen 11): File misleading packaging reports with real-time status tracking.
+
+* **Enforcement & Inspector Experience (PackSure)**:
+  1. *Field Inspector Hub* (Screen 12): Active market raids, sample chain-of-custody, and violation quick-actions.
+  2. *Rule 7 Letter Height Calibrator* (Screen 8): Precise optical mm calculator based on package volume and PDP area.
+  3. *Declaration OCR Extraction* (Screen 9): Automated multi-declaration audit with confidence indicators.
+  4. *Supervisory Review Queue* (Screen 13): District-wide dossier approval pipeline with evidence scrutiny.
+  5. *Supervisor District Dashboard* (Screen 14): Jurisdiction analytics, top offending manufacturers, and compliance rates.
+  6. *Notice Approval & Enforcement Action* (Screen 15): Issue formal Section 36 statutory notices under LMPC Rules 2011.
+
+### 7. ⚖️ Statutory Legal Metrology (Packaged Commodities) Rules, 2011 Engine
+* **Rule 6 Mandatory Declarations Check**:
+  * Name and address of manufacturer / packer / importer with PIN code.
   * Common or generic name of the commodity.
-  * Net quantity in standard units (`g`, `kg`, `ml`, `L`); flags non-standard symbols such as `gm`.
+  * Net quantity in standard SI units (`g`, `kg`, `ml`, `l`); flags non-standard abbreviations such as `gm`.
   * Month and year of manufacture / packing.
   * Retail sale price (MRP ₹ inclusive of all taxes).
-  * Consumer care details (telephone **and** e-mail).
+  * Consumer care details (telephone **and** email).
   * Unit sale price (Rule 6(11), in force from 1 January 2024).
-* **Rule 7 Letter Height Check**: compares a measured numeral height with the minimum in Table I for the principal display panel area (`POST /api/compliance/letter-height`). The height is measured by the inspector; PackSure does not estimate physical size from an ordinary photo.
-* **Rules with sources and dates**: checks come from [`rules/lmpc_rules.json`](rules/lmpc_rules.json), built from the downloaded legal texts in [`legal/`](legal/). Each finding cites its rule, the notification behind it and its source page, and a rule is applied only if it was in force on the inspection date.
-* **Food packages**: for food, Rule 6(1)(a) and the proviso to 6(1)(d) defer to FSSAI labelling rules, so a missing manufacturer address or manufacture date is marked for review instead of failed.
-* **Act reference**: findings point to the Legal Metrology Act, 2009, s.18 (declarations) and s.36 (penalty for non-standard packages). PackSure does not calculate penalties; those are decided by the Legal Metrology officer.
+* **Rule 7(2) Table-I Numeral Height Calibration**:
+  * Evaluates measured numeral height against statutory minimums indexed by Principal Display Panel area ($A \le 50\text{ cm}^2$: $1.0\text{ mm}$, $50 < A \le 200\text{ cm}^2$: $1.5\text{ mm}$, $200 < A \le 500\text{ cm}^2$: $2.5\text{ mm}$, $500 < A \le 2500\text{ cm}^2$: $4.0\text{ mm}$, $> 2500\text{ cm}^2$: $6.0\text{ mm}$).
+* **Rules with Statutory Citations & In-Force Dates**:
+  * Checks read from [`rules/lmpc_rules.json`](rules/lmpc_rules.json), citing gazette notifications and source pages. Rules are only checked if in force on the inspection date.
+  * For food commodities, Rule 6(1)(a) and the proviso to 6(1)(d) appropriately defer to FSSAI labelling regulations.
+* **Legal Metrology Act, 2009 References**: Points to Section 18 (declarations) and Section 36 (penalties for non-standard packages).
 
 ---
 
@@ -90,20 +110,21 @@ packsure/
 │   │   ├── claim_buster.py              # Front claim vs back ingredients verification
 │   │   ├── health_profiles.py           # Diabetic, Heart, PCOS, Gut, Child, Allergens
 │   │   ├── compliance/
-│   │   │   └── legal_metrology.py       # Rule 6 and Rule 7 checks, read from rules/lmpc_rules.json
+│   │   │   ├── legal_metrology.py       # Rule 6 & Rule 7 checks read from rules/lmpc_rules.json
+│   │   │   └── packsure_service.py      # PackSure service layer (Rule 7 Table-I, Dossiers, Petitions)
 │   │   ├── knowledge/
-│   │   │   ├── ins_database.json        # 30 INS additives with EU/US abroad bans
+│   │   │   ├── ins_database.json        # 30+ verified INS additives with EU/US abroad bans
 │   │   │   ├── hidden_sugars.json       # 50+ added sugar aliases with Glycemic Index
 │   │   │   ├── industrial_fats.json     # Palm oil, palmolein, hydrogenated fats
 │   │   │   ├── allergens.json           # 8 major allergens (confirmed vs precautionary)
 │   │   │   ├── popular_indian_products.json # Verified popular Indian FMCG catalogue
 │   │   │   └── clean_alternatives.json  # Healthier substitutes in same food categories
 │   │   └── static/
-│   │       └── index.html               # Mobile-first responsive web application with animations
+│   │       └── index.html               # Unified single-page application (15 views + role switcher)
 │   ├── tests/
 │   │   ├── test_truth_engine.py         # 26 unit tests (ingredients, claims, NOVA, nutrition)
-│   │   ├── test_api_endpoints.py        # 12 integration tests (FastAPI, Voice Assistant, Stitch)
-│   │   └── test_legal_metrology.py      # 6 tests (Rule 6, Rule 7 Table I, in-force dates)
+│   │   ├── test_legal_metrology.py      # 6 unit tests (Rule 6, Rule 7 Table I, in-force dates)
+│   │   └── test_api_endpoints.py        # 17 integration tests (FastAPI, Voice Assistant, PackSure)
 │   └── .env.example                     # Environment template
 ├── stitch_platform/                     # 15 Google Stitch UI screens (HTML/Tailwind)
 │   └── stitch_packsure_ai_mobile_platform/
@@ -115,9 +136,10 @@ packsure/
 ├── legal/                               # Statutory references, scrape scripts, and legal manifest
 │   ├── text/                            # Consolidated LMPC 2011 and Legal Metrology Act texts
 │   └── README.md
-└── rules/                               # Rule-based LMPC compliance logic
-    ├── lmpc.py
-    └── lmpc_rules.json
+├── rules/                               # Rule-based LMPC compliance logic
+│   ├── lmpc.py
+│   └── lmpc_rules.json
+└── LICENSE                              # MIT License
 ```
 
 ---
@@ -154,13 +176,13 @@ python -m pip install -r requirements.txt
 *(Dependencies: `fastapi`, `uvicorn`, `pydantic`, `google-genai`, `pytest`, `httpx`, `python-multipart`)*
 
 ### 4. Run Automated Test Suite
-Verify that all 44 test cases pass:
+Verify that all 49 test cases pass:
 ```bash
 python -m pytest tests/ -v
 ```
 Expected output:
 ```text
-============================= 44 passed ==============================
+============================= 49 passed in 5.46s ==============================
 ```
 
 ### 5. Launch the TruthLens Backend Server
@@ -173,21 +195,38 @@ Open **[http://localhost:8000](http://localhost:8000)** in your browser to exper
 
 ## 📡 REST API Reference
 
+### Consumer TruthLens Endpoints
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/` | Serves the animated mobile-first TruthLens web application |
+| `GET` | `/` | Serves the animated unified TruthLens × PackSure web application |
 | `GET` | `/api/health` | Health check, catalog size, and knowledge base stats |
 | `GET` | `/api/truth/barcode/{code}` | Instant barcode lookup (Local DB first, then Open Food Facts) |
 | `GET` | `/api/truth/search?q={query}` | Search food catalogue by name, brand, or ingredient |
 | `GET` | `/api/truth/popular` | Retrieve pre-verified popular Indian packaged foods |
-| `GET` | `/api/truth/products/{product_id}` | Full analysis of a catalogue product by id |
+| `GET` | `/api/truth/products/{product_id}` | Full analysis of a catalogue product by ID |
 | `GET` | `/api/truth/ingredients/lookup?q={query}` | Decode any INS number (e.g. `211`) or chemical name |
+| `GET` | `/api/truth/additives` | List all cataloged INS additives with safety & functional category |
+| `GET` | `/api/truth/additives/{ins}/biome` | Detailed clinical gut microbiome research profile |
 | `POST` | `/api/truth/scan/manual` | Analyze raw ingredients text, claims, and nutrition per 100g |
 | `POST` | `/api/truth/scan` | Multi-modal scan supporting barcode, label photo, and text |
 | `POST` | `/api/truth/compare` | Head-to-head nutrition and TruthScore comparison of two products |
 | `POST` | `/api/truth/alternatives` | Retrieve clean-label alternatives in the same food category |
-| `POST` | `/api/truth/voice-assistant` | Conversational Gemini AI assistant with product context |
-| `POST` | `/api/compliance/letter-height` | Rule 7 / Table I check for a measured numeral height and panel area |
+| `POST` | `/api/truth/voice-assistant` | Conversational Gemini AI assistant with active product context |
+| `GET` | `/api/consumer/daily-log` | Get tracked daily intake of sugars, sodium, and ultra-processed food |
+| `POST` | `/api/consumer/daily-log` | Log consumed product to daily diary |
+| `GET` | `/api/consumer/complaints` | Fetch filed consumer packaging complaints and status |
+| `POST` | `/api/consumer/complaints` | File new misleading claim or LMPC non-compliance petition |
+
+### Enforcement PackSure Endpoints
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/compliance/letter-height` | Rule 7(2) Table-I statutory numeral height calibration |
+| `POST` | `/api/compliance/extract-declarations` | Automated Rule 6 mandatory declarations audit from OCR |
+| `GET` | `/api/compliance/inspections` | Retrieve active market inspection dossiers |
+| `POST` | `/api/compliance/inspections` | Create new field inspection dossier with geo-tag & seized batch |
+| `GET` | `/api/compliance/inspections/{dossier_id}` | Retrieve comprehensive dossier details and audit trail |
+| `POST` | `/api/compliance/dossiers/{dossier_id}/determination` | Supervisor final determination (Approve Notice / Warn / Dismiss) |
+| `GET` | `/api/compliance/supervisor/metrics` | District inspection metrics, compliance rate, and jurisdiction stats |
 | `GET` | `/api/stitch/screens` | Catalog of the 15 Google Stitch UI screens with launch URLs |
 | `GET` | `/stitch/{screen_id}/code.html` | Direct access to any Google Stitch screen |
 
@@ -210,7 +249,7 @@ The TruthLens web interface features a tailored micro-interaction and animation 
 * **Legal Metrology Act, 2009** (Act No. 1 of 2010): Section 18 & Section 36 (Penalties for non-standard packaging).
 * **Legal Metrology (Packaged Commodities) Rules, 2011**:
   * **Rule 6**: Mandatory declarations to be printed on every retail package.
-  * **Rule 7**: Minimum height of numerals and letters in mm, based on the area of the principal display panel (Table I).
+  * **Rule 7**: Prescribed minimum letter and numeral height in mm based on net quantity.
   * **Rule 9**: Manner in which declarations shall be specified.
 * **FSSAI Food Safety and Standards (Labelling and Display) Regulations, 2020**.
 

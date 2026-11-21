@@ -12,7 +12,20 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .gemini_service import gemini_voice_assistant, gemini_parse_label_image
-from .compliance.legal_metrology import check_letter_height
+from .compliance.legal_metrology import check_letter_height, check_legal_metrology
+from .compliance.packsure_service import (
+    audit_letter_height,
+    get_inspection_dossiers,
+    get_dossier_by_id,
+    create_field_inspection,
+    apply_supervisor_determination,
+    get_supervisor_metrics,
+    get_consumer_petitions,
+    create_consumer_petition,
+    get_daily_consumption,
+    add_daily_consumption_item,
+    get_gut_biome_info,
+)
 
 from .truth_service import (
     INS_DB,
@@ -335,19 +348,36 @@ def voice_assistant(body: VoiceAssistantInput):
     }
 
 
-# ------------------------------------------------------------------ Google Stitch UI Screen Gallery
+# ------------------------------------------------------------------ Rule 7 Numeral Height Calibration
 class LetterHeightRequest(BaseModel):
     panel_area_cm2: float = Field(gt=0, description="Principal display panel area, Rule 7(4)")
-    numeral_height_mm: float = Field(gt=0, description="Measured height of the smallest numeral in the declaration")
+    numeral_height_mm: Optional[float] = Field(default=None, description="Measured height of the smallest numeral in the declaration")
+    actual_height_mm: Optional[float] = Field(default=None, description="Measured height alias")
     blown_or_moulded: bool = False
+    is_blown_or_moulded: bool = False
 
 
 @app.post("/api/compliance/letter-height")
 def letter_height(req: LetterHeightRequest):
     """Rule 7 / Table I check for a measured numeral height."""
-    return check_letter_height(req.panel_area_cm2, req.numeral_height_mm, req.blown_or_moulded)
+    measured = req.numeral_height_mm if req.numeral_height_mm is not None else req.actual_height_mm
+    if measured is None:
+        raise HTTPException(400, "Either 'numeral_height_mm' or 'actual_height_mm' is required.")
+    blown = req.blown_or_moulded or req.is_blown_or_moulded
+
+    res = check_letter_height(req.panel_area_cm2, measured, blown)
+    audit = audit_letter_height(req.panel_area_cm2, measured, blown)
+    combined = {**audit, **res}
+    combined["verdict"] = audit.get("verdict", "PASS" if res.get("status") == "pass" else "NON-COMPLIANT")
+    combined["actual_height_mm"] = measured
+    combined["statutory_min_height_mm"] = audit.get("statutory_min_height_mm", res.get("required_mm"))
+    combined["difference_mm"] = audit.get("difference_mm", round(measured - combined["statutory_min_height_mm"], 2))
+    combined["statutory_penalty_inr"] = audit.get("statutory_penalty_inr", 0 if combined["verdict"] == "PASS" else 25000)
+    combined["is_compliant"] = audit.get("is_compliant", res.get("status") == "pass")
+    return combined
 
 
+# ------------------------------------------------------------------ Google Stitch UI Screen Gallery
 @app.get("/api/stitch/screens")
 def list_stitch_screens():
     """Returns catalog of the 15 UI screens designed in Google Stitch with direct launch URLs."""
@@ -369,3 +399,208 @@ def list_stitch_screens():
         {"id": "packsure_ai_supervisor_review_approval", "title": "Supervisor Review & Notice Approval", "desc": "Legal notice generation under Legal Metrology Act 2009 Section 36", "url": "/stitch/packsure_ai_supervisor_review_approval/code.html"},
     ]
     return {"total": len(screens), "screens": screens}
+
+
+class ExtractDeclarationsInput(BaseModel):
+    label_text: str
+
+
+@app.post("/api/compliance/extract-declarations")
+def api_extract_declarations(body: ExtractDeclarationsInput):
+    """Extracts and verifies Rule 6 mandatory declarations from label text."""
+    result = check_legal_metrology(body.label_text)
+    # Extract specific detected values for human review & correction
+    mrp_match = None
+    net_match = None
+    import re
+    m_mrp = re.search(r"(?:₹|rs\.?|inr|m\.?r\.?p\.?)\s*(\d+(?:[.,]\d+)?)", body.label_text, re.IGNORECASE)
+    if m_mrp:
+        mrp_match = m_mrp.group(1)
+    m_net = re.search(r"(\d+(?:[.,]\d+)?\s*(?:g|kg|ml|l|gms|gm|ltr|pcs|units))\b", body.label_text, re.IGNORECASE)
+    if m_net:
+        net_match = m_net.group(1)
+
+    return {
+        "verdict": result["verdict"],
+        "checks": result["checks"],
+        "n_pass": result["n_pass"],
+        "n_warn": result["n_warn"],
+        "n_fail": result["n_fail"],
+        "extracted_values": {
+            "mrp": mrp_match,
+            "net_quantity": net_match,
+            "raw_text": body.label_text
+        }
+    }
+
+
+class FieldInspectionInput(BaseModel):
+    product_name: str
+    brand: str = ""
+    category: str = "Packaged Commodity"
+    batch_no: str = ""
+    retailer: str = ""
+    district: str = "South Hub"
+    inspector_id: str = "INS-OFFICER"
+    panel_area_cm2: float = 100.0
+    detected_numeral_height_mm: float = 2.0
+    is_blown_or_moulded: bool = False
+    declared_net_quantity: str = ""
+    inspector_notes: str = ""
+    evidence_photos: list[str] = []
+
+
+@app.get("/api/compliance/inspections")
+def api_list_inspections(status: str = Query("", description="Status filter: all, under_review, notice_approved, compounded, dismissed")):
+    """Lists field inspection dossiers."""
+    return get_inspection_dossiers(status)
+
+
+@app.post("/api/compliance/inspections")
+def api_create_inspection(body: FieldInspectionInput):
+    """Submits a new field inspection record."""
+    return create_field_inspection(body.model_dump())
+
+
+@app.get("/api/compliance/inspections/{dossier_id}")
+def api_get_inspection(dossier_id: str):
+    """Retrieves dossier detail by ID."""
+    dossier = get_dossier_by_id(dossier_id)
+    if not dossier:
+        raise HTTPException(404, f"Inspection dossier '{dossier_id}' not found.")
+    return dossier
+
+
+class DeterminationInput(BaseModel):
+    action: str  # approve_notice, dismiss, compound
+    comments: str = ""
+    compounding_fee: Optional[int] = None
+
+
+@app.post("/api/compliance/dossiers/{dossier_id}/determination")
+def api_apply_determination(dossier_id: str, body: DeterminationInput):
+    """Applies supervisor determination (approves formal notice or dismisses)."""
+    try:
+        return apply_supervisor_determination(
+            dossier_id=dossier_id,
+            action=body.action,
+            comments=body.comments,
+            compounding_fee=body.compounding_fee
+        )
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+
+
+@app.get("/api/compliance/supervisor/metrics")
+def api_supervisor_metrics():
+    """Retrieves supervisory clearance velocity and district metrics."""
+    return get_supervisor_metrics()
+
+
+# ------------------------------------------------------------------ Consumer Complaints & Daily Food Log
+
+class ConsumerPetitionInput(BaseModel):
+    title: str = ""
+    product_name: str
+    brand: str = ""
+    category: str = "Misleading Marketing"
+    issue: str
+    evidence_text: str = ""
+    claimant: str = "Consumer"
+
+
+@app.get("/api/consumer/complaints")
+def api_list_complaints():
+    """Lists consumer violation and infraction petitions."""
+    return get_consumer_petitions()
+
+
+@app.post("/api/consumer/complaints")
+def api_create_complaint(body: ConsumerPetitionInput):
+    """Files a consumer violation petition."""
+    if not body.product_name.strip() or not body.issue.strip():
+        raise HTTPException(400, "Product name and issue description are required.")
+    return create_consumer_petition(body.model_dump())
+
+
+class DailyLogItemInput(BaseModel):
+    product_name: str
+    brand: str = ""
+    meal: str = "Snack"
+    serving_g: float = 100.0
+    energy_kcal: float = 0.0
+    sugars_g: float = 0.0
+    sat_fat_g: float = 0.0
+    sodium_mg: float = 0.0
+    nova_group: int = 4
+    truth_score: int = 50
+    date: Optional[str] = None
+
+
+@app.get("/api/consumer/daily-log")
+def api_get_daily_log(date: Optional[str] = Query(None, description="ISO date YYYY-MM-DD")):
+    """Retrieves today's consumption log and nutritional guideline limits."""
+    return get_daily_consumption(date)
+
+
+@app.post("/api/consumer/daily-log")
+def api_add_daily_log(body: DailyLogItemInput):
+    """Logs a food item into today's consumption diary."""
+    return add_daily_consumption_item(body.model_dump())
+
+
+# ------------------------------------------------------------------ Additives & Gut Biome Intelligence
+
+@app.get("/api/truth/additives")
+def api_list_additives(
+    class_filter: str = Query("", description="Filter by functional class"),
+    abroad_bans_only: bool = Query(False, description="Filter only additives with EU/US abroad bans")
+):
+    """Catalog of all 30+ INS additives with functional classes and abroad warnings."""
+    results = []
+    cf = class_filter.strip().lower()
+    for a in INS_DB:
+        if cf and cf not in a.get("class", "").lower():
+            continue
+        if abroad_bans_only and not a.get("abroad_status"):
+            continue
+        results.append(a)
+    return {"total": len(results), "additives": results}
+
+
+@app.get("/api/truth/additives/{ins}/biome")
+def api_additive_biome(ins: str):
+    """Retrieves clinical evidence explorer and gut biome findings for an additive."""
+    info = get_gut_biome_info(ins)
+    if not info:
+        # Fallback to general INS DB entry if available
+        matched = None
+        for a in INS_DB:
+            if a["ins"].lower() == ins.lower().replace("ins", "").replace("e", "").strip():
+                matched = a
+                break
+        if matched:
+            return {
+                "ins": matched["ins"],
+                "name": matched["name"],
+                "common_source": matched.get("description", ""),
+                "natural_vs_synthetic": {
+                    "synthetic_share": "Synthesized or purified for industrial food applications.",
+                    "natural_source": "Isolated from natural minerals, plant extract, or microbial synthesis."
+                },
+                "gut_biome_findings": [
+                    {
+                        "claim": matched.get("health_considerations", "Evaluated by FSSAI & EFSA"),
+                        "evidence_strength": "Regulatory Standard",
+                        "detail": matched.get("safety_rating", "Permitted under statutory limits"),
+                        "status": "safe" if "Safe" in matched.get("safety_rating", "") else "caution"
+                    }
+                ],
+                "international_status": {
+                    "fssai": matched.get("fssai_status", "Permitted"),
+                    "eu_efsa": matched.get("abroad_status", {}).get("eu", "Approved"),
+                    "us_fda": matched.get("abroad_status", {}).get("us", "Approved")
+                }
+            }
+        raise HTTPException(404, f"Gut biome profile for additive INS '{ins}' not found.")
+    return info
