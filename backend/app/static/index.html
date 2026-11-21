@@ -25,6 +25,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Barcode Scanner Library for Live Camera Feed -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
     /* -------------------------------------------------------------
        GOOGLE STITCH WARM EDITORIAL INTELLIGENCE DESIGN SYSTEM
@@ -798,122 +800,134 @@
     </section>
 
 
-    <!-- VIEW 2: TRIPLE INPUT SCANNER (Stitch Screen 2 & Human Correction) -->
+    <!-- VIEW 2: SMART LIVE BARCODE & AI SCANNER -->
     <section id="view-scanner" class="app-view">
-      <div class="card">
-        <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 6px;">Triple Input Product Scanner</h2>
-        <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 18px;">
-          Choose your input method. You will be able to review and correct all extracted text before running the intelligence engine.
-        </p>
-
-        <!-- Mode Pills -->
-        <div style="display: flex; gap: 8px; margin-bottom: 20px;">
-          <button class="btn btn-brand" id="tabBtnBarcode" onclick="switchScannerMode('barcode')">1. Barcode</button>
-          <button class="btn btn-secondary" id="tabBtnPhoto" onclick="switchScannerMode('photo')">2. Label Photo OCR</button>
-          <button class="btn btn-secondary" id="tabBtnManual" onclick="switchScannerMode('manual')">3. Paste Ingredients</button>
+      <div class="card" style="padding: 18px 20px;">
+        <!-- Header with controls -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px;">
+              <span>📸 Live Barcode Scanner</span>
+            </h2>
+            <p style="font-size: 12px; color: var(--ink-secondary);">Scan any packaged commodity barcode to view TruthScore & FSSAI nutrition</p>
+          </div>
+          <div style="display: flex; gap: 6px; align-items: center;">
+            <button class="btn btn-secondary" id="btnToggleCamera" onclick="toggleCameraScanner()" style="padding: 6px 12px; font-size: 11px;">
+              <span id="cameraBtnIcon">⏹</span> <span id="cameraBtnLabel">Pause Camera</span>
+            </button>
+            <button class="btn btn-secondary" id="btnFlipCamera" onclick="flipCameraScanner()" style="padding: 6px 10px; font-size: 11px;" title="Switch Front/Back Camera">
+              🔄
+            </button>
+          </div>
         </div>
 
-        <!-- Mode 1: Barcode Input -->
-        <div id="scannerSectionBarcode">
-          <div class="form-group">
-            <label class="form-label">Scan or Type EAN-13 Barcode</label>
-            <input type="text" id="scannerBarcodeInput" class="form-control" placeholder="e.g. 8901719101013">
+        <!-- Live Camera Viewfinder -->
+        <div class="scanner-viewfinder" id="scannerViewportWrap" style="position: relative; overflow: hidden; border-radius: 16px; background: #000; height: 260px; max-width: 520px; margin: 0 auto 16px;">
+          <!-- HTML5 QR / Barcode Video mounts here -->
+          <div id="barcodeReader" style="width: 100%; height: 100%;"></div>
+          <video id="barcodeNativeVideo" autoplay playsinline muted style="display: none; width: 100%; height: 100%; object-fit: cover;"></video>
+
+          <!-- Animated Green Laser Scan Line -->
+          <div class="scan-laser" id="scannerLaserBar"></div>
+          <div class="scan-reticle-corner reticle-tl"></div>
+          <div class="scan-reticle-corner reticle-tr"></div>
+          <div class="scan-reticle-corner reticle-bl"></div>
+          <div class="scan-reticle-corner reticle-br"></div>
+
+          <!-- Dynamic Status Badge Overlay -->
+          <div id="scannerOverlayStatus" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); color: #fff; padding: 4px 14px; border-radius: 9999px; font-size: 11px; font-weight: 700; z-index: 5; pointer-events: none; white-space: nowrap; border: 1px solid rgba(255,255,255,0.2);">
+            Align barcode inside frame
           </div>
-          <div style="margin-bottom: 16px;">
-            <span style="font-size: 11px; font-weight: 700; color: var(--ink-tertiary);">QUICK TEST BARCODES:</span>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px;">
-              <button class="btn btn-secondary" onclick="fillTestBarcode('8901719101013')" style="padding: 4px 10px; font-size: 11px;">Parle-G (8901719101013)</button>
-              <button class="btn btn-secondary" onclick="fillTestBarcode('8901058852230')" style="padding: 4px 10px; font-size: 11px;">Maggi Noodles (8901058852230)</button>
-              <button class="btn btn-secondary" onclick="fillTestBarcode('8901233010123')" style="padding: 4px 10px; font-size: 11px;">Bournvita (8901233010123)</button>
-              <button class="btn btn-secondary" onclick="fillTestBarcode('8908013210041')" style="padding: 4px 10px; font-size: 11px;">Whole Truth PB (8908013210041)</button>
+        </div>
+
+        <!-- Controls: Quick Chips & Manual Entry -->
+        <div style="max-width: 520px; margin: 0 auto;">
+          <!-- 1-Click Instant Test Products -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 11px; font-weight: 700; color: var(--ink-tertiary); text-transform: uppercase;">Instant 1-Click Test Products:</span>
+              <span style="font-size: 10px; color: var(--brand); font-weight: 700;">Verified Open Database</span>
+            </div>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901719101013')" style="padding: 4px 10px; font-size: 11px;">🍪 Parle-G</button>
+              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901058852230')" style="padding: 4px 10px; font-size: 11px;">🍜 Maggi</button>
+              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901233010123')" style="padding: 4px 10px; font-size: 11px;">🥛 Bournvita</button>
+              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8908013210041')" style="padding: 4px 10px; font-size: 11px;">🥜 Whole Truth PB</button>
+              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901262010058')" style="padding: 4px 10px; font-size: 11px;">🧈 Amul Butter</button>
             </div>
           </div>
-          <button class="btn btn-brand" onclick="runBarcodeLookupAction()">Lookup Barcode</button>
-        </div>
 
-        <!-- Mode 2: Multi-Image Photo OCR -->
-        <div id="scannerSectionPhoto" style="display: none;">
-          <input type="file" id="scannerCameraCapture" accept="image/*" capture="environment" style="display:none" onchange="handleCameraCapture(event)">
-          <div class="scanner-viewfinder" role="button" tabindex="0" style="cursor:pointer" aria-label="Take a photo of the pack / पैकेट की फ़ोटो लें"
-               onclick="document.getElementById('scannerCameraCapture').click()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
-            <div class="scan-laser"></div>
-            <div class="scan-reticle-corner reticle-tl"></div>
-            <div class="scan-reticle-corner reticle-tr"></div>
-            <div class="scan-reticle-corner reticle-bl"></div>
-            <div class="scan-reticle-corner reticle-br"></div>
-            <div style="text-align: center; color: rgba(255,255,255,0.8); z-index: 4;">
-              <span style="font-size: 32px; display: block; margin-bottom: 4px;">📷</span>
-              <b style="font-size: 18px;">यहाँ दबाइए — फ़ोटो लीजिए</b>
-              <p style="font-size: 13px; opacity: 0.85;">Tap here to photograph the back of the pack</p>
-            </div>
+          <!-- Manual Barcode Input Fallback -->
+          <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+            <input type="text" id="manualBarcodeInput" class="form-control" placeholder="Or enter barcode numbers (e.g. 8901719101013)" style="font-size: 13px;" onkeypress="if(event.key==='Enter') handleManualBarcodeSubmit()">
+            <button class="btn btn-brand" onclick="handleManualBarcodeSubmit()" style="white-space: nowrap; padding: 8px 16px;">Scan Barcode</button>
           </div>
-          
-          <div class="form-group">
-            <label class="form-label">Upload Packaging Photographs (Front & Back)</label>
-            <input type="file" id="scannerPhotoUpload" accept="image/*" class="form-control" onchange="handlePhotoSelected(event)">
           </div>
-          <div id="scannerPhotoThumbnails" style="display: flex; gap: 10px; margin-bottom: 16px;"></div>
-          <button class="btn btn-brand" onclick="extractTextFromPhotosAction()">Extract Text from Photo</button>
-        </div>
 
-        <!-- Mode 3: Manual Text Paste -->
-        <div id="scannerSectionManual" style="display: none;">
-          <div class="form-group">
-            <label class="form-label">Product Name & Brand</label>
-            <input type="text" id="manualInputName" class="form-control" placeholder="e.g. Nutri-Delight Multigrain Atta Cookies">
+          <!-- Direct photo scan trigger if product has no barcode -->
+          <div style="text-align: center; border-top: 1px dashed var(--hairline); padding-top: 10px;">
+            <button onclick="toggleDirectPhotoOption()" style="background: none; border: none; font-size: 12px; font-weight: 600; color: var(--ink-secondary); cursor: pointer; text-decoration: underline;">
+              Product has no barcode? Upload label photo directly →
+            </button>
           </div>
-          <div class="form-group">
-            <label class="form-label">Front Packaging Marketing Claims</label>
-            <input type="text" id="manualInputClaims" class="form-control" placeholder="e.g. 100% Atta, Zero Trans Fat, No Added Sugar">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Full Ingredients List (Paste from label or Blinkit/Zepto)</label>
-            <textarea id="manualInputIngredients" class="form-control" placeholder="Paste back-of-pack ingredients..."></textarea>
-          </div>
-          <button class="btn btn-brand" onclick="prepareManualReviewAction()">Proceed to Review & Analysis</button>
         </div>
       </div>
 
-      <!-- STEP 4: HUMAN-IN-THE-LOOP CORRECTION SCREEN -->
-      <div class="card" id="scannerReviewCard" style="display: none; border: 2px solid var(--brand);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-          <div>
-            <span class="badge" style="background: var(--brand-soft); color: var(--brand);">Step 4: Human-in-the-Loop Verification</span>
-            <h3 style="font-size: 18px; font-weight: 800; margin-top: 4px;">Confirm Extracted Packaging Declarations</h3>
+      <!-- SMART AI RESOLUTION CARD (Appears ONLY if barcode is NOT in open database) -->
+      <div class="card" id="barcodeNotFoundAiCard" style="display: none; border: 2px solid var(--warning); background: #FFFDF9; animation: slideUpPwa 0.3s ease-out;">
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+          <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--warning-soft); color: var(--warning); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+            🤖
           </div>
-          <button class="btn btn-secondary" onclick="document.getElementById('scannerReviewCard').style.display='none'">✕ Dismiss</button>
-        </div>
-        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 16px;">
-          Review the OCR-extracted values below. You can correct spelling errors or missing fields before triggering the full intelligence and legal metrology algorithms.
-        </p>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label class="form-label">Product Name</label>
-            <input type="text" id="reviewProdName" class="form-control">
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <h3 style="font-size: 16px; font-weight: 800; color: var(--ink);">Not Found in Open Database</h3>
+              <span class="badge" id="notFoundBarcodeBadge" style="background: var(--warning-soft); color: var(--warning); font-family: monospace; font-size: 11px;">890...</span>
+            </div>
+            <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 4px; line-height: 1.4;">
+              This barcode isn't registered in the open food catalogue (FSSAI / Open Food Facts) yet. <b>Take or upload a photo of the nutrition table or ingredients</b>, and <b>TruthLens AI</b> will analyze it instantly!
+            </p>
           </div>
-          <div class="form-group">
-            <label class="form-label">Brand</label>
-            <input type="text" id="reviewProdBrand" class="form-control">
-          </div>
+          <button class="btn btn-secondary" onclick="dismissNotFoundCard()" style="padding: 2px 8px; font-size: 12px;" title="Dismiss">✕</button>
         </div>
 
+        <!-- 1-Click Camera / Photo Upload Buttons -->
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <label class="btn btn-brand" style="flex: 1; justify-content: center; cursor: pointer; padding: 12px 16px; font-size: 13px;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span>📸 Take Photo with Camera</span>
+            <input type="file" accept="image/*" capture="environment" style="display: none;" onchange="handleAiLabelUpload(event)">
+          </label>
+          <label class="btn btn-secondary" style="flex: 1; justify-content: center; cursor: pointer; padding: 12px 16px; font-size: 13px;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span>📁 Choose File</span>
+            <input type="file" accept="image/*" style="display: none;" onchange="handleAiLabelUpload(event)">
+          </label>
+        </div>
+
+        <!-- AI Progress Indicator -->
+        <div id="aiAnalysisProgress" style="display: none; margin-top: 14px; padding: 14px; background: var(--surface-container-low); border-radius: 12px; text-align: center;">
+          <div style="font-size: 26px; animation: soundEqualizer 0.8s infinite alternate; display: inline-block; margin-bottom: 6px;">✨</div>
+          <div style="font-size: 13px; font-weight: 800; color: var(--brand);" id="aiProgressText">Analyzing label with Gemini Vision AI...</div>
+          <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 3px;">Extracting nutrition facts, decoding INS additives, and computing FSSAI RDA compliance...</p>
+        </div>
+      </div>
+
+      <!-- Collapsed Direct Photo / Text Box for items without barcode -->
+      <div class="card" id="directPhotoSection" style="display: none; margin-top: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="font-size: 16px; font-weight: 800;">Upload Label Photo Directly</h3>
+          <button class="btn btn-secondary" onclick="toggleDirectPhotoOption()" style="padding: 2px 8px;">✕</button>
+        </div>
         <div class="form-group">
-          <label class="form-label">Detected Marketing Claims</label>
-          <input type="text" id="reviewProdClaims" class="form-control" placeholder="Comma separated claims">
+          <label class="form-label">Upload packaging photo:</label>
+          <input type="file" accept="image/*" class="form-control" onchange="handleAiLabelUpload(event)">
         </div>
-
-        <div class="form-group">
-          <label class="form-label">Ingredient List Text</label>
-          <textarea id="reviewProdIngredients" class="form-control" style="min-height: 120px;"></textarea>
+        <div class="form-group" style="margin-top: 10px;">
+          <label class="form-label">Or paste ingredients from Blinkit / Zepto / Amazon:</label>
+          <textarea id="directPasteIngredients" class="form-control" placeholder="e.g. Wheat flour (Atta 55%), refined palm oil, sugar, invert syrup, maltodextrin, INS 500(ii)..." rows="3"></textarea>
         </div>
-
-        <div style="display: flex; gap: 12px; justify-content: flex-end;">
-          <button class="btn btn-secondary" onclick="document.getElementById('scannerReviewCard').style.display='none'">Back to Scanner</button>
-          <button class="btn btn-brand" onclick="submitConfirmedReviewAction()">
-            Run Full TruthLens & PackSure Analysis
-          </button>
-        </div>
+        <button class="btn btn-brand" onclick="handleDirectPasteAnalyze()">Analyze with TruthLens</button>
       </div>
     </section>
 
@@ -1734,11 +1748,18 @@
         window.scrollTo(0, 0);
       }
       
+      // Auto-manage live camera scanner: start when in scanner, stop when leaving
+      if (viewId === 'scanner') {
+        setTimeout(startCameraScanner, 150);
+      } else {
+        stopCameraScanner();
+      }
+      
       // Update breadcrumbs
       const titleEl = document.getElementById('currentViewTitle');
       const titles = {
         'consumer-home': 'Home Dashboard',
-        'scanner': 'Triple Input Scanner',
+        'scanner': 'Live Barcode Scanner',
         'intelligence': 'Product Intelligence Overview',
         'voice-lens': 'Voice & Multimodal Lens Assistant',
         'sugar-breakdown': 'Hidden Sugar Breakdown',
@@ -1829,135 +1850,297 @@
       renderHomeProducts(filtered);
     }
 
-    // --- Scanner Mode Switching & Human-in-the-Loop Workflow ---
-    function switchScannerMode(mode) {
-      document.getElementById('scannerSectionBarcode').style.display = mode === 'barcode' ? 'block' : 'none';
-      document.getElementById('scannerSectionPhoto').style.display = mode === 'photo' ? 'block' : 'none';
-      document.getElementById('scannerSectionManual').style.display = mode === 'manual' ? 'block' : 'none';
+    // --- Live Camera Barcode Scanner & Smart AI Resolver Engine ---
+    let html5QrScanner = null;
+    let cameraActive = false;
+    let cameraFacingMode = 'environment'; // 'environment' (back) | 'user' (front)
+    let nativeDetectorLoop = null;
+    let nativeVideoStream = null;
+
+    function playScanBeep() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) {
+          const ctx = new AudioCtx();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.13);
+        }
+      } catch (e) {
+        console.warn('AudioContext beep ignored:', e);
+      }
+      if (navigator.vibrate) {
+        try { navigator.vibrate([80, 40, 80]); } catch(e){}
+      }
+    }
+
+    async function startCameraScanner() {
+      if (cameraActive) return;
+      const statusEl = document.getElementById('scannerOverlayStatus');
+      const videoEl = document.getElementById('barcodeNativeVideo');
+      const readerEl = document.getElementById('barcodeReader');
+
+      if (statusEl) statusEl.textContent = 'Starting camera scanner...';
+
+      // 1. Check if Html5Qrcode library is loaded
+      if (typeof Html5Qrcode !== 'undefined') {
+        try {
+          if (!html5QrScanner) {
+            html5QrScanner = new Html5Qrcode("barcodeReader");
+          }
+          await html5QrScanner.start(
+            { facingMode: cameraFacingMode },
+            {
+              fps: 15,
+              qrbox: { width: 280, height: 160 },
+              aspectRatio: 1.777778
+            },
+            (decodedText, decodedResult) => {
+              console.log('Barcode detected via Html5Qrcode:', decodedText);
+              handleBarcodeScanned(decodedText);
+            },
+            (errorMessage) => {}
+          );
+          cameraActive = true;
+          updateCameraButtons();
+          if (statusEl) statusEl.textContent = 'Align barcode inside frame';
+          return;
+        } catch (err) {
+          console.warn('Html5Qrcode camera startup failed, trying native camera:', err);
+        }
+      }
+
+      // 2. Fallback to Native MediaDevices + BarcodeDetector
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        try {
+          nativeVideoStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: cameraFacingMode, width: { ideal: 1280 }, height: { ideal: 720 } }
+          });
+          videoEl.srcObject = nativeVideoStream;
+          videoEl.style.display = 'block';
+          readerEl.style.display = 'none';
+          await videoEl.play();
+          cameraActive = true;
+          updateCameraButtons();
+          if (statusEl) statusEl.textContent = 'Align barcode inside frame';
+
+          if ('BarcodeDetector' in window) {
+            const barcodeDetector = new BarcodeDetector({
+              formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code']
+            });
+            const scanFrame = async () => {
+              if (!cameraActive) return;
+              try {
+                const barcodes = await barcodeDetector.detect(videoEl);
+                if (barcodes && barcodes.length > 0) {
+                  const detected = barcodes[0].rawValue;
+                  console.log('Native BarcodeDetector hit:', detected);
+                  handleBarcodeScanned(detected);
+                  return;
+                }
+              } catch (e) {}
+              nativeDetectorLoop = requestAnimationFrame(scanFrame);
+            };
+            nativeDetectorLoop = requestAnimationFrame(scanFrame);
+          }
+          return;
+        } catch (err) {
+          console.warn('Native camera access error:', err);
+          if (statusEl) statusEl.textContent = 'Camera permission required or unavailable';
+        }
+      }
+
+      if (statusEl) statusEl.textContent = 'Camera not available. Enter barcode below.';
+    }
+
+    async function stopCameraScanner() {
+      cameraActive = false;
+      if (nativeDetectorLoop) {
+        cancelAnimationFrame(nativeDetectorLoop);
+        nativeDetectorLoop = null;
+      }
+      if (nativeVideoStream) {
+        nativeVideoStream.getTracks().forEach(t => t.stop());
+        nativeVideoStream = null;
+      }
+      const videoEl = document.getElementById('barcodeNativeVideo');
+      if (videoEl) {
+        videoEl.srcObject = null;
+        videoEl.style.display = 'none';
+      }
+      if (html5QrScanner) {
+        try {
+          await html5QrScanner.stop();
+        } catch (e) {}
+      }
+      const readerEl = document.getElementById('barcodeReader');
+      if (readerEl) readerEl.style.display = 'block';
+      const statusEl = document.getElementById('scannerOverlayStatus');
+      if (statusEl) statusEl.textContent = 'Camera paused. Tap Start Camera to resume.';
+      updateCameraButtons();
+    }
+
+    function toggleCameraScanner() {
+      if (cameraActive) {
+        stopCameraScanner();
+      } else {
+        startCameraScanner();
+      }
+    }
+
+    async function flipCameraScanner() {
+      cameraFacingMode = cameraFacingMode === 'environment' ? 'user' : 'environment';
+      if (cameraActive) {
+        await stopCameraScanner();
+        await startCameraScanner();
+      }
+    }
+
+    function updateCameraButtons() {
+      const icon = document.getElementById('cameraBtnIcon');
+      const label = document.getElementById('cameraBtnLabel');
+      if (icon && label) {
+        if (cameraActive) {
+          icon.textContent = '⏹';
+          label.textContent = 'Pause Camera';
+        } else {
+          icon.textContent = '▶️';
+          label.textContent = 'Start Camera';
+        }
+      }
+    }
+
+    // --- Core Barcode Processing Flow ---
+    async function handleBarcodeScanned(code) {
+      if (!code) return;
+      const cleanCode = String(code).trim();
+      playScanBeep();
       
-      document.getElementById('tabBtnBarcode').className = mode === 'barcode' ? 'btn btn-brand' : 'btn btn-secondary';
-      document.getElementById('tabBtnPhoto').className = mode === 'photo' ? 'btn btn-brand' : 'btn btn-secondary';
-      document.getElementById('tabBtnManual').className = mode === 'manual' ? 'btn btn-brand' : 'btn btn-secondary';
+      const statusEl = document.getElementById('scannerOverlayStatus');
+      if (statusEl) statusEl.textContent = `🔍 Checking open database for #${cleanCode}...`;
+      
+      const manualInput = document.getElementById('manualBarcodeInput');
+      if (manualInput) manualInput.value = cleanCode;
+
+      try {
+        const res = await fetch('/api/truth/barcode/' + encodeURIComponent(cleanCode));
+        if (res.ok) {
+          // FOUND IN OPEN DATABASE (FSSAI / Local DB / Open Food Facts)
+          const product = await res.json();
+          stopCameraScanner();
+          dismissNotFoundCard();
+          renderProductIntelligenceScreen(product);
+          switchView('intelligence');
+        } else {
+          // NOT FOUND IN OPEN DATABASE -> Trigger smart AI photo upload card!
+          stopCameraScanner();
+          showNotFoundCard(cleanCode);
+        }
+      } catch (err) {
+        console.error('Barcode lookup error:', err);
+        showNotFoundCard(cleanCode);
+      }
     }
 
-    function fillTestBarcode(code) {
-      document.getElementById('scannerBarcodeInput').value = code;
-    }
-
-    async function runBarcodeLookupAction() {
-      const code = document.getElementById('scannerBarcodeInput').value.trim();
+    function handleManualBarcodeSubmit() {
+      const input = document.getElementById('manualBarcodeInput');
+      const code = input.value.trim();
       if (!code) return alert('Please enter a barcode number.');
-      
-      try {
-        const res = await fetch('/api/truth/barcode/' + encodeURIComponent(code));
-        if (!res.ok) throw new Error('Product barcode not found in registry. Please upload packaging photo or paste ingredients.');
-        const product = await res.json();
-        renderProductIntelligenceScreen(product);
-        switchView('intelligence');
-      } catch (err) {
-        alert(err.message);
+      handleBarcodeScanned(code);
+    }
+
+    function showNotFoundCard(barcode) {
+      AppState.scannedNotFoundBarcode = barcode;
+      const card = document.getElementById('barcodeNotFoundAiCard');
+      const badge = document.getElementById('notFoundBarcodeBadge');
+      if (badge) badge.textContent = barcode;
+      if (card) {
+        card.style.display = 'block';
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      const statusEl = document.getElementById('scannerOverlayStatus');
+      if (statusEl) statusEl.textContent = `⚠️ #${barcode} not in database. Snap photo below.`;
+    }
+
+    function dismissNotFoundCard() {
+      const card = document.getElementById('barcodeNotFoundAiCard');
+      if (card) card.style.display = 'none';
+      const progress = document.getElementById('aiAnalysisProgress');
+      if (progress) progress.style.display = 'none';
+    }
+
+    function toggleDirectPhotoOption() {
+      const section = document.getElementById('directPhotoSection');
+      if (section) {
+        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+        if (section.style.display === 'block') {
+          section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
       }
     }
 
-    function handlePhotoSelected(e) {
-      const file = e.target.files[0];
+    // --- AI Multi-Modal Label Upload (When not in DB) ---
+    async function handleAiLabelUpload(e) {
+      const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const thumb = document.getElementById('scannerPhotoThumbnails');
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        thumb.innerHTML = `
-          <div style="position: relative; width: 80px; height: 80px; border-radius: 10px; overflow: hidden; border: 2px solid var(--brand);">
-            <img src="${evt.target.result}" style="width: 100%; height: 100%; object-fit: cover;">
-          </div>
-        `;
-      };
-      reader.readAsDataURL(file);
-    }
 
-    // One tap: camera photo -> preview -> extraction, no separate button needed.
-    function handleCameraCapture(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const upload = document.getElementById('scannerPhotoUpload');
-      try {
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        upload.files = dt.files;
-      } catch (err) {
-        return alert('Please use "Choose File" below to add the photo.');
-      }
-      handlePhotoSelected({ target: upload });
-      extractTextFromPhotosAction();
-    }
+      const progress = document.getElementById('aiAnalysisProgress');
+      const progressText = document.getElementById('aiProgressText');
+      if (progress) progress.style.display = 'block';
+      if (progressText) progressText.textContent = 'Analyzing label with Gemini Vision AI...';
 
-    async function extractTextFromPhotosAction() {
-      const fileInput = document.getElementById('scannerPhotoUpload');
-      if (!fileInput.files.length) return alert('Please select or capture a label photograph.');
-      
       const formData = new FormData();
-      formData.append('image', fileInput.files[0]);
-      
+      formData.append('image', file);
+      if (AppState.scannedNotFoundBarcode) {
+        formData.append('barcode', AppState.scannedNotFoundBarcode);
+      }
+
       try {
+        if (progressText) progressText.textContent = 'Decoding INS additives & hidden sugars...';
         const res = await fetch('/api/truth/scan', {
           method: 'POST',
           body: formData
         });
-        const data = await res.json();
+        if (!res.ok) throw new Error('AI analysis failed. Please try a clearer photo or enter ingredients.');
         
-        // Populate Human-in-the-Loop review form
-        document.getElementById('reviewProdName').value = data.name || 'Scanned Packaged Commodity';
-        document.getElementById('reviewProdBrand').value = data.brand || '';
-        document.getElementById('reviewProdClaims').value = (data.claim_verdicts || []).map(c => c.claim).join(', ');
-        document.getElementById('reviewProdIngredients').value = data.ingredients_text || '';
-        
-        document.getElementById('scannerReviewCard').style.display = 'block';
-        window.scrollTo(0, document.getElementById('scannerReviewCard').offsetTop - 60);
+        const product = await res.json();
+        dismissNotFoundCard();
+        renderProductIntelligenceScreen(product);
+        switchView('intelligence');
       } catch (err) {
-        alert('OCR text extraction failed: ' + err.message);
+        alert('Could not analyze photo: ' + err.message);
+        if (progress) progress.style.display = 'none';
       }
     }
 
-    function prepareManualReviewAction() {
-      const name = document.getElementById('manualInputName').value.trim() || 'Custom Product';
-      const claims = document.getElementById('manualInputClaims').value.trim();
-      const ingredients = document.getElementById('manualInputIngredients').value.trim();
-      
-      if (!ingredients) return alert('Please paste the ingredient text.');
-      
-      document.getElementById('reviewProdName').value = name;
-      document.getElementById('reviewProdBrand').value = '';
-      document.getElementById('reviewProdClaims').value = claims;
-      document.getElementById('reviewProdIngredients').value = ingredients;
-      
-      document.getElementById('scannerReviewCard').style.display = 'block';
-      window.scrollTo(0, document.getElementById('scannerReviewCard').offsetTop - 60);
-    }
-
-    async function submitConfirmedReviewAction() {
-      const name = document.getElementById('reviewProdName').value.trim();
-      const brand = document.getElementById('reviewProdBrand').value.trim();
-      const claimsStr = document.getElementById('reviewProdClaims').value.trim();
-      const claims = claimsStr ? claimsStr.split(',').map(c => c.trim()) : [];
-      const ingredients = document.getElementById('reviewProdIngredients').value.trim();
+    async function handleDirectPasteAnalyze() {
+      const text = document.getElementById('directPasteIngredients').value.trim();
+      if (!text) return alert('Please enter or paste the ingredient list.');
       
       try {
         const res = await fetch('/api/truth/scan/manual', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: name,
-            brand: brand,
-            claims: claims,
-            ingredients_text: ingredients,
-            raw_label_text: ingredients
+            name: 'Analyzed Packaged Commodity',
+            ingredients_text: text,
+            raw_label_text: text
           })
         });
+        if (!res.ok) throw new Error('Analysis failed');
         const product = await res.json();
         renderProductIntelligenceScreen(product);
-        document.getElementById('scannerReviewCard').style.display = 'none';
         switchView('intelligence');
       } catch (err) {
-        alert('Analysis submission failed: ' + err.message);
+        alert('Analysis error: ' + err.message);
       }
     }
 
