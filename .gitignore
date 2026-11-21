@@ -40,3 +40,6 @@ Thumbs.db
 
 # Legal Scraper Raw Storage
 legal/raw/
+
+# Generated voice audio
+backend/data/voice_cache/

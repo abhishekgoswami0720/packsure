@@ -2651,5 +2651,247 @@
       loadPopularProducts();
     });
   </script>
+
+  <!-- ===================== Voice Lens: first-run guide + speak/ask bar ===================== -->
+  <style>
+    .vl-overlay { position: fixed; inset: 0; background: rgba(15,30,22,.72); z-index: 9000; display: none; align-items: center; justify-content: center; padding: 16px; }
+    .vl-overlay.open { display: flex; }
+    .vl-card { background: #fff; width: 100%; max-width: 440px; border-radius: 24px; padding: 28px 22px 22px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    .vl-title { font-size: 22px; font-weight: 800; color: var(--ink, #14261C); margin: 6px 0 4px; line-height: 1.3; }
+    .vl-sub { font-size: 15px; color: var(--ink-secondary, #4b5a52); margin-bottom: 18px; }
+    .vl-langs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .vl-lang { min-height: 58px; border-radius: 14px; border: 2px solid var(--brand-soft, #E8F1EC); background: #fff; font-size: 19px; font-weight: 700; color: var(--brand, #1B4332); cursor: pointer; }
+    .vl-lang:active, .vl-lang:focus { border-color: var(--brand, #1B4332); outline: none; }
+    .vl-art { width: 132px; height: 132px; margin: 0 auto 14px; border-radius: 50%; background: var(--brand-soft, #E8F1EC); display: flex; align-items: center; justify-content: center; animation: vlPulse 1.8s ease-in-out infinite; }
+    .vl-art svg { width: 66px; height: 66px; color: var(--brand, #1B4332); }
+    @keyframes vlPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    .vl-dots { display: flex; justify-content: center; gap: 8px; margin: 14px 0 18px; }
+    .vl-dots span { width: 10px; height: 10px; border-radius: 50%; background: #d5ded9; }
+    .vl-dots span.on { background: var(--brand, #1B4332); width: 26px; border-radius: 6px; }
+    .vl-row { display: flex; gap: 10px; }
+    .vl-btn { flex: 1; min-height: 58px; border-radius: 16px; border: none; font-size: 18px; font-weight: 800; cursor: pointer; }
+    .vl-primary { background: var(--brand, #1B4332); color: #fff; }
+    .vl-ghost { background: #f1f4f2; color: var(--ink, #14261C); }
+    .vl-repeat { background: none; border: none; color: var(--brand, #1B4332); font-weight: 700; font-size: 15px; margin-top: 12px; cursor: pointer; }
+    .vl-help { position: fixed; left: 16px; bottom: 92px; z-index: 8000; width: 54px; height: 54px; border-radius: 50%; border: none; background: #fff; color: var(--brand, #1B4332); font-size: 26px; font-weight: 800; box-shadow: 0 6px 18px rgba(0,0,0,.18); cursor: pointer; }
+    .vl-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 8500; width: min(560px, calc(100% - 24px)); background: #fff; border-radius: 22px; box-shadow: 0 10px 34px rgba(0,0,0,.22); padding: 12px; display: none; }
+    .vl-bar.show { display: block; }
+    @media (max-width: 900px) { .vl-bar { bottom: 78px; } .vl-help { bottom: 160px; } }
+    .vl-caption { font-size: 15px; line-height: 1.45; color: var(--ink, #14261C); padding: 4px 6px 10px; max-height: 120px; overflow-y: auto; }
+    .vl-caption .q { color: var(--ink-secondary, #4b5a52); font-size: 13px; display: block; margin-bottom: 4px; }
+    .vl-bar .vl-btn { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .vl-bar svg { width: 24px; height: 24px; }
+    .vl-mic.rec { background: #C0392B; color: #fff; animation: vlPulse 1s ease-in-out infinite; }
+    .vl-speaking { outline: 3px solid var(--brand-soft, #E8F1EC); }
+  </style>
+
+  <div class="vl-overlay" id="vlOverlay" role="dialog" aria-modal="true" aria-labelledby="vlTitle">
+    <div class="vl-card">
+      <div id="vlBody"></div>
+    </div>
+  </div>
+  <button class="vl-help" id="vlHelp" aria-label="Help / मदद" title="मदद" onclick="VoiceLens.openGuide(true)">?</button>
+  <div class="vl-bar" id="vlBar" aria-live="polite">
+    <div class="vl-caption" id="vlCaption"></div>
+    <div class="vl-row">
+      <button class="vl-btn vl-ghost" id="vlListen" onclick="VoiceLens.replay()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+        <span id="vlListenLabel">सुनिए</span>
+      </button>
+      <button class="vl-btn vl-primary vl-mic" id="vlMic">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        <span id="vlMicLabel">दबाकर पूछिए</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+  const VoiceLens = (() => {
+    const ICONS = {
+      hello: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>',
+      camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h3l2-3h6l2 3h3v13H4z"/><circle cx="12" cy="13" r="4"/></svg>',
+      speak: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>',
+      mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>'
+    };
+    // Button labels shown in the app's own chrome (Hindi and English; other languages use Hindi labels).
+    const UI = {
+      hi: { pick: 'अपनी भाषा चुनिए', pickSub: 'Choose your language', next: 'आगे', skip: 'छोड़ें', start: 'पहला स्कैन करें', again: 'फिर से सुनिए',
+            listen: 'सुनिए', ask: 'दबाकर पूछिए', recording: 'बोलिए… छोड़ने पर भेजेंगे', thinking: 'सुन रहा हूँ…', noMic: 'माइक की अनुमति दीजिए' },
+      en: { pick: 'Choose your language', pickSub: 'अपनी भाषा चुनिए', next: 'Next', skip: 'Skip', start: 'Do my first scan', again: 'Hear again',
+            listen: 'Listen', ask: 'Hold to ask', recording: 'Speak… release to send', thinking: 'Listening…', noMic: 'Please allow the microphone' }
+    };
+    const BCP47 = { hi: 'hi-IN', en: 'en-IN', bn: 'bn-IN', mr: 'mr-IN', ta: 'ta-IN', te: 'te-IN', gu: 'gu-IN', kn: 'kn-IN', ml: 'ml-IN', pa: 'pa-IN' };
+    const store = {
+      get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    };
+    let lang = store.get('vl.lang') || '';
+    let languages = [];
+    let guide = [];
+    let step = 0;
+    let audio = new Audio();
+    let lastSpoken = { text: '', url: null };
+    let recorder = null, chunks = [];
+
+    const t = (k) => (UI[lang] || UI.hi)[k];
+    const $ = (id) => document.getElementById(id);
+
+    async function api(url, opts) {
+      const res = await fetch(url, opts);
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).detail || res.statusText);
+      return res.json();
+    }
+
+    // Speak: server audio if available, otherwise the phone's built-in voice.
+    function play(text, url) {
+      lastSpoken = { text, url };
+      audio.pause();
+      if (window.speechSynthesis) speechSynthesis.cancel();
+      if (url) {
+        audio = new Audio(url);
+        return audio.play().catch(() => deviceSpeak(text));
+      }
+      deviceSpeak(text);
+    }
+    function deviceSpeak(text) {
+      if (!window.speechSynthesis || !text) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = BCP47[lang] || 'hi-IN';
+      u.rate = 0.95;
+      speechSynthesis.speak(u);
+    }
+    async function speak(text) {
+      try { const r = await api('/api/voice/speak', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, lang }) }); play(text, r.audio_url); }
+      catch (e) { play(text, null); }
+    }
+
+    // ---------- First-run guide ----------
+    function renderPicker() {
+      $('vlBody').innerHTML = `
+        <div class="vl-art">${ICONS.hello}</div>
+        <div class="vl-title" id="vlTitle">${UI.hi.pick}</div>
+        <div class="vl-sub">${UI.hi.pickSub}</div>
+        <div class="vl-langs">${languages.map(l => `<button class="vl-lang" lang="${l.code}" onclick="VoiceLens.chooseLang('${l.code}')">${l.native}</button>`).join('')}</div>`;
+    }
+    function renderStep() {
+      const art = [ICONS.hello, ICONS.camera, ICONS.speak, ICONS.mic][step];
+      const last = step === guide.length - 1;
+      $('vlBody').innerHTML = `
+        <div class="vl-art">${art}</div>
+        <div class="vl-title" id="vlTitle">${escapeHtml(guide[step])}</div>
+        <div class="vl-dots">${guide.map((_, i) => `<span class="${i === step ? 'on' : ''}"></span>`).join('')}</div>
+        <div class="vl-row">
+          <button class="vl-btn vl-ghost" onclick="VoiceLens.finish(false)">${t('skip')}</button>
+          <button class="vl-btn vl-primary" onclick="VoiceLens.${last ? 'finish(true)' : 'next()'}">${last ? t('start') : t('next') + ' ▶'}</button>
+        </div>
+        <button class="vl-repeat" onclick="VoiceLens.speakStep()">↻ ${t('again')}</button>`;
+      speakStep();
+    }
+    function speakStep() { speak(guide[step]); }
+
+    async function chooseLang(code) {
+      lang = code; store.set('vl.lang', code);
+      applyLabels();
+      try { guide = (await api('/api/voice/guide?lang=' + code)).lines; }
+      catch (e) { guide = [ 'नमस्ते!', 'पैकेट के पीछे की फ़ोटो लीजिए।', 'मैं बोलकर बताऊँगा।', 'पूछने के लिए माइक दबाइए।' ]; }
+      step = 0; renderStep();
+    }
+    function next() { step = Math.min(step + 1, guide.length - 1); renderStep(); }
+    function finish(startScan) {
+      store.set('vl.guided', '1');
+      $('vlOverlay').classList.remove('open');
+      audio.pause(); if (window.speechSynthesis) speechSynthesis.cancel();
+      if (startScan && typeof switchView === 'function') {
+        if (typeof switchRole === 'function' && AppState.role !== 'consumer') switchRole('consumer');
+        switchView('scanner');
+        if (typeof switchScannerMode === 'function') switchScannerMode('photo');
+      }
+    }
+    async function openGuide(force) {
+      if (!languages.length) {
+        try { languages = (await api('/api/voice/languages')).languages; }
+        catch (e) { languages = [{ code: 'hi', native: 'हिन्दी' }, { code: 'en', native: 'English' }]; }
+      }
+      $('vlOverlay').classList.add('open');
+      if (force && lang) { chooseLang(lang); } else { renderPicker(); }
+    }
+
+    function applyLabels() {
+      $('vlListenLabel').textContent = t('listen');
+      $('vlMicLabel').textContent = t('ask');
+    }
+
+    // ---------- After every scan: say the verdict ----------
+    async function onResult(product) {
+      if (!product) return;
+      $('vlBar').classList.add('show');
+      $('vlCaption').textContent = '…';
+      try {
+        const r = await api('/api/voice/summary', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lang: lang || 'hi', result: product }) });
+        $('vlCaption').textContent = r.text;
+        play(r.text, r.audio_url);
+      } catch (e) { $('vlCaption').textContent = ''; }
+    }
+    function replay() { if (lastSpoken.text) play(lastSpoken.text, lastSpoken.url); }
+
+    // ---------- Hold the mic to ask ----------
+    async function startRec(ev) {
+      ev.preventDefault();
+      if (recorder && recorder.state === 'recording') return;
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        chunks = [];
+        recorder = new MediaRecorder(stream);
+        recorder.ondataavailable = e => e.data.size && chunks.push(e.data);
+        recorder.onstop = () => { stream.getTracks().forEach(tr => tr.stop()); sendRec(); };
+        recorder.start();
+        $('vlMic').classList.add('rec'); $('vlMicLabel').textContent = t('recording');
+        audio.pause(); if (window.speechSynthesis) speechSynthesis.cancel();
+      } catch (e) { $('vlCaption').textContent = t('noMic'); }
+    }
+    function stopRec() {
+      if (recorder && recorder.state === 'recording') recorder.stop();
+      $('vlMic').classList.remove('rec'); $('vlMicLabel').textContent = t('ask');
+    }
+    async function sendRec() {
+      if (!chunks.length) return;
+      const blob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+      const fd = new FormData();
+      fd.append('audio', blob, 'question.webm');
+      fd.append('lang', lang || 'hi');
+      const p = AppState.currentProduct;
+      if (p && p.id) fd.append('product_id', p.id);
+      $('vlBar').classList.add('show');
+      $('vlCaption').textContent = t('thinking');
+      try {
+        const r = await api('/api/voice/ask', { method: 'POST', body: fd });
+        $('vlCaption').innerHTML = (r.question ? `<span class="q">“${escapeHtml(r.question)}”</span>` : '') + escapeHtml(r.answer);
+        play(r.answer, r.audio_url);
+      } catch (e) { $('vlCaption').textContent = e.message; }
+    }
+
+    function init() {
+      if (lang) applyLabels();
+      const mic = $('vlMic');
+      mic.addEventListener('pointerdown', startRec);
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => mic.addEventListener(ev, stopRec));
+      // Every result screen speaks its verdict.
+      if (typeof renderProductIntelligenceScreen === 'function') {
+        const original = renderProductIntelligenceScreen;
+        window.renderProductIntelligenceScreen = function (p) { original(p); onResult(p); };
+      }
+      // Hide the bar away from result screens.
+      if (typeof switchView === 'function') {
+        const originalSwitch = switchView;
+        window.switchView = function (v) { originalSwitch(v); if (v !== 'intelligence') $('vlBar').classList.remove('show'); };
+      }
+      if (!store.get('vl.guided')) openGuide(false);
+    }
+    document.addEventListener('DOMContentLoaded', init);
+    return { openGuide, chooseLang, next, finish, speakStep, replay, onResult };
+  })();
+  </script>
+
 </body>
 </html>

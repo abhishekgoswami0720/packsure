@@ -7,11 +7,12 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .gemini_service import gemini_voice_assistant, gemini_parse_label_image
+from . import voice_service
 from .compliance.legal_metrology import check_letter_height, check_legal_metrology
 from .compliance.packsure_service import (
     audit_letter_height,
@@ -346,6 +347,99 @@ def voice_assistant(body: VoiceAssistantInput):
         "answer": answer,
         "status": "success",
     }
+
+
+# ------------------------------------------------------------------ Voice Lens: speak results, listen to questions
+class VoiceSummaryInput(BaseModel):
+    lang: str = "hi"
+    product_id: Optional[str] = None
+    result: Optional[dict] = None
+    speak: bool = True
+
+
+class VoiceSpeakInput(BaseModel):
+    text: str = Field(min_length=1, max_length=1500)
+    lang: str = "hi"
+
+
+def _audio_url(text: str, lang: str) -> tuple[Optional[str], Optional[str]]:
+    try:
+        out = voice_service.synthesize(text, lang)
+        return f"/api/voice/audio/{out['key']}", None
+    except Exception as e:  # voice is optional; text still goes back
+        return None, str(e)
+
+
+@app.get("/api/voice/languages")
+def voice_languages():
+    """Languages the app can speak, plus the first-run guide lines (Hindi and English)."""
+    return {
+        "languages": [{"code": c, "native": n, "english": e} for c, (n, e) in voice_service.LANGUAGES.items()],
+        "default": "hi",
+        "guide": voice_service.GUIDE_LINES,
+    }
+
+
+@app.get("/api/voice/guide")
+def voice_guide(lang: str = "hi"):
+    """The four first-run guide lines in the user's language."""
+    return voice_service.guide_lines(lang)
+
+
+@app.post("/api/voice/summary")
+def voice_summary(body: VoiceSummaryInput):
+    """Short spoken verdict for a scanned product, in the user's language."""
+    result = body.result
+    if result is None and body.product_id:
+        result = get_product(body.product_id)
+    if not result:
+        raise HTTPException(400, "Send a scan result or a product_id.")
+    summary = voice_service.spoken_summary(result, body.lang)
+    url, err = _audio_url(summary["text"], summary["lang"]) if body.speak else (None, None)
+    return {**summary, "audio_url": url, "audio_error": err}
+
+
+@app.post("/api/voice/speak")
+def voice_speak(body: VoiceSpeakInput):
+    """Any short text (guide lines, answers) as speech."""
+    lang = voice_service.lang_or_default(body.lang)
+    url, err = _audio_url(body.text, lang)
+    if not url:
+        raise HTTPException(503, err or "Speech unavailable")
+    return {"audio_url": url}
+
+
+@app.get("/api/voice/audio/{key}")
+def voice_audio(key: str):
+    if not key.isalnum():
+        raise HTTPException(400, "Bad audio key")
+    found = voice_service.cached_audio(key)
+    if not found:
+        raise HTTPException(404, "Audio not found")
+    data, mime = found
+    return Response(content=data, media_type=mime, headers={"Cache-Control": "public, max-age=86400"})
+
+
+@app.post("/api/voice/ask")
+async def voice_ask(audio: UploadFile = File(...), lang: str = Form("hi"), product_id: Optional[str] = Form(None)):
+    """Spoken question in, spoken answer out."""
+    data = await audio.read()
+    if not data:
+        raise HTTPException(400, "Empty recording")
+    if len(data) > 10 * 1024 * 1024:
+        raise HTTPException(413, "Recording too long")
+    context = None
+    if product_id:
+        try:
+            context = get_product(product_id)
+        except HTTPException:
+            context = None
+    try:
+        out = voice_service.ask_by_voice(data, audio.content_type or "audio/webm", lang, context)
+    except Exception as e:
+        raise HTTPException(503, f"Voice question failed: {e}")
+    url, err = _audio_url(out["answer"], out["lang"]) if out["answer"] else (None, None)
+    return {**out, "audio_url": url, "audio_error": err}
 
 
 # ------------------------------------------------------------------ Rule 7 Numeral Height Calibration
