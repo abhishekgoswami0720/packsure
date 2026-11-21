@@ -1,4 +1,4 @@
-"""TruthLens FastAPI backend server."""
+"""PackSure FastAPI backend server."""
 from __future__ import annotations
 
 import json
@@ -55,8 +55,8 @@ from .consumer_service import (
 )
 
 app = FastAPI(
-    title="TruthLens API",
-    description="Food intelligence and consumer transparency platform under TruthLens (TruthIn 2.0).",
+    title="PackSure API",
+    description="Food intelligence and consumer transparency platform under PackSure.",
     version="2.0.0",
 )
 
@@ -81,7 +81,7 @@ def home():
     idx = STATIC_DIR / "index.html"
     if idx.exists():
         return FileResponse(idx)
-    return {"service": "TruthLens API v2.0.0"}
+    return {"service": "PackSure API v2.0.0"}
 
 
 @app.get("/manifest.json")
@@ -144,7 +144,7 @@ def get_apple_touch_icon():
 def health():
     return {
         "status": "healthy",
-        "service": "TruthLens API",
+        "service": "PackSure API",
         "version": "2.0.0",
         "catalog_size": len(LOCAL_PRODUCTS),
         "additives_count": len(INS_DB),

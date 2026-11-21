@@ -1,6 +1,6 @@
 {
-  "name": "TruthLens — Food Intelligence & PackSure",
-  "short_name": "TruthLens",
+  "name": "PackSure — Food Intelligence & Consumer Transparency",
+  "short_name": "PackSure",
   "description": "Know what's really inside packaged foods. AI food label analysis, hidden sugars, INS additives & legal metrology compliance.",
   "start_url": "/",
   "scope": "/",
@@ -44,7 +44,7 @@
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Voice Lens AI",
+      "name": "PackSure Voice AI",
       "short_name": "Voice",
       "description": "Ask Gemini nutritional questions",
       "url": "/#voice",

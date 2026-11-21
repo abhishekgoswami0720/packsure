@@ -1,4 +1,4 @@
-"""Open Food Facts API v3 Client for TruthLens.
+"""Open Food Facts API v3 Client for PackSure.
 
 Implements official Open Food Facts Product-Opener API v3 querying,
 polite User-Agent identification, rate-limit awareness, and schema normalization
@@ -19,7 +19,7 @@ from .schema import (
     TruthLensProductRecord,
 )
 
-OFF_USER_AGENT = "TruthLens/2.0 (support@packsure.in; https://truthlens-packsure.onrender.com; Open Source Food Intelligence)"
+OFF_USER_AGENT = "PackSure/2.0 (support@packsure.in; https://truthlens-packsure.onrender.com; Open Source Food Intelligence)"
 OFF_V3_ENDPOINT = "https://world.openfoodfacts.org/api/v3/product/{barcode}.json"
 OFF_V2_ENDPOINT = "https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
 

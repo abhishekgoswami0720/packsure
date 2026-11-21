@@ -1,4 +1,4 @@
-"""Consumer profile, favorites, scan history, and feedback management for TruthLens."""
+"""Consumer profile, favorites, scan history, and feedback management for PackSure."""
 from __future__ import annotations
 
 import datetime as dt

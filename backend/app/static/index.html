@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>TruthLens × PackSure — Food Intelligence & Statutory Metrology Platform</title>
+  <title>PackSure — Food Intelligence & Statutory Metrology Platform</title>
 
   <!-- PWA & Mobile Meta Tags -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1B4332">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="TruthLens">
-  <meta name="application-name" content="TruthLens">
+  <meta name="apple-mobile-web-app-title" content="PackSure">
+  <meta name="application-name" content="PackSure">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="format-detection" content="telephone=no">
 
@@ -32,7 +32,7 @@
     /* -------------------------------------------------------------
        GOOGLE STITCH WARM EDITORIAL INTELLIGENCE DESIGN SYSTEM
     -------------------------------------------------------------- */
-    /* TRUTHLENS PURPLE THEME & REFERENCE APP STYLES */
+    /* PACKSURE PURPLE THEME & REFERENCE APP STYLES */
     :root {
       --bg: #F8F9FA;
       --surface: #FFFFFF;
@@ -45,7 +45,7 @@
       --ink-secondary: #4B5563;
       --ink-tertiary: #9CA3AF;
       
-      /* TruthLens Brand Purple */
+      /* PackSure Brand Purple */
       --brand: #7C3AED;
       --brand-strong: #6D28D9;
       --brand-soft: #F5F3FF;
@@ -804,6 +804,50 @@
       transform: translateY(-2px);
     }
 
+    /* Diet & Profile Preference Cards */
+    .diet-opt {
+      flex: 1;
+      padding: 14px 10px;
+      border: 2px solid var(--hairline, #e5e7eb);
+      border-radius: 14px;
+      background: var(--surface, #fff);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .diet-opt:hover {
+      border-color: var(--brand);
+    }
+    .diet-opt.selected {
+      border-color: var(--brand);
+      background: var(--brand-soft);
+      color: var(--brand);
+    }
+    .goal-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      background: var(--surface-container-low);
+      border: 1px solid var(--hairline);
+      border-radius: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .goal-checkbox-item:hover {
+      background: #edf3f0;
+    }
+    .goal-checkbox-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--brand);
+      cursor: pointer;
+    }
+
     .hero-banner {
       border-radius: var(--radius);
       padding: 28px 24px;
@@ -1188,9 +1232,9 @@
   <header class="app-header">
     <div class="header-inner">
       <div class="brand-cluster" onclick="navigateHome()">
-        <div class="brand-mark" id="brandLogo">T</div>
+        <div class="brand-mark" id="brandLogo">P</div>
         <div class="brand-titles">
-          <h1 id="brandName">TruthLens</h1>
+          <h1 id="brandName">PackSure</h1>
           <p id="brandTagline">Know what's really inside</p>
         </div>
       </div>
@@ -1221,7 +1265,7 @@
     <div class="sub-bar">
       <div class="sub-bar-inner">
         <div class="breadcrumb-trail" id="breadcrumbTrail">
-          <span>TruthLens</span>
+          <span>PackSure</span>
           <span>/</span>
           <b id="currentViewTitle">Home Dashboard</b>
         </div>
@@ -1246,7 +1290,7 @@
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
           <div>
             <h2 style="font-family: var(--font-display); font-size: 22px; font-weight: 800; line-height: 1.2;">Unmask Packaged Foods</h2>
-            <p style="font-size: 13px; opacity: 0.9; margin-top: 4px;">Know what's really inside with TruthLens intelligence</p>
+            <p style="font-size: 13px; opacity: 0.9; margin-top: 4px;">Know what's really inside with PackSure intelligence</p>
           </div>
           <button onclick="switchView('profile')" style="background: rgba(255,255,255,0.2); border: none; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; font-size: 18px;" title="User Profile">
             👤
@@ -1344,7 +1388,7 @@
             <h2 style="font-size: 20px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px;">
               <span>📸 Live Barcode Scanner</span>
             </h2>
-            <p style="font-size: 12px; color: var(--ink-secondary);">Scan any packaged commodity barcode to view TruthScore & FSSAI nutrition</p>
+            <p style="font-size: 12px; color: var(--ink-secondary);">Scan any packaged commodity barcode to view PackSure Score & FSSAI nutrition</p>
           </div>
           <div style="display: flex; gap: 6px; align-items: center;">
             <button class="btn btn-secondary" id="btnToggleCamera" onclick="toggleCameraScanner()" style="padding: 6px 12px; font-size: 11px;">
@@ -1415,7 +1459,7 @@
               <span class="badge" id="notFoundBarcodeBadge" style="background: var(--warning-soft); color: var(--warning); font-family: monospace; font-size: 11px;">890...</span>
             </div>
             <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 4px; line-height: 1.4;">
-              This barcode isn't registered in the open food catalogue (FSSAI / Open Food Facts) yet. <b>Take or upload a photo of the nutrition table or ingredients</b>, and <b>TruthLens AI</b> will analyze it instantly!
+              This barcode isn't registered in the open food catalogue (FSSAI / Open Food Facts) yet. <b>Take or upload a photo of the nutrition table or ingredients</b>, and <b>PackSure AI</b> will analyze it instantly!
             </p>
           </div>
           <button class="btn btn-secondary" onclick="dismissNotFoundCard()" style="padding: 2px 8px; font-size: 12px;" title="Dismiss">✕</button>
@@ -1457,7 +1501,7 @@
           <label class="form-label">Or paste ingredients from Blinkit / Zepto / Amazon:</label>
           <textarea id="directPasteIngredients" class="form-control" placeholder="e.g. Wheat flour (Atta 55%), refined palm oil, sugar, invert syrup, maltodextrin, INS 500(ii)..." rows="3"></textarea>
         </div>
-        <button class="btn btn-brand" onclick="handleDirectPasteAnalyze()">Analyze with TruthLens</button>
+        <button class="btn btn-brand" onclick="handleDirectPasteAnalyze()">Analyze with PackSure</button>
       </div>
     </section>
 
@@ -1472,6 +1516,9 @@
         </button>
         <span class="badge" id="intelCategoryBadge" style="background: var(--surface-container-low); color: var(--ink); font-size: 11px;">Category</span>
         <div style="display: flex; gap: 8px;">
+          <button id="intelVoiceBtn" onclick="VoiceLens.toggleBar()" class="btn btn-secondary" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 16px;" title="Voice Assistant / आवाज">
+            🔊
+          </button>
           <button id="intelFavBtn" onclick="toggleFavoriteCurrent()" class="btn btn-secondary" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 16px;" title="Favorite">
             🤍
           </button>
@@ -1517,7 +1564,7 @@
           <span id="intelSourceIcon" style="font-size: 20px;">🛡️</span>
           <div>
             <div style="display: flex; align-items: center; gap: 6px;">
-              <b id="intelSourceLabel" style="font-size: 12px; color: var(--ink);">Verified Indian Catalogue (TruthLens Audited)</b>
+              <b id="intelSourceLabel" style="font-size: 12px; color: var(--ink);">Verified Indian Catalogue (PackSure Audited)</b>
               <span id="intelSourceChip" class="badge" style="font-size: 9px; padding: 2px 6px; background: #e0f2fe; color: #0369a1;">Audited</span>
             </div>
             <small id="intelRetrievedTime" style="font-size: 10px; color: var(--ink-secondary); display: block;">Retrieved: Just now</small>
@@ -1711,7 +1758,7 @@
             <div style="display: flex; gap: 10px;">
               <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--brand-soft); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;">🌿</div>
               <div style="background: var(--surface-container-low); padding: 12px 16px; border-radius: 14px; font-size: 13px; line-height: 1.5; max-width: 85%;">
-                Namaste! I am your <b>TruthLens Voice & AI Assistant</b>. Ask me anything about packaged food ingredients, hidden sugars, INS additives, health impact, or Legal Metrology packaging compliance in India.
+                Namaste! I am your <b>PackSure Voice & AI Assistant</b>. Ask me anything about packaged food ingredients, hidden sugars, INS additives, health impact, or Legal Metrology packaging compliance in India.
               </div>
             </div>
           </div>
@@ -1906,12 +1953,12 @@
     </section>
 
 
-    <!-- VIEW 10: PRODUCT COMPARISON (TruthLens) -->
+    <!-- VIEW 10: PRODUCT COMPARISON (PackSure) -->
     <section id="view-compare" class="app-view">
       <div class="card">
         <h2 style="font-size: 22px; font-weight: 800; margin-bottom: 6px;">Side-by-Side Product Comparison</h2>
         <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 20px;">
-          Compare two packaged food products head-to-head on nutrition, NOVA processing group, TruthScore, and additives.
+          Compare two packaged food products head-to-head on nutrition, NOVA processing group, PackSure Score, and additives.
         </p>
 
         <div class="grid-2" style="margin-bottom: 20px;">
@@ -1926,6 +1973,204 @@
         </div>
 
         <div id="comparisonResultsContainer"></div>
+      </div>
+    </section>
+
+
+    <!-- VIEW 10A: SEARCH (Food & Personal Care) -->
+    <section id="view-search" class="app-view">
+      <!-- Search Header Card -->
+      <div class="card" style="padding: 20px 18px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 800; color: var(--ink);">Search Products</h2>
+            <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 2px;">Search by product name, brand, barcode, or category</p>
+          </div>
+          <button class="btn btn-secondary" onclick="switchView('scanner')" style="padding: 6px 12px; font-size: 12px; border-radius: var(--radius-full); display: flex; align-items: center; gap: 4px;">
+            📸 Scan
+          </button>
+        </div>
+
+        <!-- Search Input Bar -->
+        <div style="position: relative; display: flex; align-items: center; margin-bottom: 14px;">
+          <input type="text" id="fullSearchInput" class="form-control" placeholder="Search foods, beverages, biscuits (e.g. Parle-G, Red Bull, Maggi)..." style="background: var(--surface-container-low); padding: 14px 44px 14px 40px; font-size: 14px; border-radius: 14px; border: 1.5px solid var(--hairline);" oninput="handleFullSearch(event)" onkeyup="if(event.key==='Enter') handleFullSearch(event)">
+          <span style="position: absolute; left: 14px; color: var(--ink-tertiary); font-size: 16px;">🔍</span>
+          <button onclick="clearFullSearch()" style="position: absolute; right: 12px; background: none; border: none; font-size: 14px; color: var(--ink-tertiary); cursor: pointer;" title="Clear search">✕</button>
+        </div>
+
+        <!-- Trending Search Pills -->
+        <div>
+          <div style="font-size: 11px; font-weight: 700; color: var(--ink-tertiary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Trending Searches</div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button class="cat-chip" onclick="quickSearch('Red Bull')">⚡ Red Bull</button>
+            <button class="cat-chip" onclick="quickSearch('Parle-G')">🍪 Parle-G</button>
+            <button class="cat-chip" onclick="quickSearch('Maggi')">🍜 Maggi</button>
+            <button class="cat-chip" onclick="quickSearch('Bournvita')">🍫 Bournvita</button>
+            <button class="cat-chip" onclick="quickSearch('Amul')">🧈 Amul</button>
+            <button class="cat-chip" onclick="quickSearch('The Whole Truth')">🌿 The Whole Truth</button>
+            <button class="cat-chip" onclick="quickSearch('Epigamia')">🥣 Epigamia</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Search Results Grid -->
+      <div class="card" style="padding: 18px 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+          <h3 style="font-size: 15px; font-weight: 800; color: var(--ink);" id="searchResultsTitle">Products Catalogue</h3>
+          <span id="searchResultsCount" class="badge" style="background: var(--brand-soft); color: var(--brand); font-size: 11px;">14 Products</span>
+        </div>
+        <div class="product-grid" id="searchResultsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px;">
+          <!-- Populated dynamically via handleFullSearch() -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- VIEW 10B: CATEGORIES DIRECTORY -->
+    <section id="view-categories" class="app-view">
+      <!-- Header -->
+      <div class="card" style="padding: 20px 18px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 800; color: var(--ink);">Product Categories</h2>
+            <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 2px;">Browse packaged foods and personal care items by FSSAI category</p>
+          </div>
+          <button class="btn btn-secondary" onclick="navigateHome()" style="padding: 6px 12px; font-size: 12px; border-radius: var(--radius-full);">
+            ← Home
+          </button>
+        </div>
+      </div>
+
+      <!-- Categories Grid -->
+      <div class="card" style="padding: 18px 16px;">
+        <div id="categoriesDirectoryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;">
+          <!-- Populated dynamically via loadCategoriesDirectory() -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- VIEW 10C: USER PROFILE & HEALTH GOALS -->
+    <section id="view-profile" class="app-view">
+      <!-- Profile Header Hero -->
+      <div class="card" style="padding: 24px 20px; margin-bottom: 16px; background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); color: #fff;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 28px; border: 2px solid rgba(255,255,255,0.4);">
+            👤
+          </div>
+          <div style="flex: 1;">
+            <h2 id="profileDisplayName" style="font-size: 20px; font-weight: 800; line-height: 1.2;">Health Seeker</h2>
+            <p id="profileDietSummary" style="font-size: 13px; opacity: 0.9; margin-top: 4px;">Vegetarian · 3 Health Goals</p>
+          </div>
+          <button class="btn btn-secondary" onclick="saveUserProfile()" style="background: #fff; color: #1B4332; font-weight: 700; font-size: 12px; padding: 6px 14px; border-radius: var(--radius-full);">
+            Save ✓
+          </button>
+        </div>
+      </div>
+
+      <!-- Dietary Preference Card -->
+      <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
+        <h3 style="font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 4px;">Dietary Preference</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Personalize ingredient alerts and NOVA warnings for your lifestyle</p>
+        <div style="display: flex; gap: 10px;">
+          <div class="diet-opt" id="dietOptVeg" onclick="setProfileDiet('vegetarian')">
+            <div style="font-size: 20px; margin-bottom: 4px;">🌿</div>
+            <div>Vegetarian</div>
+          </div>
+          <div class="diet-opt" id="dietOptVegan" onclick="setProfileDiet('vegan')">
+            <div style="font-size: 20px; margin-bottom: 4px;">🌱</div>
+            <div>Vegan</div>
+          </div>
+          <div class="diet-opt" id="dietOptNonVeg" onclick="setProfileDiet('non-vegetarian')">
+            <div style="font-size: 20px; margin-bottom: 4px;">🍗</div>
+            <div>Non-Veg</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Health Goals Checklist -->
+      <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
+        <h3 style="font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 4px;">Personal Health Goals</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Select dietary boundaries to flag during barcode and label scanning</p>
+        
+        <label class="goal-checkbox-item">
+          <input type="checkbox" id="goal_low_added_sugar" onchange="toggleGoal('low_added_sugar', this)">
+          <div>
+            <b style="font-size: 13px; color: var(--ink); display: block;">Low Added Sugar & Maltodextrin</b>
+            <span style="font-size: 11px; color: var(--ink-secondary);">Flag products with &gt; 5g added sugars or high-GI disguised syrups</span>
+          </div>
+        </label>
+
+        <label class="goal-checkbox-item">
+          <input type="checkbox" id="goal_no_palm_oil" onchange="toggleGoal('no_palm_oil', this)">
+          <div>
+            <b style="font-size: 13px; color: var(--ink); display: block;">Zero Palm Oil / Industrial Fat</b>
+            <span style="font-size: 11px; color: var(--ink-secondary);">Detect refined palm olein, hydrogenated vanaspati, and trans-fats</span>
+          </div>
+        </label>
+
+        <label class="goal-checkbox-item">
+          <input type="checkbox" id="goal_high_protein" onchange="toggleGoal('high_protein', this)">
+          <div>
+            <b style="font-size: 13px; color: var(--ink); display: block;">High Protein Focus</b>
+            <span style="font-size: 11px; color: var(--ink-secondary);">Highlight foods with &gt; 10g protein per 100g</span>
+          </div>
+        </label>
+
+        <label class="goal-checkbox-item">
+          <input type="checkbox" id="goal_no_artificial_dyes" onchange="toggleGoal('no_artificial_dyes', this)">
+          <div>
+            <b style="font-size: 13px; color: var(--ink); display: block;">No Synthetic Dyes & Chemical Additives</b>
+            <span style="font-size: 11px; color: var(--ink-secondary);">Flag Tartrazine (INS 102), Sunset Yellow (INS 110), and cosmetic emulsifiers</span>
+          </div>
+        </label>
+
+        <button class="btn btn-brand" onclick="saveUserProfile()" style="width: 100%; justify-content: center; margin-top: 10px; padding: 12px;">
+          💾 Save Preferences
+        </button>
+      </div>
+
+      <!-- Favorites Section -->
+      <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="font-size: 15px; font-weight: 800; color: var(--ink);">❤️ My Saved Favorites</h3>
+        </div>
+        <div id="profileFavoritesList" class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;">
+          <!-- Populated dynamically via loadProfileFavorites() -->
+        </div>
+      </div>
+
+      <!-- Scan History Section -->
+      <div class="card" style="padding: 18px 20px; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="font-size: 15px; font-weight: 800; color: var(--ink);">🕒 Recent Scan History</h3>
+          <button class="btn btn-secondary" onclick="clearUserScanHistory()" style="padding: 4px 10px; font-size: 11px; color: var(--danger);">
+            Clear History
+          </button>
+        </div>
+        <div id="profileHistoryList" style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Populated dynamically via loadProfileHistory() -->
+        </div>
+      </div>
+
+      <!-- App Info & Regulatory Citations -->
+      <div class="card" style="padding: 16px 20px; display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+          <span style="color: var(--ink-secondary);">App Version:</span>
+          <b>PackSure v2.0.0 (PWA)</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px;">
+          <span style="color: var(--ink-secondary);">Food Regulations:</span>
+          <b>FSSAI 2020 / Codex GSFA / LMPC 2011</b>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 6px;">
+          <button class="btn btn-secondary" onclick="openDataCoverageModal()" style="flex: 1; justify-content: center; font-size: 12px;">
+            📊 Data Sources
+          </button>
+          <button class="btn btn-secondary" onclick="VoiceLens.openGuide(true)" style="flex: 1; justify-content: center; font-size: 12px;">
+            🗣️ Voice Guide
+          </button>
+        </div>
       </div>
     </section>
 
@@ -2235,9 +2480,9 @@
   <!-- PWA Install Bottom Drawer -->
   <div id="pwaInstallDrawer" class="pwa-drawer" style="display: none;">
     <div class="pwa-drawer-header">
-      <img src="/icon-192.png" alt="TruthLens Logo" class="pwa-drawer-icon" />
+      <img src="/icon-192.png" alt="PackSure Logo" class="pwa-drawer-icon" />
       <div class="pwa-drawer-text">
-        <h4>Install TruthLens App</h4>
+        <h4>Install PackSure App</h4>
         <p>Opens from your home screen like an app, with full-screen camera scanning. Scanning needs an internet connection.</p>
       </div>
       <button class="pwa-close-btn" onclick="dismissPwaDrawer()" aria-label="Close">&times;</button>
@@ -2255,9 +2500,9 @@
   <div id="iosInstallModal" class="modal-overlay" style="display: none;" onclick="if(event.target===this) closeIosInstallModal()">
     <div class="modal-dialog" style="max-width: 400px; text-align: center;">
       <img src="/icon-192.png" style="width: 60px; height: 60px; border-radius: 16px; margin: 0 auto 12px; display: block; box-shadow: 0 4px 12px rgba(27,67,50,0.2);" />
-      <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Install TruthLens on iPhone</h3>
+      <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Install PackSure on iPhone</h3>
       <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 18px;">
-        Add TruthLens to your Home Screen for full-screen camera scanning (an internet connection is needed to analyse a pack):
+        Add PackSure to your Home Screen for full-screen camera scanning (an internet connection is needed to analyse a pack):
       </p>
       <div style="background: var(--surface-container-low); padding: 14px 16px; border-radius: 14px; text-align: left; font-size: 13px; line-height: 1.6; margin-bottom: 20px; border: 1px solid var(--hairline);">
         <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
@@ -2412,8 +2657,8 @@
       const tagline = document.getElementById('brandTagline');
       
       if (role === 'consumer') {
-        if (logo) logo.textContent = 'T';
-        if (name) name.textContent = 'TruthLens';
+        if (logo) logo.textContent = 'P';
+        if (name) name.textContent = 'PackSure';
         if (tagline) tagline.textContent = 'Know what\'s really inside';
         renderDesktopNav([
           { id: 'consumer-home', label: 'Home' },
@@ -2538,8 +2783,15 @@
       if (viewId === 'categories') loadCategoriesDirectory();
       if (viewId === 'profile') loadUserProfile();
       if (viewId === 'search') {
+        const homeVal = document.getElementById('homeSearchInput')?.value || '';
         const fi = document.getElementById('fullSearchInput');
-        if (fi) setTimeout(() => fi.focus(), 100);
+        if (fi) {
+          if (homeVal && !fi.value) {
+            fi.value = homeVal;
+          }
+          setTimeout(() => fi.focus(), 100);
+        }
+        handleFullSearch();
       }
       if (viewId === 'additive-decoder' && !AppState.additivesCatalog.length) loadAdditivesCatalog();
       if (viewId === 'inspector-dashboard' || viewId === 'review-queue') loadInspectorDossiers();
@@ -2671,34 +2923,12 @@
     }
 
     // --- Search View Implementation ---
-    function handleFullSearch(e) {
-      const q = e.target.value.toLowerCase().trim();
-      const grid = document.getElementById('searchResultsGrid');
-      if (!grid) return;
-      if (!q) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--ink-secondary); padding: 30px;">Type a product name (e.g. Red Bull, Parle-G, Maggi)...</p>';
-        return;
-      }
-      const matches = AppState.popularProducts.filter(p => 
-        p.name.toLowerCase().includes(q) || 
-        (p.brand && p.brand.toLowerCase().includes(q)) || 
-        (p.category && p.category.toLowerCase().includes(q)) ||
-        (p.barcode && p.barcode.includes(q))
-      );
-      if (!matches.length) {
-        grid.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-            <p style="font-size: 15px; font-weight: 700; color: var(--ink);">No exact product matches in open database.</p>
-            <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 6px;">Have the package with you? Use camera scanner to analyze ingredients instantly!</p>
-            <button class="btn btn-brand" onclick="switchView('scanner')" style="margin-top: 14px;">📸 Open Scanner</button>
-          </div>
-        `;
-        return;
-      }
+    let searchDebounceTimer = null;
+    function renderSearchResults(grid, matches) {
       grid.innerHTML = matches.map(p => `
         <div class="prod-card" onclick="viewProductDetail('${p.id}')">
           <div class="prod-img-box">
-            ${p.image_url ? `<img src="${p.image_url}" alt="${escapeHtml(p.name)}">` : `<div style="font-size: 32px; font-weight:800; color: var(--brand);">T</div>`}
+            ${p.image_url ? `<img src="${p.image_url}" alt="${escapeHtml(p.name)}">` : `<div style="font-size: 32px; font-weight:800; color: var(--brand);">P</div>`}
           </div>
           <div class="prod-title">${escapeHtml(p.name)}</div>
           <div style="font-size: 11px; color: var(--ink-secondary); margin-bottom: 8px;">${escapeHtml(p.brand || '')} · ${escapeHtml(p.category || '')}</div>
@@ -2710,6 +2940,79 @@
       `).join('');
     }
 
+    async function handleFullSearch(e) {
+      const q = (e && e.target ? e.target.value : (document.getElementById('fullSearchInput')?.value || '')).toLowerCase().trim();
+      const grid = document.getElementById('searchResultsGrid');
+      const titleEl = document.getElementById('searchResultsTitle');
+      const countEl = document.getElementById('searchResultsCount');
+      if (!grid) return;
+
+      if (!q) {
+        if (titleEl) titleEl.textContent = 'All Catalogue Products';
+        const list = AppState.popularProducts || [];
+        if (countEl) countEl.textContent = `${list.length} Items`;
+        renderSearchResults(grid, list);
+        return;
+      }
+
+      if (titleEl) titleEl.textContent = `Search: "${q}"`;
+
+      // Instant client-side filter
+      const localMatches = (AppState.popularProducts || []).filter(p => 
+        p.name.toLowerCase().includes(q) || 
+        (p.brand && p.brand.toLowerCase().includes(q)) || 
+        (p.category && p.category.toLowerCase().includes(q)) ||
+        (p.barcode && p.barcode.includes(q))
+      );
+      if (countEl) countEl.textContent = `${localMatches.length} Matches`;
+      if (localMatches.length) {
+        renderSearchResults(grid, localMatches);
+      }
+
+      // Debounced backend catalog search
+      clearTimeout(searchDebounceTimer);
+      searchDebounceTimer = setTimeout(async () => {
+        try {
+          const res = await fetch('/api/truth/search?q=' + encodeURIComponent(q));
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.length) {
+              if (countEl) countEl.textContent = `${data.length} Matches`;
+              renderSearchResults(grid, data);
+              return;
+            }
+          }
+        } catch (_) {}
+
+        if (!localMatches.length) {
+          if (countEl) countEl.textContent = '0 Matches';
+          grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+              <p style="font-size: 15px; font-weight: 700; color: var(--ink);">No exact product matches found for "${escapeHtml(q)}".</p>
+              <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 6px;">Have the package with you? Use camera scanner to analyze ingredients instantly!</p>
+              <button class="btn btn-brand" onclick="switchView('scanner')" style="margin-top: 14px;">📸 Open Scanner</button>
+            </div>
+          `;
+        }
+      }, 250);
+    }
+
+    function quickSearch(term) {
+      const fi = document.getElementById('fullSearchInput');
+      if (fi) {
+        fi.value = term;
+        handleFullSearch();
+      }
+    }
+
+    function clearFullSearch() {
+      const fi = document.getElementById('fullSearchInput');
+      if (fi) {
+        fi.value = '';
+        handleFullSearch();
+      }
+    }
+
     // --- Categories View Implementation ---
     async function loadCategoriesDirectory() {
       try {
@@ -2718,14 +3021,17 @@
         const grid = document.getElementById('categoriesDirectoryGrid');
         if (!grid) return;
         grid.innerHTML = cats.map(c => `
-          <div class="card" style="padding: 16px; cursor: pointer; display: flex; align-items: center; gap: 14px; margin-bottom: 0;" onclick="selectCategoryDirectory('${c.name}')">
-            <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--brand-soft); color: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 22px;">
-              ${c.name.includes('Drink') ? '⚡' : (c.name.includes('Care') ? '🧴' : (c.name.includes('Biscuit') ? '🍪' : (c.name.includes('Dairy') ? '🥛' : '🍲')))}
+          <div class="card" style="padding: 16px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0;" onclick="selectCategoryDirectory('${c.name}')">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--brand-soft); color: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 22px;">
+                ${c.name.includes('Drink') ? '⚡' : (c.name.includes('Care') ? '🧴' : (c.name.includes('Biscuit') ? '🍪' : (c.name.includes('Dairy') ? '🥛' : '🍲')))}
+              </div>
+              <div>
+                <b style="font-size: 14px; color: var(--ink);">${escapeHtml(c.name)}</b>
+                <p style="font-size: 11px; color: var(--ink-secondary);">${c.count} Products</p>
+              </div>
             </div>
-            <div>
-              <b style="font-size: 14px; color: var(--ink);">${escapeHtml(c.name)}</b>
-              <p style="font-size: 11px; color: var(--ink-secondary);">${c.count} Products</p>
-            </div>
+            <span style="font-size: 16px; color: var(--ink-tertiary); font-weight: 800;">&gt;</span>
           </div>
         `).join('');
       } catch (e) {}
@@ -2733,8 +3039,8 @@
 
     function selectCategoryDirectory(catName) {
       currentFilteredCategory = catName;
-      switchView('consumer-home');
-      renderReferenceHomeCarousels(AppState.popularProducts);
+      switchView('search');
+      quickSearch(catName);
     }
 
     // --- Bottom Sheet Scan Preview Modal (Video Reference at 15s & 24s) ---
@@ -3102,7 +3408,7 @@
       const progress = document.getElementById('aiAnalysisProgress');
       const progressText = document.getElementById('aiProgressText');
       if (progress) progress.style.display = 'block';
-      if (progressText) progressText.textContent = 'Transcribing packaging label & computing FSSAI metrics with TruthLens AI...';
+      if (progressText) progressText.textContent = 'Transcribing packaging label & computing FSSAI metrics with PackSure AI...';
 
       const formData = new FormData();
       formData.append('image', file);
@@ -3184,7 +3490,7 @@
         const res = await fetch('/api/health');
         if (res.ok) {
           const data = await res.json();
-          if (label) label.textContent = `TruthLens API v${data.version || '2.0'} Online (${data.catalog_size || 14} Products · ${data.additives_count || 30}+ Additives)`;
+          if (label) label.textContent = `PackSure API v${data.version || '2.0'} Online (${data.catalog_size || 14} Products · ${data.additives_count || 30}+ Additives)`;
           if (dot) dot.style.background = 'var(--success)';
         } else {
           if (label) label.textContent = 'Backend Unavailable (HTTP ' + res.status + ')';
@@ -3308,7 +3614,7 @@
       
       const pSource = p.primary_source || p.source || 'verified_local';
       if (pSource === 'verified_local') {
-        if (srcLabel) srcLabel.textContent = 'Verified Indian Catalogue (TruthLens Audited)';
+        if (srcLabel) srcLabel.textContent = 'Verified Indian Catalogue (PackSure Audited)';
         if (srcChip) { srcChip.textContent = 'Audited'; srcChip.style.background = '#dcfce7'; srcChip.style.color = '#15803d'; }
         if (srcIcon) srcIcon.textContent = '🛡️';
       } else if (pSource === 'user_corrected') {
@@ -3834,7 +4140,7 @@
 
       html += `
         <div style="background: var(--ink); color: #fff; padding: 12px 14px; border-radius: 12px; display: flex; justify-content: space-between; font-weight: 900; margin-top: 6px;">
-          <span>Final TruthScore:</span>
+          <span>Final PackSure Score:</span>
           <span>${score} / 100 (${(score / 20).toFixed(1)} / 5)</span>
         </div>
       `;
@@ -3947,9 +4253,17 @@
         const res = await fetch('/api/consumer/profile');
         const data = await res.json();
         userProfile = data;
-        document.getElementById('profileDisplayName').textContent = data.name || 'Health Seeker';
-        document.getElementById('profileDietSummary').textContent = `${data.diet || 'Vegetarian'} · ${data.goals?.length || 3} Health Goals`;
+        const nameEl = document.getElementById('profileDisplayName');
+        if (nameEl) nameEl.textContent = data.name || 'Health Seeker';
+        const sumEl = document.getElementById('profileDietSummary');
+        if (sumEl) sumEl.textContent = `${data.diet ? data.diet.charAt(0).toUpperCase() + data.diet.slice(1) : 'Vegetarian'} · ${data.goals?.length || 3} Health Goals`;
         setProfileDietUI(data.diet);
+        if (data.goals) {
+          ['low_added_sugar', 'no_palm_oil', 'high_protein', 'no_artificial_dyes'].forEach(g => {
+            const chk = document.getElementById('goal_' + g);
+            if (chk) chk.checked = data.goals.includes(g);
+          });
+        }
       } catch (e) {}
 
       // Load favorites in profile
@@ -3959,9 +4273,12 @@
     }
 
     function setProfileDietUI(diet) {
-      document.getElementById('dietOptVeg').classList.toggle('selected', diet === 'vegetarian');
-      document.getElementById('dietOptVegan').classList.toggle('selected', diet === 'vegan');
-      document.getElementById('dietOptNonVeg').classList.toggle('selected', diet === 'non-vegetarian');
+      const v = document.getElementById('dietOptVeg');
+      const vg = document.getElementById('dietOptVegan');
+      const nv = document.getElementById('dietOptNonVeg');
+      if (v) v.classList.toggle('selected', diet === 'vegetarian');
+      if (vg) vg.classList.toggle('selected', diet === 'vegan');
+      if (nv) nv.classList.toggle('selected', diet === 'non-vegetarian');
     }
 
     function setProfileDiet(diet) {
@@ -3986,6 +4303,8 @@
           body: JSON.stringify(userProfile)
         });
         showToast('Profile health goals saved! ✓');
+        const sumEl = document.getElementById('profileDietSummary');
+        if (sumEl) sumEl.textContent = `${userProfile.diet ? userProfile.diet.charAt(0).toUpperCase() + userProfile.diet.slice(1) : 'Vegetarian'} · ${userProfile.goals?.length || 0} Health Goals`;
       } catch (e) {}
     }
 
@@ -3997,12 +4316,12 @@
         const data = await res.json();
         const favs = data.favorites || [];
         if (!favs.length) {
-          list.innerHTML = '<p style="grid-column: 1/-1; font-size: 13px; color: var(--ink-secondary);">No favorite products saved yet. Tap the heart on any product to save it!</p>';
+          list.innerHTML = '<p style="grid-column: 1/-1; font-size: 13px; color: var(--ink-secondary); padding: 12px 0;">No favorite products saved yet. Tap the heart on any product to save it!</p>';
           return;
         }
         list.innerHTML = favs.map(p => `
           <div class="prod-card" onclick="viewProductDetail('${p.id}')">
-            <div class="prod-img-box">${p.image_url ? `<img src="${p.image_url}">` : 'T'}</div>
+            <div class="prod-img-box">${p.image_url ? `<img src="${p.image_url}">` : '<div style="font-size: 28px; font-weight:800; color: var(--brand);">P</div>'}</div>
             <div class="prod-title">${escapeHtml(p.name)}</div>
             <span class="badge badge-score-a">Score ${p.truth_score?.score || 80}</span>
           </div>
@@ -4056,8 +4375,8 @@
     function shareProductReport() {
       if (navigator.share && AppState.currentProduct) {
         navigator.share({
-          title: `TruthLens: ${AppState.currentProduct.name}`,
-          text: `Check out the TruthScore analysis of ${AppState.currentProduct.name}! Rating: ${AppState.currentProduct.truth_score?.score_out_of_5 || '3.0'}/5`,
+          title: `PackSure: ${AppState.currentProduct.name}`,
+          text: `Check out the PackSure analysis of ${AppState.currentProduct.name}! Rating: ${AppState.currentProduct.truth_score?.score_out_of_5 || '3.0'}/5`,
           url: window.location.href
         }).catch(() => {});
       } else {
@@ -4926,7 +5245,7 @@ function populateSugarBreakdownScreen(p) {
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js', { scope: '/' })
-          .then((reg) => console.log('TruthLens PWA ServiceWorker active at:', reg.scope))
+          .then((reg) => console.log('PackSure PWA ServiceWorker active at:', reg.scope))
           .catch((err) => console.warn('PWA ServiceWorker error:', err));
       });
     }
@@ -4948,7 +5267,7 @@ function populateSugarBreakdownScreen(p) {
     });
 
     window.addEventListener('appinstalled', () => {
-      console.log('TruthLens PWA successfully installed to home screen.');
+      console.log('PackSure PWA successfully installed to home screen.');
       deferredPrompt = null;
       dismissPwaDrawer();
       const btnHeader = document.getElementById('btnPwaHeaderInstall');
@@ -4960,7 +5279,7 @@ function populateSugarBreakdownScreen(p) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
           if (choiceResult.outcome === 'accepted') {
-            console.log('User installed TruthLens');
+            console.log('User installed PackSure');
           }
           dismissPwaDrawer();
           deferredPrompt = null;
@@ -4968,7 +5287,7 @@ function populateSugarBreakdownScreen(p) {
       } else if (isIos && !isInStandalone) {
         showIosInstallModal();
       } else if (isInStandalone) {
-        alert('TruthLens is running in standalone app mode.');
+        alert('PackSure is running in standalone app mode.');
       } else {
         // Fallback for browsers that don't support beforeinstallprompt
         showIosInstallModal();
@@ -5037,9 +5356,45 @@ function populateSugarBreakdownScreen(p) {
     .vl-ghost { background: #f1f4f2; color: var(--ink, #14261C); }
     .vl-repeat { background: none; border: none; color: var(--brand, #1B4332); font-weight: 700; font-size: 15px; margin-top: 12px; cursor: pointer; }
     .vl-help { position: fixed; left: 16px; bottom: 92px; z-index: 8000; width: 54px; height: 54px; border-radius: 50%; border: none; background: #fff; color: var(--brand, #1B4332); font-size: 26px; font-weight: 800; box-shadow: 0 6px 18px rgba(0,0,0,.18); cursor: pointer; }
-    .vl-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 8500; width: min(560px, calc(100% - 24px)); background: #fff; border-radius: 22px; box-shadow: 0 10px 34px rgba(0,0,0,.22); padding: 12px; display: none; }
+    .vl-bar { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 8500; width: min(560px, calc(100% - 24px)); background: #fff; border-radius: 22px; box-shadow: 0 10px 34px rgba(0,0,0,.22); padding: 12px; display: none; transition: width 0.2s ease, padding 0.2s ease, border-radius 0.2s ease; }
     .vl-bar.show { display: block; }
     @media (max-width: 900px) { .vl-bar { bottom: 78px; } .vl-help { bottom: 160px; } }
+
+    .vl-bar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; padding: 2px 4px 6px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .vl-header-left { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--brand, #1B4332); }
+    .vl-pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; display: inline-block; animation: vlPulseDot 1.6s infinite ease-in-out; }
+    @keyframes vlPulseDot {
+      0% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(0.9); opacity: 0.8; }
+    }
+    .vl-bar-controls { display: flex; align-items: center; gap: 4px; }
+    .vl-ctrl-btn { width: 28px; height: 28px; border-radius: 50%; border: none; background: #f1f4f2; color: var(--ink-secondary, #4b5a52); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s, color 0.15s; font-size: 12px; }
+    .vl-ctrl-btn:hover { background: #e2e8e4; color: var(--ink, #14261C); }
+    .vl-ctrl-btn svg { width: 14px; height: 14px; }
+
+    .vl-mini-pill { display: none; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; user-select: none; }
+    .vl-mini-left { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: var(--brand, #1B4332); }
+    .vl-mini-actions { display: flex; align-items: center; gap: 6px; }
+
+    /* MINIMIZED STATE */
+    .vl-bar.minimized {
+      width: auto !important;
+      min-width: 180px;
+      max-width: calc(100% - 32px);
+      padding: 8px 14px;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      cursor: pointer;
+    }
+    .vl-bar.minimized .vl-bar-header,
+    .vl-bar.minimized .vl-expanded-content {
+      display: none !important;
+    }
+    .vl-bar.minimized .vl-mini-pill {
+      display: flex !important;
+    }
+
     .vl-caption { font-size: 15px; line-height: 1.45; color: var(--ink, #14261C); padding: 4px 6px 10px; max-height: 120px; overflow-y: auto; }
     .vl-caption .q { color: var(--ink-secondary, #4b5a52); font-size: 13px; display: block; margin-bottom: 4px; }
     .vl-bar .vl-btn { display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -5055,16 +5410,47 @@ function populateSugarBreakdownScreen(p) {
   </div>
   <button class="vl-help" id="vlHelp" aria-label="Help / मदद" title="मदद" onclick="VoiceLens.openGuide(true)">?</button>
   <div class="vl-bar" id="vlBar" aria-live="polite">
-    <div class="vl-caption" id="vlCaption"></div>
-    <div class="vl-row">
-      <button class="vl-btn vl-ghost" id="vlListen" onclick="VoiceLens.replay()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
-        <span id="vlListenLabel">सुनिए</span>
-      </button>
-      <button class="vl-btn vl-primary vl-mic" id="vlMic">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-        <span id="vlMicLabel">दबाकर पूछिए</span>
-      </button>
+    <!-- Header with title, minimize & close controls -->
+    <div class="vl-bar-header" id="vlBarHeader">
+      <div class="vl-header-left">
+        <span class="vl-pulse-dot"></span>
+        <span id="vlBarTitle">🔊 PackSure Voice Verdict</span>
+      </div>
+      <div class="vl-bar-controls">
+        <button class="vl-ctrl-btn" id="vlMinBtn" onclick="VoiceLens.toggleMinimize(event)" aria-label="Minimize speaker" title="Minimize / छोटा करें">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <button class="vl-ctrl-btn" id="vlCloseBtn" onclick="VoiceLens.closeBar(event)" aria-label="Close speaker" title="Close / बंद करें">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Collapsed mini-pill view (shown when .minimized) -->
+    <div class="vl-mini-pill" id="vlMiniPill" onclick="VoiceLens.expandBar(event)" title="Tap to expand / बड़ा करें">
+      <div class="vl-mini-left">
+        <span class="vl-pulse-dot"></span>
+        <span id="vlMiniLabel">🔊 Voice Verdict</span>
+      </div>
+      <div class="vl-mini-actions">
+        <button class="vl-ctrl-btn" onclick="VoiceLens.replay(event)" title="Replay / फिर से सुनिए">↻</button>
+        <button class="vl-ctrl-btn" onclick="VoiceLens.expandBar(event)" title="Expand / बड़ा करें">▲</button>
+      </div>
+    </div>
+
+    <!-- Expanded content (hidden when .minimized) -->
+    <div class="vl-expanded-content" id="vlExpandedContent">
+      <div class="vl-caption" id="vlCaption"></div>
+      <div class="vl-row">
+        <button class="vl-btn vl-ghost" id="vlListen" onclick="VoiceLens.replay(event)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          <span id="vlListenLabel">सुनिए</span>
+        </button>
+        <button class="vl-btn vl-primary vl-mic" id="vlMic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          <span id="vlMicLabel">दबाकर पूछिए</span>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -5184,10 +5570,49 @@ function populateSugarBreakdownScreen(p) {
       $('vlMicLabel').textContent = t('ask');
     }
 
+    // ---------- Minimize & Bar Controls ----------
+    function toggleMinimize(ev) {
+      if (ev) ev.stopPropagation();
+      const bar = $('vlBar');
+      const isMin = bar.classList.toggle('minimized');
+      store.set('vl.minimized', isMin ? '1' : '0');
+    }
+    function expandBar(ev) {
+      if (ev) ev.stopPropagation();
+      const bar = $('vlBar');
+      bar.classList.remove('minimized');
+      store.set('vl.minimized', '0');
+    }
+    function closeBar(ev) {
+      if (ev) ev.stopPropagation();
+      const bar = $('vlBar');
+      bar.classList.remove('show');
+      audio.pause();
+      if (window.speechSynthesis) speechSynthesis.cancel();
+    }
+    function toggleBar() {
+      const bar = $('vlBar');
+      if (!bar.classList.contains('show')) {
+        bar.classList.add('show');
+        bar.classList.remove('minimized');
+        if (lastSpoken.text) replay();
+      } else if (bar.classList.contains('minimized')) {
+        bar.classList.remove('minimized');
+      } else {
+        toggleMinimize();
+      }
+    }
+
     // ---------- After every scan: say the verdict ----------
     async function onResult(product) {
       if (!product) return;
-      $('vlBar').classList.add('show');
+      const bar = $('vlBar');
+      bar.classList.add('show');
+      if (store.get('vl.minimized') === '1') {
+        bar.classList.add('minimized');
+      } else {
+        bar.classList.remove('minimized');
+      }
       $('vlCaption').textContent = '…';
       try {
         const r = await api('/api/voice/summary', { method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -5196,7 +5621,10 @@ function populateSugarBreakdownScreen(p) {
         play(r.text, r.audio_url);
       } catch (e) { $('vlCaption').textContent = ''; }
     }
-    function replay() { if (lastSpoken.text) play(lastSpoken.text, lastSpoken.url); }
+    function replay(ev) {
+      if (ev) ev.stopPropagation();
+      if (lastSpoken.text) play(lastSpoken.text, lastSpoken.url);
+    }
 
     // ---------- Hold the mic to ask ----------
     async function startRec(ev) {
@@ -5225,7 +5653,9 @@ function populateSugarBreakdownScreen(p) {
       fd.append('lang', lang || 'hi');
       const p = AppState.currentProduct;
       if (p && p.id) fd.append('product_id', p.id);
-      $('vlBar').classList.add('show');
+      const bar = $('vlBar');
+      bar.classList.add('show');
+      bar.classList.remove('minimized');
       $('vlCaption').textContent = t('thinking');
       try {
         const r = await api('/api/voice/ask', { method: 'POST', body: fd });
@@ -5252,7 +5682,7 @@ function populateSugarBreakdownScreen(p) {
       if (!store.get('vl.guided')) openGuide(false);
     }
     document.addEventListener('DOMContentLoaded', init);
-    return { openGuide, chooseLang, next, finish, speakStep, replay, onResult };
+    return { openGuide, chooseLang, next, finish, speakStep, replay, onResult, toggleMinimize, expandBar, closeBar, toggleBar };
   })();
   </script>
 

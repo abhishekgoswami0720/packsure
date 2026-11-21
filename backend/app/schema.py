@@ -80,7 +80,7 @@ class TruthLensProductRecord(BaseModel):
 
     def get_source_label(self) -> str:
         labels = {
-            DataSource.VERIFIED_LOCAL: "Verified Indian Catalogue (TruthLens)",
+            DataSource.VERIFIED_LOCAL: "Verified Indian Catalogue (PackSure Audited)",
             DataSource.OPENFOODFACTS_V3: "Open Food Facts API v3 (Third-Party Database)",
             DataSource.OPENFOODFACTS_V2: "Open Food Facts API v2 (Third-Party Database)",
             DataSource.OCR_EXTRACTED: "Packaging Label OCR (Auto-Extracted)",

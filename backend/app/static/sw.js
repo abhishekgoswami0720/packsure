@@ -1,4 +1,4 @@
-const CACHE_NAME = 'truthlens-pwa-v1';
+const CACHE_NAME = 'packsure-pwa-v2';
 const CORE_ASSETS = [
   '/',
   '/manifest.json',

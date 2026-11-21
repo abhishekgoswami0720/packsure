@@ -360,7 +360,7 @@ def get_cache_coverage_report() -> Dict[str, Any]:
         "records_with_logged_conflicts": conflicts_cnt,
         "audit_log_entries": audits_cnt,
         "audit_timestamp": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "disclaimer": "TruthLens never fabricates missing nutritional data. Products with incomplete labels display explicit declaration gaps.",
+        "disclaimer": "PackSure never fabricates missing nutritional data. Products with incomplete labels display explicit declaration gaps.",
         "official_citation_registry": [
             {"authority": "Codex Alimentarius", "standard": "CODEX STAN 192-1995 (GSFA)", "scope": "Global additive provisions & INS numbers"},
             {"authority": "FAO/WHO JECFA", "standard": "Joint FAO/WHO Expert Committee on Food Additives", "scope": "Toxicological monographs & ADI evaluations"},

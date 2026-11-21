@@ -1,4 +1,4 @@
-# PackSure & TruthLens (TruthIn 2.0)
+# PackSure
 ### Next-Generation Food Intelligence & Statutory Legal Metrology Compliance Platform for India
 
 [![Python 3.11](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
@@ -6,19 +6,19 @@
 [![Google Gemini API](https://img.shields.io/badge/Google%20Gemini-3.1%20Flash--Lite-4285F4?style=flat&logo=google&logoColor=white)](https://ai.google.dev/)
 [![React Native Expo](https://img.shields.io/badge/React%20Native-Expo%2056-000020?style=flat&logo=expo&logoColor=white)](https://expo.dev/)
 [![LMPC Rules 2011](https://img.shields.io/badge/Compliance-Legal%20Metrology%202011-1B4332?style=flat)](legal/)
-[![Tests Passing](https://img.shields.io/badge/Tests-58%2F58%20Passing-2D6A4F?style=flat&logo=pytest&logoColor=white)](backend/tests/)
+[![Tests Passing](https://img.shields.io/badge/Tests-74%2F74%20Passing-2D6A4F?style=flat&logo=pytest&logoColor=white)](backend/tests/)
 [![License MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
 ## 🌟 Overview
 
-**PackSure & TruthLens** is an integrated food intelligence and statutory legal metrology compliance platform built specifically for Indian consumers, enforcement officers, and FMCG brands.
+**PackSure** is an integrated food intelligence and statutory legal metrology compliance platform built specifically for Indian consumers, enforcement officers, and FMCG brands.
 
 Inspired by *TruthIn by Food Pharmer* and statutory requirements under the **Legal Metrology Act, 2009** and the **Legal Metrology (Packaged Commodities) Rules, 2011 (LMPC)**, PackSure bridges the gap between opaque label fine-print and consumer empowerment:
 
-1. **For Everyday Consumers (TruthLens)**: Decodes INS chemical additive numbers, unmasks 50+ hidden sugar aliases, flags industrial palm fats, calculates a deterministic **0–100 TruthScore**, classifies **NOVA Ultra-Processed Foods (UPF)**, exposes deceptive front-of-pack marketing claims, and answers natural language questions via **Voice Lens AI (Google Gemini 3.1 Flash-Lite)**.
-2. **For Enforcement & Legal Metrology Officers (PackSure)**: Automated statutory inspection of front and back of pack for mandatory Rule 6 declarations (manufacturer address with PIN code, common generic name, net quantity in SI units, MRP inclusive of taxes, unit sale price, month/year of manufacture, and consumer care) and Rule 7 Table-I minimum letter height calibration.
+1. **For Everyday Consumers**: Decodes INS chemical additive numbers, unmasks 50+ hidden sugar aliases, flags industrial palm fats, calculates a deterministic **0–100 PackSure Score**, classifies **NOVA Ultra-Processed Foods (UPF)**, exposes deceptive front-of-pack marketing claims, and answers natural language questions via **Voice Lens AI (Google Gemini 3.1 Flash-Lite)**.
+2. **For Enforcement & Legal Metrology Officers**: Automated statutory inspection of front and back of pack for mandatory Rule 6 declarations (manufacturer address with PIN code, common generic name, net quantity in SI units, MRP inclusive of taxes, unit sale price, month/year of manufacture, and consumer care) and Rule 7 Table-I minimum letter height calibration.
 
 ---
 
@@ -65,9 +65,9 @@ Built for first-time smartphone users in Tier 2 and Tier 3 towns:
 * **Voice stack**: summaries and answers are written by **Google Gemini**. Speech uses **Sarvam AI** (Bulbul text-to-speech, Saaras speech-to-text, built for Indian languages) when `VOICE_PROVIDER=sarvam` and `SARVAM_API_KEY` are set, and **Gemini TTS** otherwise. Generated audio is cached, so replays are instant; if speech is unavailable the phone's built-in voice reads the same text.
 
 ### 6. 🎨 Dual-Mode Platform with 15 Natively-Integrated Stitch Screens
-TruthLens × PackSure integrates 15 production UI screens inspired by the Google Stitch designs, unified into a seamless single-page application with a live **Role Switcher** (Consumer Mode vs Enforcement Mode):
+PackSure integrates 15 production UI screens inspired by the Google Stitch designs, unified into a seamless single-page application with a live **Role Switcher** (Consumer Mode vs Enforcement Mode):
 
-* **Consumer Experience (TruthLens)**:
+* **Consumer Experience**:
   1. *Consumer Home Dashboard* (Screen 1): Trending food alerts, daily sugar quotas, and recent scans.
   2. *Triple Input Scanner with Human Review* (Screen 2): 6-step optical pipeline with text correction before analysis.
   3. *Product Intelligence Overview* (Screen 3): 0–100 TruthScore gauge, NOVA UPF badge, traffic lights.
@@ -194,7 +194,7 @@ Expected output:
 ============================= 58 passed ==============================
 ```
 
-### 5. Launch the TruthLens Backend Server
+### 5. Launch the PackSure Backend Server
 ```bash
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
@@ -204,10 +204,10 @@ Open **[http://localhost:8000](http://localhost:8000)** in your browser to exper
 
 ## 📡 REST API Reference
 
-### Consumer TruthLens Endpoints
+### Consumer Food Intelligence Endpoints
 | Method | Endpoint | Description |
 |---|---|---|
-| `GET` | `/` | Serves the animated unified TruthLens × PackSure web application |
+| `GET` | `/` | Serves the animated unified PackSure web application |
 | `GET` | `/api/health` | Health check, catalog size, and knowledge base stats |
 | `GET` | `/api/truth/barcode/{code}` | Instant barcode lookup (Local DB first, then Open Food Facts) |
 | `GET` | `/api/truth/search?q={query}` | Search food catalogue by name, brand, or ingredient |
@@ -247,7 +247,7 @@ Open **[http://localhost:8000](http://localhost:8000)** in your browser to exper
 
 ## 🎨 UI Animation System
 
-The TruthLens web interface features a tailored micro-interaction and animation system:
+The PackSure web interface features a tailored micro-interaction and animation system:
 * **Ambient Floating Glow**: Dynamic radial background gradients on hero containers (`@keyframes ambientFloat`).
 * **TruthScore Circular Gauge Pulse**: Dynamic entrance animation and gentle pulse glow (`@keyframes gaugePulse`).
 * **Laser Scanner Reticle**: Animated green laser sweep across the camera viewfinder simulating active optical recognition (`@keyframes scanLaserAnim`).

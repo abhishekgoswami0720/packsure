@@ -118,7 +118,7 @@ def get_clean_alternatives(product_id: str, category: str) -> list[dict]:
 
 def get_source_label(source_str: str) -> str:
     labels = {
-        "verified_local": "Verified Indian Catalogue (TruthLens Audited)",
+        "verified_local": "Verified Indian Catalogue (PackSure Audited)",
         "openfoodfacts_v3": "Open Food Facts API v3 (Third-Party Database)",
         "openfoodfacts_v2": "Open Food Facts API v2 (Third-Party Database)",
         "ocr_extracted": "Packaging Label OCR (Auto-Extracted)",

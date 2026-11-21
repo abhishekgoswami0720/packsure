@@ -11,15 +11,19 @@ def test_health_endpoint():
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "healthy"
-    assert data["service"] == "TruthLens API"
+    assert data["service"] == "PackSure API"
     assert data["catalog_size"] > 0
 
 
 def test_web_app_served_at_root():
     res = client.get("/")
     assert res.status_code == 200
-    assert "TruthLens" in res.text
+    assert "PackSure" in res.text
     assert "Know what's really inside" in res.text
+    # Ensure all primary navigation views exist in DOM
+    assert 'id="view-search"' in res.text
+    assert 'id="view-categories"' in res.text
+    assert 'id="view-profile"' in res.text
 
 
 def test_pwa_and_favicon_assets():
@@ -28,7 +32,7 @@ def test_pwa_and_favicon_assets():
     assert res.status_code == 200
     assert res.headers["content-type"].startswith("application/manifest+json")
     manifest = res.json()
-    assert manifest["name"] == "TruthLens — Food Intelligence & PackSure"
+    assert manifest["name"] == "PackSure — Food Intelligence & Consumer Transparency"
     assert manifest["display"] == "standalone"
     assert len(manifest["icons"]) >= 3
 
@@ -36,7 +40,7 @@ def test_pwa_and_favicon_assets():
     res = client.get("/sw.js")
     assert res.status_code == 200
     assert "application/javascript" in res.headers["content-type"]
-    assert "truthlens-pwa" in res.text
+    assert "packsure-pwa" in res.text
 
     # 3. Favicon & Icons
     for path in ("/favicon.svg", "/favicon.ico", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png"):

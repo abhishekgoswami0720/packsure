@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "TruthLens",
-    "slug": "truthlens",
+    "name": "PackSure",
+    "slug": "packsure",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "truthlens",
+    "scheme": "packsure",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "backgroundColor": "#FBF9F5",
@@ -16,13 +16,13 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.truthlens.app",
+      "bundleIdentifier": "com.packsure.app",
       "infoPlist": {
-        "NSCameraUsageDescription": "TruthLens uses the camera to scan packaged food labels, barcodes, and nutrition facts."
+        "NSCameraUsageDescription": "PackSure uses the camera to scan packaged food labels, barcodes, and nutrition facts."
       }
     },
     "android": {
-      "package": "com.truthlens.app",
+      "package": "com.packsure.app",
       "versionCode": 2,
       "adaptiveIcon": {
         "backgroundColor": "#1B4332",

@@ -56,7 +56,7 @@ Legal Metrology Compliance: {product_context.get('compliance', {}).get('verdict'
 """
 
     system_instruction = (
-        "You are TruthLens Voice & AI Assistant, an expert in Indian packaged foods, FSSAI regulations, "
+        "You are PackSure Voice & AI Assistant, an expert in Indian packaged foods, FSSAI regulations, "
         "the Legal Metrology (Packaged Commodities) Rules 2011, and clean label transparency. "
         "Answer the user's question clearly, warmly, and concisely in 2-3 brief paragraphs. "
         "Highlight hidden sugars, palm oils, cosmetic additives, and deceptive claims when relevant. "
@@ -76,7 +76,7 @@ Legal Metrology Compliance: {product_context.get('compliance', {}).get('verdict'
         except Exception as e:
             continue
 
-    return "TruthLens AI could not reach the server right now. Please try your question again in a moment."
+    return "PackSure AI could not reach the server right now. Please try your question again in a moment."
 
 
 def gemini_parse_label_image(image_bytes: bytes) -> dict | None:
