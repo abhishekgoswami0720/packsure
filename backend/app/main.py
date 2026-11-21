@@ -9,9 +9,10 @@ from fastapi import FastAPI, HTTPException, Query, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .gemini_service import gemini_voice_assistant, gemini_parse_label_image
+from .compliance.legal_metrology import check_letter_height
 
 from .truth_service import (
     INS_DB,
@@ -335,6 +336,18 @@ def voice_assistant(body: VoiceAssistantInput):
 
 
 # ------------------------------------------------------------------ Google Stitch UI Screen Gallery
+class LetterHeightRequest(BaseModel):
+    panel_area_cm2: float = Field(gt=0, description="Principal display panel area, Rule 7(4)")
+    numeral_height_mm: float = Field(gt=0, description="Measured height of the smallest numeral in the declaration")
+    blown_or_moulded: bool = False
+
+
+@app.post("/api/compliance/letter-height")
+def letter_height(req: LetterHeightRequest):
+    """Rule 7 / Table I check for a measured numeral height."""
+    return check_letter_height(req.panel_area_cm2, req.numeral_height_mm, req.blown_or_moulded)
+
+
 @app.get("/api/stitch/screens")
 def list_stitch_screens():
     """Returns catalog of the 15 UI screens designed in Google Stitch with direct launch URLs."""

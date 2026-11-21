@@ -1,7 +1,15 @@
 """Legal Metrology compliance checking module integrating PackSure statutory standards."""
 from __future__ import annotations
 
+import datetime as dt
+import json
 import re
+from functools import lru_cache
+from pathlib import Path
+
+# Rule data built from the legal corpus (repo root: rules/lmpc_rules.json, legal/text/).
+RULES_FILE = Path(__file__).resolve().parents[3] / "rules" / "lmpc_rules.json"
+ACT_REF = "Legal Metrology Act, 2009: s.18 (declarations on pre-packaged commodities); s.36 (penalty for non-standard packages)"
 
 I = re.IGNORECASE
 P = {
@@ -18,8 +26,55 @@ P = {
 }
 
 
-def check_legal_metrology(label_text: str) -> dict:
-    """Verifies mandatory declarations under the Legal Metrology (Packaged Commodities) Rules, 2011 (Rule 6)."""
+@lru_cache(maxsize=1)
+def load_rules() -> dict:
+    return json.loads(RULES_FILE.read_text(encoding="utf-8"))
+
+
+def _rule(rule_id: str) -> dict:
+    rules = load_rules()
+    return next(r for r in rules["declarations"] + rules["presentation"] if r["id"] == rule_id)
+
+
+def _cite(check: dict, rule_id: str) -> dict:
+    """Attach the rule reference, its in-force date and the source page from the rule file."""
+    r = _rule(rule_id)
+    check.update(rule=f"LMPC Rules 2011, Rule {r['rule']}", in_force_from=r["in_force_from"],
+                 basis=r["basis"], source_pages=r["source"]["pages"], act_reference=ACT_REF)
+    return check
+
+
+def min_numeral_height_mm(panel_area_cm2: float, blown_or_moulded: bool = False) -> float:
+    """Rule 7(2), Table I: minimum numeral/letter height for a principal display panel area."""
+    for row in _rule("numeral_height")["table_I"]:
+        if row["area_cm2_max"] is None or panel_area_cm2 <= row["area_cm2_max"]:
+            return row["min_mm_blown_moulded" if blown_or_moulded else "min_mm"]
+    raise AssertionError("Table I has an open-ended last row")
+
+
+def check_letter_height(panel_area_cm2: float | None, numeral_height_mm: float | None,
+                        blown_or_moulded: bool = False) -> dict:
+    """Rule 7 check. The numeral height must be measured (by the inspector, or from a photo with a
+    reference marker); PackSure does not guess physical size from an ordinary photo."""
+    check = {"id": "letter_height", "label": "Minimum Letter Height (Rule 7)"}
+    if not panel_area_cm2 or not numeral_height_mm:
+        check.update(status="warn", detail="Needs the display panel area (cm\u00b2) and the measured numeral height (mm) to check Rule 7.")
+        return _cite(check, "numeral_height")
+    need = min_numeral_height_mm(panel_area_cm2, blown_or_moulded)
+    ok = numeral_height_mm >= need
+    check.update(status="pass" if ok else "fail", measured_mm=numeral_height_mm, required_mm=need,
+                 panel_area_cm2=panel_area_cm2,
+                 detail=(f"Numerals measure {numeral_height_mm:g} mm; Table I requires at least {need:g} mm "
+                         f"for a {panel_area_cm2:g} cm\u00b2 display panel."))
+    return _cite(check, "numeral_height")
+
+
+def check_legal_metrology(label_text: str, product_name: str = "", is_food: bool = True,
+                          panel_area_cm2: float | None = None, numeral_height_mm: float | None = None,
+                          on: str | None = None) -> dict:
+    """Verifies mandatory declarations under the Legal Metrology (Packaged Commodities) Rules, 2011
+    (Rule 6), and Rule 7 letter height when measurements are supplied. Each check cites its rule,
+    in-force date and source page. Results support an inspector; they are not a legal finding."""
     checks = []
     text = label_text or ""
 
@@ -30,6 +85,8 @@ def check_legal_metrology(label_text: str) -> dict:
         checks.append({"id": "mfr_address", "label": "Manufacturer Details & PIN Code", "status": "pass", "detail": "Manufacturer details found with postal PIN code."})
     elif has_mfr:
         checks.append({"id": "mfr_address", "label": "Manufacturer Details", "status": "warn", "detail": "Manufacturer keyword found, but no clear postal PIN code detected."})
+    elif is_food:
+        checks.append({"id": "mfr_address", "label": "Manufacturer Details", "status": "warn", "detail": "Not found. For food, Rule 6(1)(a) Explanation III defers to FSSAI labelling rules; verify against those."})
     else:
         checks.append({"id": "mfr_address", "label": "Manufacturer Details", "status": "fail", "detail": "No 'Manufactured / Packed / Marketed by' declaration found."})
 
@@ -60,6 +117,8 @@ def check_legal_metrology(label_text: str) -> dict:
     has_date = bool(P["date_kw"].search(text))
     if has_date:
         checks.append({"id": "mfg_date", "label": "Date of Manufacture / Packing", "status": "pass", "detail": "Manufacturing / packing date declaration found."})
+    elif is_food:
+        checks.append({"id": "mfg_date", "label": "Date of Manufacture / Packing", "status": "warn", "detail": "Not found. For food, the proviso to Rule 6(1)(d) applies FSSAI date-marking rules instead; verify against those."})
     else:
         checks.append({"id": "mfg_date", "label": "Date of Manufacture / Packing", "status": "fail", "detail": "Month and year of manufacture or packing not found."})
 
@@ -72,6 +131,38 @@ def check_legal_metrology(label_text: str) -> dict:
         checks.append({"id": "consumer_care", "label": "Consumer Care Helpline", "status": "warn", "detail": "Partial consumer care details found (requires both telephone and email under Rule 6)."})
     else:
         checks.append({"id": "consumer_care", "label": "Consumer Care Helpline", "status": "fail", "detail": "Consumer care telephone and email contact not found."})
+
+    # 6. Common or generic name (Rule 6(1)(b))
+    words = [w for w in re.findall(r"[a-z]{4,}", product_name.lower())]
+    if not product_name:
+        checks.append({"id": "common_name", "label": "Common / Generic Name", "status": "warn", "detail": "No product name supplied to compare against the label."})
+    elif any(w in text.lower() for w in words):
+        checks.append({"id": "common_name", "label": "Common / Generic Name", "status": "pass", "detail": "Product name found on the label."})
+    else:
+        checks.append({"id": "common_name", "label": "Common / Generic Name", "status": "warn", "detail": "Product name not found in the label text; check the front of pack."})
+
+    # 7. Unit sale price (Rule 6(11), in force 1 Jan 2024)
+    if P["usp"].search(text):
+        checks.append({"id": "unit_sale_price", "label": "Unit Sale Price", "status": "pass", "detail": "Unit sale price declaration found."})
+    else:
+        checks.append({"id": "unit_sale_price", "label": "Unit Sale Price", "status": "fail", "detail": "Unit sale price (e.g. \u20b9 x.xx per g) not found. Not required only where MRP equals the unit sale price."})
+
+    # 8. Rule 7 letter height (only when measurements are supplied)
+    if panel_area_cm2 or numeral_height_mm:
+        checks.append(check_letter_height(panel_area_cm2, numeral_height_mm))
+
+    # Cite each Rule 6 check and drop any rule not yet in force on the inspection date.
+    rule_ids = {"mfr_address": "manufacturer_name_address", "net_quantity": "net_quantity", "mrp": "mrp",
+                "mfg_date": "month_year_of_manufacture", "consumer_care": "consumer_care",
+                "common_name": "common_name", "unit_sale_price": "unit_sale_price"}
+    day = dt.date.fromisoformat(on) if on else dt.date.today()
+    cited = []
+    for c in checks:
+        if c["id"] in rule_ids:
+            _cite(c, rule_ids[c["id"]])
+        if dt.date.fromisoformat(c["in_force_from"]) <= day:
+            cited.append(c)
+    checks = cited
 
     n_fail = sum(c["status"] == "fail" for c in checks)
     n_warn = sum(c["status"] == "warn" for c in checks)

@@ -128,7 +128,7 @@ def analyze_product_data(name: str, brand: str = "", category: str = "",
     )
 
     # 7. Legal Metrology Compliance Check
-    compliance = check_legal_metrology(raw_label_text or ingredients_text)
+    compliance = check_legal_metrology(raw_label_text or ingredients_text, product_name=name)
 
     # 8. Clean Alternatives
     alternatives = get_clean_alternatives(product_id, category)
