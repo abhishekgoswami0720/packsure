@@ -3073,6 +3073,29 @@
       const isFav = AppState.favoritesSet ? AppState.favoritesSet.has(product.id) : false;
       if (favBtn) favBtn.textContent = isFav ? '❤️' : '🤍';
 
+      const srcBadge = document.getElementById('sheetPreviewSourceBadge');
+      if (srcBadge) {
+        const src = product.primary_source || product.source || 'verified_local';
+        if (src === 'ai_synthesized') {
+          srcBadge.textContent = '✨ AI Synthesized';
+          srcBadge.style.background = '#ede9fe';
+          srcBadge.style.color = '#6d28d9';
+          srcBadge.style.display = 'inline-block';
+        } else if (src === 'verified_local') {
+          srcBadge.textContent = '🛡️ Audited';
+          srcBadge.style.background = '#dcfce7';
+          srcBadge.style.color = '#15803d';
+          srcBadge.style.display = 'inline-block';
+        } else if (src.includes('openfoodfacts')) {
+          srcBadge.textContent = '🌐 OFF API v3';
+          srcBadge.style.background = '#e0f2fe';
+          srcBadge.style.color = '#0369a1';
+          srcBadge.style.display = 'inline-block';
+        } else {
+          srcBadge.style.display = 'none';
+        }
+      }
+
       sheet.classList.add('active');
     }
 
@@ -3625,6 +3648,10 @@
         if (srcLabel) srcLabel.textContent = 'Open Food Facts API v3 (Global Open DB)';
         if (srcChip) { srcChip.textContent = 'OFF API v3'; srcChip.style.background = '#e0f2fe'; srcChip.style.color = '#0369a1'; }
         if (srcIcon) srcIcon.textContent = '🌐';
+      } else if (pSource === 'ai_synthesized') {
+        if (srcLabel) srcLabel.textContent = 'PackSure AI Analysis (Synthesized for Unindexed Barcode)';
+        if (srcChip) { srcChip.textContent = 'AI Synthesized'; srcChip.style.background = '#ede9fe'; srcChip.style.color = '#6d28d9'; }
+        if (srcIcon) srcIcon.textContent = '✨';
       } else {
         if (srcLabel) srcLabel.textContent = 'OCR Extracted / Live Scan';
         if (srcChip) { srcChip.textContent = 'OCR'; srcChip.style.background = '#f3e8ff'; srcChip.style.color = '#7e22ce'; }
@@ -5695,7 +5722,10 @@ function populateSugarBreakdownScreen(p) {
       <div class="preview-header">
         <img src="" id="sheetPreviewImg" class="preview-img" alt="Product">
         <div class="preview-details">
-          <span class="cat" id="sheetPreviewCat">Category</span>
+          <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+            <span class="cat" id="sheetPreviewCat">Category</span>
+            <span id="sheetPreviewSourceBadge" class="badge" style="display: none; font-size: 10px; padding: 2px 6px;">✨ AI Synthesized</span>
+          </div>
           <h3 id="sheetPreviewTitle">Product Title</h3>
         </div>
         <button id="sheetFavBtn" onclick="toggleFavoriteCurrent()" style="background: var(--surface-container-low); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px;">

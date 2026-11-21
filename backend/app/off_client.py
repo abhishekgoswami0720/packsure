@@ -24,7 +24,7 @@ OFF_V3_ENDPOINT = "https://world.openfoodfacts.org/api/v3/product/{barcode}.json
 OFF_V2_ENDPOINT = "https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
 
 
-def fetch_open_food_facts_v3(barcode: str, timeout_sec: int = 6) -> Optional[TruthLensProductRecord]:
+def fetch_open_food_facts_v3(barcode: str, timeout_sec: int = 2) -> Optional[TruthLensProductRecord]:
     """Queries Open Food Facts API v3 (falling back to v2) and normalizes into canonical record."""
     clean_barcode = barcode.strip()
     if not clean_barcode:

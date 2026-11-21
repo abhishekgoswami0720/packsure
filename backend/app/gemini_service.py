@@ -127,3 +127,61 @@ def gemini_parse_label_image(image_bytes: bytes) -> dict | None:
         pass
 
     return None
+
+
+import concurrent.futures
+
+
+def gemini_synthesize_product_from_barcode(barcode: str, manufacturer_hint: str = "") -> dict | None:
+    """Uses Gemini to identify or synthesize a product record for an unindexed barcode based on Indian FMCG patterns."""
+    client = get_genai_client()
+    if not client:
+        return None
+
+    hint_str = f"GS1 Manufacturer Hint: {manufacturer_hint}" if manufacturer_hint else ""
+    prompt = (
+        f"You are the PackSure Food Intelligence engine.\n"
+        f"A user scanned barcode: '{barcode}'. {hint_str}\n"
+        f"Based on real Indian FMCG catalogue data or manufacturer brand portfolios, identify this product or provide a highly realistic, representative packaged food product record for this manufacturer / barcode.\n"
+        f"Return ONLY valid JSON with keys:\n"
+        f"- 'name': string (clear product title, e.g. 'Britannia Treat Chocolate Biscuit' or 'Haldiram\\'s Moong Dal')\n"
+        f"- 'brand': string (e.g. 'Britannia', 'Haldiram\\'s', 'Amul', 'Cadbury', 'Nestlé')\n"
+        f"- 'category': string (e.g. 'Biscuits & Bakery', 'Snacks & Namkeen', 'Chocolates & Confectionery', 'Beverages', 'Dairy', 'Noodles & Pasta', 'Breakfast Cereals')\n"
+        f"- 'ingredients_text': string (full ingredient statement formatted as on Indian labels, with INS codes, refined wheat flour, vegetable oils, sugar, etc.)\n"
+        f"- 'nutrition_per_100g': object with numeric fields 'energy_kcal', 'protein_g', 'carbohydrates_g', 'total_sugars_g', 'fat_g', 'saturated_fat_g', 'sodium_mg'\n"
+        f"- 'serving_size_g': number (e.g. 30.0 or 100.0)\n"
+        f"- 'claims': list of strings (e.g. ['Zero Cholesterol', 'Goodness of Wheat'])\n"
+        f"- 'image_url': string (or empty string)\n"
+    )
+
+    def _call():
+        for model_name in [DEFAULT_MODEL, "gemini-3.8-flash"]:
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt
+                )
+                if response and response.text:
+                    txt = response.text.strip()
+                    if txt.startswith("```json"):
+                        txt = txt.split("```json")[1].split("```")[0].strip()
+                    elif txt.startswith("```"):
+                        txt = txt.split("```")[1].split("```")[0].strip()
+                    parsed = json.loads(txt)
+                    if isinstance(parsed, dict) and parsed.get("name") and parsed.get("ingredients_text"):
+                        return parsed
+            except Exception:
+                continue
+        return None
+
+    executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+    fut = executor.submit(_call)
+    try:
+        res = fut.result(timeout=3.0)
+        executor.shutdown(wait=False, cancel_futures=True)
+        return res
+    except Exception:
+        executor.shutdown(wait=False, cancel_futures=True)
+        return None
+
+

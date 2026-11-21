@@ -131,3 +131,41 @@ def test_no_default_product_substitution():
     assert res_m.status_code == 200
     assert "Maggi" in res_m.json()["name"]
     assert "Red Bull" not in res_m.json()["name"]
+
+
+def test_expanded_indian_fmcg_barcodes_found():
+    """Verifies popular Indian FMCG products resolve immediately with nutrition & score."""
+    test_cases = [
+        ("8901063018249", "Britannia"),
+        ("7622201138248", "Cadbury"),
+        ("8901491103756", "Kurkure"),
+        ("8904004400588", "Haldiram"),
+        ("8901764012234", "Thums Up"),
+    ]
+    for code, expected_kw in test_cases:
+        res = client.get(f"/api/truth/barcode/{code}")
+        assert res.status_code == 200, f"Barcode {code} should resolve with 200"
+        data = res.json()
+        assert expected_kw.lower() in data["name"].lower() or expected_kw.lower() in data["brand"].lower()
+        assert data["truth_score"]["score"] is not None
+        assert data["nova"]["group"] is not None
+
+
+def test_unindexed_barcode_ai_synthesis_fallback():
+    """Verifies that an unindexed real barcode triggers AI synthesis instead of dead-end 404."""
+    test_unindexed_code = "8901030554433"  # HUL prefix, unindexed
+    try:
+        res = client.get(f"/api/truth/barcode/{test_unindexed_code}")
+        assert res.status_code == 200
+        data = res.json()
+        assert data["primary_source"] == "ai_synthesized"
+        assert data["truth_score"]["score"] is not None
+        assert len(data["ingredients_text"]) > 10
+    finally:
+        # Clean up cache
+        import sqlite3
+        conn = sqlite3.connect("backend/app/knowledge/product_cache.sqlite")
+        conn.execute("DELETE FROM product_cache WHERE barcode = ?", (test_unindexed_code,))
+        conn.commit()
+        conn.close()
+

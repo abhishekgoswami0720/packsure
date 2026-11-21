@@ -18,6 +18,7 @@ class DataSource(str, Enum):
     OCR_EXTRACTED = "ocr_extracted"         # Multi-modal OCR / Gemini Vision from packaging image
     USER_CORRECTED = "user_corrected"       # Consumer or inspector reviewed & corrected
     USDA_FDC = "usda_fdc"                   # USDA FoodData Central (generic composition baseline)
+    AI_SYNTHESIZED = "ai_synthesized"       # PackSure AI / Gemini synthesis for unindexed barcodes
 
 
 class FieldProvenance(BaseModel):
@@ -86,6 +87,7 @@ class TruthLensProductRecord(BaseModel):
             DataSource.OCR_EXTRACTED: "Packaging Label OCR (Auto-Extracted)",
             DataSource.USER_CORRECTED: "Consumer / Inspector Verified & Corrected",
             DataSource.USDA_FDC: "USDA FoodData Central Reference",
+            DataSource.AI_SYNTHESIZED: "PackSure AI Analysis (Synthesized for Unindexed Barcode)",
         }
         return labels.get(self.primary_source, self.primary_source.value)
 

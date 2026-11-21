@@ -6,7 +6,11 @@
       "name": "Parle-G Original Gluco Biscuits",
       "brand": "Parle",
       "category": "Biscuits & Cookies",
-      "claims": ["The World's Largest Selling Biscuit", "Power of Milk & Wheat", "Gluco Energy"],
+      "claims": [
+        "The World's Largest Selling Biscuit",
+        "Power of Milk & Wheat",
+        "Gluco Energy"
+      ],
       "ingredients_text": "Refined Wheat Flour (Maida) (66%), Sugar (26%), Refined Palm Oil, Invert Sugar Syrup, Raising Agents [INS 503(ii), INS 500(ii)], Milk Solids (0.6%), Salt, Emulsifier [INS 322(i)], Artificial Flavouring Substances (Vanilla), Flour Treatment Agent [INS 223].",
       "nutrition_per_100g": {
         "energy_kcal": 465,
@@ -31,7 +35,11 @@
       "name": "Britannia NutriChoice 100% Atta Biscuits",
       "brand": "Britannia",
       "category": "Biscuits & Cookies",
-      "claims": ["100% Whole Wheat Atta", "Goodness of Wheat", "Zero Trans Fat"],
+      "claims": [
+        "100% Whole Wheat Atta",
+        "Goodness of Wheat",
+        "Zero Trans Fat"
+      ],
       "ingredients_text": "Whole Wheat Flour (Atta) (56%), Refined Palm Oil, Sugar (19%), Invert Sugar Syrup, Raising Agents [INS 503(ii), INS 500(ii)], Milk Solids, Iodised Salt, Emulsifiers [INS 322, INS 471], Natural and Nature Identical Flavouring Substances.",
       "nutrition_per_100g": {
         "energy_kcal": 472,
@@ -56,7 +64,12 @@
       "name": "Cadbury Bournvita Nutrition Drink",
       "brand": "Cadbury",
       "category": "Malt Food Drinks",
-      "claims": ["Strong Bones", "Strong Muscles", "Active Brain", "Scientific Nutrition"],
+      "claims": [
+        "Strong Bones",
+        "Strong Muscles",
+        "Active Brain",
+        "Scientific Nutrition"
+      ],
       "ingredients_text": "Cereal Extract (56%) (Barley, Wheat), Sugar (37%), Cocoa Solids, Liquid Glucose, Colour (INS 150c), Minerals, Wheat Gluten, Emulsifiers (INS 322, INS 471), Liquid Invert Sugar, Vitamins, Raising Agent (INS 500(ii)), Iodised Salt.",
       "nutrition_per_100g": {
         "energy_kcal": 388,
@@ -81,7 +94,11 @@
       "name": "Maggi 2-Minute Masala Instant Noodles",
       "brand": "Nestle",
       "category": "Instant Noodles & Pasta",
-      "claims": ["Taste Bhi Health Bhi", "Goodness of Iron", "2 Minute Noodles"],
+      "claims": [
+        "Taste Bhi Health Bhi",
+        "Goodness of Iron",
+        "2 Minute Noodles"
+      ],
       "ingredients_text": "Noodles: Refined Wheat Flour (Maida), Palm Oil, Iodised Salt, Wheat Gluten, Thickeners (INS 508, INS 412), Acidity Regulators (INS 501(i), INS 500(i)), Humectant (INS 451(i)). Tastemaker: Mixed Spices (25.6%) (Onion powder, Coriander, Turmeric, Red Chilli, Cumin, Aniseed, Fenugreek, Ginger, Black Pepper, Clove, Nutmeg, Cardamom), Refined Wheat Flour (Maida), Hydrolysed Groundnut Protein, Sugar, Palm Oil, Starch, Iodised Salt, Thickener (INS 508), Flavour Enhancers (INS 635), Acidity Regulator (INS 330), Mineral (Ferric Pyrophosphate).",
       "nutrition_per_100g": {
         "energy_kcal": 427,
@@ -106,7 +123,10 @@
       "name": "Lay's India's Magic Masala Potato Chips",
       "brand": "Lay's",
       "category": "Snacks & Chips",
-      "claims": ["100% Quality Potatoes", "India's Favourite Masala"],
+      "claims": [
+        "100% Quality Potatoes",
+        "India's Favourite Masala"
+      ],
       "ingredients_text": "Potato (52%), Edible Vegetable Oil (Palmolein, Rice Bran Oil), Seasoning (Spices & Condiments, Iodised Salt, Sugar, Black Salt, Acidity Regulators (INS 330, INS 296), Flavour Enhancers (INS 627, INS 631), Anticaking Agent (INS 551)).",
       "nutrition_per_100g": {
         "energy_kcal": 555,
@@ -131,7 +151,11 @@
       "name": "Amul Pasteurised Butter",
       "brand": "Amul",
       "category": "Dairy & Spreads",
-      "claims": ["Utterly Butterly Delicious", "Taste of India", "100% Natural Dairy"],
+      "claims": [
+        "Utterly Butterly Delicious",
+        "Taste of India",
+        "100% Natural Dairy"
+      ],
       "ingredients_text": "Butter (Pasteurised Milk Fat), Common Salt (2.5%), Permitted Natural Colour (INS 160a(i) - Annatto).",
       "nutrition_per_100g": {
         "energy_kcal": 722,
@@ -156,7 +180,12 @@
       "name": "Epigamia Natural Greek Yogurt (High Protein)",
       "brand": "Epigamia",
       "category": "Dairy & Spreads",
-      "claims": ["Zero Preservatives", "High Protein", "No Added Sugar", "Live & Active Probiotics"],
+      "claims": [
+        "Zero Preservatives",
+        "High Protein",
+        "No Added Sugar",
+        "Live & Active Probiotics"
+      ],
       "ingredients_text": "Pasteurised Double Toned Milk, Milk Solids, Active Live Cultures (Streptococcus thermophilus, Lactobacillus bulgaricus).",
       "nutrition_per_100g": {
         "energy_kcal": 76,
@@ -181,7 +210,13 @@
       "name": "The Whole Truth 100% Roasted Peanut Butter (Unsweetened)",
       "brand": "The Whole Truth",
       "category": "Spreads & Dips",
-      "claims": ["100% Peanuts", "No Added Sugar", "Zero Palm Oil", "No Emulsifiers", "No Preservatives"],
+      "claims": [
+        "100% Peanuts",
+        "No Added Sugar",
+        "Zero Palm Oil",
+        "No Emulsifiers",
+        "No Preservatives"
+      ],
       "ingredients_text": "100% Roasted Peanuts.",
       "nutrition_per_100g": {
         "energy_kcal": 618,
@@ -206,7 +241,10 @@
       "name": "Red Bull Energy Drink",
       "brand": "Red Bull",
       "category": "Energy & Sports Drinks",
-      "claims": ["Vitalizes Body and Mind", "With Taurine & B-Group Vitamins"],
+      "claims": [
+        "Vitalizes Body and Mind",
+        "With Taurine & B-Group Vitamins"
+      ],
       "ingredients_text": "Water, Sucrose, Glucose, Acid (Citric Acid), Carbon Dioxide, Taurine (0.4%), Acidity Regulators (Sodium Carbonates, Magnesium Carbonates), Caffeine (0.03%), Vitamins (Niacin, Pantothenic Acid, B6, B12), Flavourings, Colours (Caramel I, Riboflavins).",
       "nutrition_per_100g": {
         "energy_kcal": 46.0,
@@ -231,7 +269,12 @@
       "name": "Delulu Activate Clean Energy Drink",
       "brand": "Delulu",
       "category": "Energy & Sports Drinks",
-      "claims": ["Zero Added Sugar", "Natural Green Tea Caffeine", "Zero Artificial Sweeteners", "Rich in Electrolytes"],
+      "claims": [
+        "Zero Added Sugar",
+        "Natural Green Tea Caffeine",
+        "Zero Artificial Sweeteners",
+        "Rich in Electrolytes"
+      ],
       "ingredients_text": "Carbonated Water, Natural Fruit Juice Concentrate (Apple, Lemon), Natural Caffeine (from Green Tea Extract), L-Theanine, Himalayan Pink Salt, Natural Flavours, Stevia Leaf Extract.",
       "nutrition_per_100g": {
         "energy_kcal": 14.0,
@@ -256,7 +299,12 @@
       "name": "Fast&Up Energy Gel (Instant Energy Boost)",
       "brand": "Fast&Up",
       "category": "Energy & Sports Drinks",
-      "claims": ["Informed Sport Certified", "Zero Added Sugar", "Natural Caffeine", "Rapid Absorption"],
+      "claims": [
+        "Informed Sport Certified",
+        "Zero Added Sugar",
+        "Natural Caffeine",
+        "Rapid Absorption"
+      ],
       "ingredients_text": "Maltodextrin, Water, Natural Flavours, Caffeine, Acidity Regulator (Citric Acid), Preservatives (Sodium Benzoate), Sodium Chloride, Potassium Chloride.",
       "nutrition_per_100g": {
         "energy_kcal": 204.0,
@@ -281,7 +329,11 @@
       "name": "Nivea Soft Light Moisturiser Cream",
       "brand": "Nivea",
       "category": "Personal Care",
-      "claims": ["Non-Greasy Formula", "With Vitamin E & Jojoba Oil", "Instant Refreshing Softness"],
+      "claims": [
+        "Non-Greasy Formula",
+        "With Vitamin E & Jojoba Oil",
+        "Instant Refreshing Softness"
+      ],
       "ingredients_text": "Aqua, Glycerin, Paraffinum Liquidum, Myristyl Alcohol, Butylene Glycol, Alcohol Denat., Stearic Acid, Myristyl Myristate, Cera Microcristallina, Glyceryl Stearate, Hydrogenated Coco-Glycerides, Simmondsia Chinensis Seed Oil, Tocopheryl Acetate, Lanolin Alcohol, Polyglyceryl-2 Caprate, Dimethicone, Carbomer, Sodium Hydroxide, Phenoxyethanol, Linalool, Citronellol, Parfum.",
       "nutrition_per_100g": {},
       "serving_size_g": 50,
@@ -295,7 +347,12 @@
       "name": "Mamaearth Onion Shampoo with Plant Keratin",
       "brand": "Mamaearth",
       "category": "Personal Care",
-      "claims": ["Toxin Free", "Paraben & SLS Free", "Reduces Hair Fall", "With Plant Keratin"],
+      "claims": [
+        "Toxin Free",
+        "Paraben & SLS Free",
+        "Reduces Hair Fall",
+        "With Plant Keratin"
+      ],
       "ingredients_text": "Purified Water, Sodium Lauroyl Sarcosinate, Cocamidopropyl Betaine, Onion Oil, Plant Keratin, D-Panthenol, Glycerin, Polyquaternium 7, Phenoxyethanol, Potassium Sorbate, Natural Fragrance.",
       "nutrition_per_100g": {},
       "serving_size_g": 250,
@@ -309,13 +366,1470 @@
       "name": "Minimalist 10% Niacinamide Face Serum with Zinc",
       "brand": "Minimalist",
       "category": "Personal Care",
-      "claims": ["Fragrance Free", "10% Pure Niacinamide", "Aloe Base", "Non-Comedogenic"],
+      "claims": [
+        "Fragrance Free",
+        "10% Pure Niacinamide",
+        "Aloe Base",
+        "Non-Comedogenic"
+      ],
       "ingredients_text": "Aloe Barbadensis Leaf Juice, Niacinamide, Dimethyl Isosorbide, Propanediol, Ethoxydiglycol, Zinc PCA, Phenoxyethanol, Ethylhexylglycerin, Hydroxyethylcellulose, Pullulan, Xanthan Gum.",
       "nutrition_per_100g": {},
       "serving_size_g": 30,
       "mrp_inr": 599.0,
       "net_quantity": "30 ml",
       "image_url": "https://images.unsplash.com/photo-1608248597359-5613589b34a0?w=400"
+    },
+    {
+      "id": "britannia_good_day_butter",
+      "barcode": "8901063018249",
+      "name": "Britannia Good Day Butter Cookies",
+      "brand": "Britannia",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Rich Butter Taste",
+        "Har Cookie Mein Khushiyan"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (57%), Sugar (22%), Refined Palm Oil, Butter (2%), Invert Sugar Syrup, Milk Solids, Raising Agents [INS 503(ii), INS 500(ii)], Iodised Salt, Emulsifiers [INS 322(i), INS 471], Nature Identical Flavouring Substances.",
+      "nutrition_per_100g": {
+        "energy_kcal": 490.0,
+        "protein_g": 7.0,
+        "carbohydrates_g": 67.0,
+        "total_sugars_g": 22.0,
+        "added_sugars_g": 21.0,
+        "fat_g": 21.5,
+        "saturated_fat_g": 10.5,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 310.0,
+        "fiber_g": 1.5
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 20.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/106/301/8249/front_en.3.400.jpg"
+    },
+    {
+      "id": "britannia_bourbon",
+      "barcode": "8901063016144",
+      "name": "Britannia Bourbon Chocolate Cream Biscuits",
+      "brand": "Britannia",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Original Bourbon",
+        "Real Chocolate Cream & Sugar Crystals"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (51%), Sugar (32%), Refined Palm Oil, Cocoa Solids (2.5%), Invert Sugar Syrup, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt, Emulsifier [INS 322(i)], Plain Caramel [INS 150a], Artificial Flavouring Substances (Vanilla, Chocolate).",
+      "nutrition_per_100g": {
+        "energy_kcal": 485.0,
+        "protein_g": 6.0,
+        "carbohydrates_g": 72.0,
+        "total_sugars_g": 34.0,
+        "added_sugars_g": 32.0,
+        "fat_g": 19.0,
+        "saturated_fat_g": 9.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 240.0,
+        "fiber_g": 1.8
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 25.0,
+      "net_quantity": "120 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/106/301/6144/front_en.10.400.jpg"
+    },
+    {
+      "id": "britannia_marie_gold",
+      "barcode": "8901063015123",
+      "name": "Britannia Marie Gold Tea Time Biscuits",
+      "brand": "Britannia",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Tea Time Snack",
+        "Vitamins & Minerals",
+        "Crisp & Light"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (68%), Sugar (19%), Refined Palm Oil, Invert Sugar Syrup, Milk Solids, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt, Emulsifiers [INS 322(i), INS 471], Flour Treatment Agent [INS 223], Dough Conditioner [INS 1101(i)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 450.0,
+        "protein_g": 8.0,
+        "carbohydrates_g": 76.0,
+        "total_sugars_g": 20.0,
+        "added_sugars_g": 19.0,
+        "fat_g": 12.0,
+        "saturated_fat_g": 5.5,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 280.0,
+        "fiber_g": 2.5
+      },
+      "serving_size_g": 20.0,
+      "mrp_inr": 15.0,
+      "net_quantity": "120 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/106/301/5123/front_en.4.400.jpg"
+    },
+    {
+      "id": "parle_monaco",
+      "barcode": "8901719104014",
+      "name": "Parle Monaco Classic Salted Crackers",
+      "brand": "Parle",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Light & Crunchy",
+        "Classic Salted Flavour"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (70%), Refined Palm Oil, Sugar (6%), Raising Agents [INS 503(ii), INS 500(ii)], Invert Sugar Syrup, Edible Common Salt (1.8%), Yeast, Emulsifier [INS 322(i)], Dough Conditioner [INS 223], Acidity Regulator [INS 270].",
+      "nutrition_per_100g": {
+        "energy_kcal": 478.0,
+        "protein_g": 8.5,
+        "carbohydrates_g": 68.0,
+        "total_sugars_g": 7.5,
+        "added_sugars_g": 6.0,
+        "fat_g": 19.0,
+        "saturated_fat_g": 9.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 780.0,
+        "fiber_g": 1.5
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 10.0,
+      "net_quantity": "75 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/171/910/4014/front_en.11.400.jpg"
+    },
+    {
+      "id": "parle_krackjack",
+      "barcode": "8901719103017",
+      "name": "Parle Krackjack Sweet & Salty Crackers",
+      "brand": "Parle",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Sweet & Salty Crunch",
+        "The Original Dual Taste"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (66%), Refined Palm Oil, Sugar (15%), Invert Sugar Syrup, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt (1.2%), Yeast, Emulsifiers [INS 322(i)], Dough Conditioner [INS 223].",
+      "nutrition_per_100g": {
+        "energy_kcal": 482.0,
+        "protein_g": 7.8,
+        "carbohydrates_g": 70.0,
+        "total_sugars_g": 16.0,
+        "added_sugars_g": 14.5,
+        "fat_g": 19.5,
+        "saturated_fat_g": 9.2,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 520.0,
+        "fiber_g": 1.4
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 10.0,
+      "net_quantity": "75 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/171/910/3017/front_en.8.400.jpg"
+    },
+    {
+      "id": "parle_hide_and_seek",
+      "barcode": "8901719108012",
+      "name": "Parle Hide & Seek Chocolate Chip Biscuits",
+      "brand": "Parle",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Real Chocolate Chips",
+        "Khaao Toh Jaano"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida), Chocolate Chips (22%) [Sugar, Hydrogenated Vegetable Fat, Cocoa Solids, Emulsifier (INS 322(i)), Vanilla Flavour], Sugar (20%), Refined Palm Oil, Invert Sugar Syrup, Cocoa Solids, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt, Artificial Flavouring Substances (Chocolate, Vanilla).",
+      "nutrition_per_100g": {
+        "energy_kcal": 495.0,
+        "protein_g": 6.2,
+        "carbohydrates_g": 71.0,
+        "total_sugars_g": 31.0,
+        "added_sugars_g": 29.5,
+        "fat_g": 20.8,
+        "saturated_fat_g": 11.0,
+        "trans_fat_g": 0.2,
+        "sodium_mg": 260.0,
+        "fiber_g": 2.2
+      },
+      "serving_size_g": 30.0,
+      "mrp_inr": 30.0,
+      "net_quantity": "120 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/171/910/8012/front_en.6.400.jpg"
+    },
+    {
+      "id": "sunfeast_dark_fantasy",
+      "barcode": "8901725121401",
+      "name": "Sunfeast Dark Fantasy Choco Fills",
+      "brand": "Sunfeast",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Molten Choco Core",
+        "Pure Indulgence"
+      ],
+      "ingredients_text": "Choco Creme (40%) [Sugar, Refined Palm Oil, Cocoa Solids (12%), Emulsifier (INS 322)], Refined Wheat Flour (Maida) (34%), Hydrogenated Vegetable Oil, Sugar (16%), Invert Syrup, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt, Artificial Vanilla Flavour.",
+      "nutrition_per_100g": {
+        "energy_kcal": 512.0,
+        "protein_g": 5.5,
+        "carbohydrates_g": 65.0,
+        "total_sugars_g": 36.0,
+        "added_sugars_g": 34.0,
+        "fat_g": 26.0,
+        "saturated_fat_g": 13.5,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 210.0,
+        "fiber_g": 2.0
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 40.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/172/512/1401/front_en.9.400.jpg"
+    },
+    {
+      "id": "oreo_vanilla_creme",
+      "barcode": "7622201736185",
+      "name": "Cadbury Oreo Original Vanilla Creme Sandwich Biscuits",
+      "brand": "Oreo",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Twist, Lick, Dunk",
+        "Crunchy Cocoa Biscuit with Vanilla Creme"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida), Sugar (37%), Fractionated Palm Oil, Invert Sugar, Cocoa Solids (3.5%), Raising Agents [INS 500(ii), INS 503(ii)], Edible Common Salt, Emulsifier [INS 322(i)], Artificial Vanilla Flavouring Substance.",
+      "nutrition_per_100g": {
+        "energy_kcal": 488.0,
+        "protein_g": 5.2,
+        "carbohydrates_g": 72.0,
+        "total_sugars_g": 38.0,
+        "added_sugars_g": 36.5,
+        "fat_g": 20.0,
+        "saturated_fat_g": 9.8,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 380.0,
+        "fiber_g": 1.8
+      },
+      "serving_size_g": 28.5,
+      "mrp_inr": 30.0,
+      "net_quantity": "120 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/762/220/173/6185/front_en.11.400.jpg"
+    },
+    {
+      "id": "cadbury_dairy_milk",
+      "barcode": "7622201138248",
+      "name": "Cadbury Dairy Milk Chocolate",
+      "brand": "Cadbury",
+      "category": "Chocolates & Confectionery",
+      "claims": [
+        "The Classic Taste of Cadbury",
+        "Glass & a Half of Milk"
+      ],
+      "ingredients_text": "Sugar (52%), Milk Solids (16%), Cocoa Butter, Cocoa Solids (10%), Emulsifiers [INS 442, INS 476], Flavours (Natural, Nature Identical and Artificial Vanilla Flavouring Substances).",
+      "nutrition_per_100g": {
+        "energy_kcal": 532.0,
+        "protein_g": 7.5,
+        "carbohydrates_g": 60.5,
+        "total_sugars_g": 56.0,
+        "added_sugars_g": 48.0,
+        "fat_g": 29.5,
+        "saturated_fat_g": 18.0,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 135.0,
+        "fiber_g": 2.1
+      },
+      "serving_size_g": 20.0,
+      "mrp_inr": 20.0,
+      "net_quantity": "40 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/762/220/113/8248/front_en.14.400.jpg"
+    },
+    {
+      "id": "cadbury_5_star",
+      "barcode": "8901233024014",
+      "name": "Cadbury 5 Star Chocolate Bar",
+      "brand": "Cadbury",
+      "category": "Chocolates & Confectionery",
+      "claims": [
+        "Eat 5 Star, Do Nothing",
+        "Chewy Caramel & Soft Nougat"
+      ],
+      "ingredients_text": "Caramel & Nougat Filling (65%) [Liquid Glucose, Sugar, Invert Sugar, Hydrogenated Palm Kernel Oil, Milk Solids, Cocoa Butter, Cocoa Solids, Hydrolysed Vegetable Protein, Emulsifier (INS 471), Salt], Milk Chocolate (35%) [Sugar, Cocoa Butter, Milk Solids, Cocoa Solids, Emulsifiers (INS 442, INS 476)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 458.0,
+        "protein_g": 3.8,
+        "carbohydrates_g": 72.0,
+        "total_sugars_g": 58.0,
+        "added_sugars_g": 50.0,
+        "fat_g": 17.5,
+        "saturated_fat_g": 10.5,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 190.0,
+        "fiber_g": 1.2
+      },
+      "serving_size_g": 20.0,
+      "mrp_inr": 10.0,
+      "net_quantity": "20 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/123/302/4014/front_en.12.400.jpg"
+    },
+    {
+      "id": "nestle_kitkat",
+      "barcode": "8901058852704",
+      "name": "Nestlé KitKat 4-Finger Crisp Wafer Bar",
+      "brand": "Nestlé",
+      "category": "Chocolates & Confectionery",
+      "claims": [
+        "Have a Break, Have a KitKat",
+        "Crisp Baked Wafer in Milk Chocolate"
+      ],
+      "ingredients_text": "Milk Chocolate (69%) [Sugar, Milk Solids, Cocoa Butter, Cocoa Solids, Emulsifier (INS 322(i)), Flavour (Artificial Vanilla)], Wafer Finger [Refined Wheat Flour (Maida), Hydrogenated Palm Oil, Sugar, Cocoa Solids, Raising Agent (INS 500(ii)), Yeast, Emulsifier (INS 322(i))].",
+      "nutrition_per_100g": {
+        "energy_kcal": 510.0,
+        "protein_g": 6.8,
+        "carbohydrates_g": 64.0,
+        "total_sugars_g": 47.0,
+        "added_sugars_g": 42.0,
+        "fat_g": 25.5,
+        "saturated_fat_g": 15.0,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 95.0,
+        "fiber_g": 2.4
+      },
+      "serving_size_g": 37.5,
+      "mrp_inr": 30.0,
+      "net_quantity": "37.5 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/105/885/2704/front_en.16.400.jpg"
+    },
+    {
+      "id": "kurkure_masala_munch",
+      "barcode": "8901491103756",
+      "name": "Kurkure Masala Munch Crispy Puffs",
+      "brand": "Kurkure",
+      "category": "Snacks & Chips",
+      "claims": [
+        "Tedha Hai Par Mera Hai",
+        "Made with Dal, Corn & Rice"
+      ],
+      "ingredients_text": "Rice Meal (43%), Edible Vegetable Oil (Palmolein), Corn Meal (14%), Gram Meal (6%), Seasoning [Spices and Condiments (Chilli, Onion, Garlic, Coriander, Black Pepper, Fenugreek, Cumin), Sugar, Iodised Salt, Acidity Regulators (INS 330, INS 296), Flavour Enhancers (INS 627, INS 631), Emulsifier (INS 414)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 560.0,
+        "protein_g": 6.2,
+        "carbohydrates_g": 54.0,
+        "total_sugars_g": 2.5,
+        "added_sugars_g": 1.5,
+        "fat_g": 35.5,
+        "saturated_fat_g": 16.0,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 890.0,
+        "fiber_g": 2.2
+      },
+      "serving_size_g": 20.0,
+      "mrp_inr": 20.0,
+      "net_quantity": "82 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/149/110/3756/front_en.14.400.jpg"
+    },
+    {
+      "id": "lays_classic_salted",
+      "barcode": "8901491101837",
+      "name": "Lay's Classic Salted Potato Chips",
+      "brand": "Lay's",
+      "category": "Snacks & Chips",
+      "claims": [
+        "Made with Farm-Grown Potatoes",
+        "Simple & Crispy"
+      ],
+      "ingredients_text": "Potato (64%), Edible Vegetable Oil (Palmolein), Iodised Salt (1.5%).",
+      "nutrition_per_100g": {
+        "energy_kcal": 545.0,
+        "protein_g": 7.0,
+        "carbohydrates_g": 52.0,
+        "total_sugars_g": 0.5,
+        "added_sugars_g": 0.0,
+        "fat_g": 34.5,
+        "saturated_fat_g": 15.5,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 580.0,
+        "fiber_g": 3.5
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 20.0,
+      "net_quantity": "50 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/149/110/1837/front_en.15.400.jpg"
+    },
+    {
+      "id": "haldirams_nagpur_aloo_bhujia",
+      "barcode": "8904004400588",
+      "name": "Haldiram's Nagpur Aloo Bhujia",
+      "brand": "Haldiram's",
+      "category": "Snacks & Chips",
+      "claims": [
+        "Chatpata Crispy Potato & Chickpea Noodles",
+        "Authentic Indian Namkeen"
+      ],
+      "ingredients_text": "Potato (22%), Edible Vegetable Oil (Cottonseed, Corn and Palmolein Oil), Chickpea Flour (20%), Moth Bean Flour (18%), Tepary Bean Flour, Iodised Salt, Red Chilli Powder, Black Pepper, Clove Powder, Nutmeg, Cardamom, Dry Ginger Powder, Acidity Regulator (INS 330).",
+      "nutrition_per_100g": {
+        "energy_kcal": 582.0,
+        "protein_g": 8.5,
+        "carbohydrates_g": 43.0,
+        "total_sugars_g": 1.8,
+        "added_sugars_g": 0.0,
+        "fat_g": 42.0,
+        "saturated_fat_g": 14.5,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 740.0,
+        "fiber_g": 5.2
+      },
+      "serving_size_g": 30.0,
+      "mrp_inr": 55.0,
+      "net_quantity": "200 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/400/440/0588/front_en.11.400.jpg"
+    },
+    {
+      "id": "bingo_mad_angles",
+      "barcode": "8901725132223",
+      "name": "Bingo! Mad Angles Achaari Masti",
+      "brand": "Bingo!",
+      "category": "Snacks & Chips",
+      "claims": [
+        "Mm-Mmm-Mad Angles",
+        "Achaari Pickle Masala Crunch"
+      ],
+      "ingredients_text": "Rice Grits (38%), Edible Vegetable Oil (Palmolein), Corn Grits (20%), Gram Grits (6%), Seasoning [Iodised Salt, Spices & Condiments (Coriander, Cumin, Fenugreek, Mustard, Fennel, Onion, Garlic), Sugar, Acidity Regulators (INS 330, INS 296), Mango Powder, Flavour Enhancers (INS 627, INS 631)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 528.0,
+        "protein_g": 6.8,
+        "carbohydrates_g": 62.0,
+        "total_sugars_g": 4.5,
+        "added_sugars_g": 3.0,
+        "fat_g": 28.0,
+        "saturated_fat_g": 12.8,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 860.0,
+        "fiber_g": 2.5
+      },
+      "serving_size_g": 20.0,
+      "mrp_inr": 20.0,
+      "net_quantity": "66 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/172/513/2223/front_en.8.400.jpg"
+    },
+    {
+      "id": "thums_up_cola",
+      "barcode": "8901764012234",
+      "name": "Thums Up Charged Strong Cola",
+      "brand": "Thums Up",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "Taste the Thunder",
+        "Strong Fizzy Carbonated Cola"
+      ],
+      "ingredients_text": "Carbonated Water, Sugar (10.6%), Acidity Regulator (INS 338), Caramel Colour (INS 150d), Natural Flavours, Caffeine (14.5 mg/100ml).",
+      "nutrition_per_100g": {
+        "energy_kcal": 42.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 10.6,
+        "total_sugars_g": 10.6,
+        "added_sugars_g": 10.6,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 18.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 40.0,
+      "net_quantity": "750 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/176/401/2234/front_en.11.400.jpg"
+    },
+    {
+      "id": "coca_cola_original",
+      "barcode": "5449000000996",
+      "name": "Coca-Cola Original Taste",
+      "brand": "Coca-Cola",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "Real Magic",
+        "Refreshing Taste"
+      ],
+      "ingredients_text": "Carbonated Water, Sugar (10.6%), Acidity Regulator (INS 338), Caramel Colour (INS 150d), Natural Flavours, Caffeine.",
+      "nutrition_per_100g": {
+        "energy_kcal": 44.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 10.6,
+        "total_sugars_g": 10.6,
+        "added_sugars_g": 10.6,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 15.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 40.0,
+      "net_quantity": "750 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/544/900/000/0996/front_en.12.400.jpg"
+    },
+    {
+      "id": "sprite_lime",
+      "barcode": "8901764022219",
+      "name": "Sprite Clear Lemon-Lime Soft Drink",
+      "brand": "Sprite",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "Clear Hai",
+        "Crisp Lemon-Lime Refreshment"
+      ],
+      "ingredients_text": "Carbonated Water, Sugar (9.8%), Acidity Regulators (INS 330, INS 331(iii)), Preservative (INS 211), Natural Lemon-Lime Flavours.",
+      "nutrition_per_100g": {
+        "energy_kcal": 39.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 9.8,
+        "total_sugars_g": 9.8,
+        "added_sugars_g": 9.8,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 24.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 40.0,
+      "net_quantity": "750 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/176/402/2219/front_en.7.400.jpg"
+    },
+    {
+      "id": "frooti_mango",
+      "barcode": "8901719281012",
+      "name": "Frooti Fresh 'N' Juicy Mango Drink",
+      "brand": "Frooti",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "Mango Frooti, Fresh 'N' Juicy",
+        "Made with Totapuri Mango Pulp"
+      ],
+      "ingredients_text": "Water, Mango Pulp (19%), Sugar (13.5%), Acidity Regulator (INS 330), Antioxidant (INS 300), Preservatives (INS 211, INS 202), Natural Mango Flavours.",
+      "nutrition_per_100g": {
+        "energy_kcal": 65.0,
+        "protein_g": 0.2,
+        "carbohydrates_g": 16.2,
+        "total_sugars_g": 15.0,
+        "added_sugars_g": 13.5,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 28.0,
+        "fiber_g": 0.5
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 10.0,
+      "net_quantity": "160 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/171/928/1012/front_en.10.400.jpg"
+    },
+    {
+      "id": "real_mixed_fruit_juice",
+      "barcode": "8901207010111",
+      "name": "Réal Fruit Power Mixed Fruit Juice",
+      "brand": "Dabur Réal",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "No Added Preservatives",
+        "Goodness of 9 Fruits"
+      ],
+      "ingredients_text": "Water, Mixed Fruit Juice Concentrate & Puree (32%) [Apple, Orange, Guava, Pineapple, Mango, Banana, Apricot, Peach, Passionfruit], Sugar (10.5%), Acidity Regulator (INS 330), Antioxidant (INS 300).",
+      "nutrition_per_100g": {
+        "energy_kcal": 56.0,
+        "protein_g": 0.4,
+        "carbohydrates_g": 13.6,
+        "total_sugars_g": 13.0,
+        "added_sugars_g": 8.5,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 20.0,
+        "fiber_g": 0.6
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 125.0,
+      "net_quantity": "1000 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/120/701/0111/front_en.12.400.jpg"
+    },
+    {
+      "id": "sunfeast_yippee_noodles",
+      "barcode": "8901725181122",
+      "name": "Sunfeast YiPPee! Magic Masala Instant Noodles",
+      "brand": "Sunfeast",
+      "category": "Noodles & Pasta",
+      "claims": [
+        "Non-Sticky Long Noodles",
+        "Goodness of Wheat & Veggies"
+      ],
+      "ingredients_text": "Noodles [Refined Wheat Flour (Maida) (80%), Refined Palm Oil, Iodised Salt, Wheat Gluten, Acidity Regulators (INS 500(i), INS 451(i)), Thickener (INS 412)], Masala Mix [Dehydrated Vegetables (Carrot, Cabbage), Spices (Cumin, Coriander, Turmeric, Ginger, Black Pepper, Clove, Nutmeg), Hydrolysed Vegetable Protein, Sugar, Iodised Salt, Flavour Enhancers (INS 627, INS 631)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 465.0,
+        "protein_g": 9.2,
+        "carbohydrates_g": 64.0,
+        "total_sugars_g": 3.2,
+        "added_sugars_g": 1.5,
+        "fat_g": 19.0,
+        "saturated_fat_g": 8.8,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 1150.0,
+        "fiber_g": 3.5
+      },
+      "serving_size_g": 60.0,
+      "mrp_inr": 14.0,
+      "net_quantity": "65 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/172/518/1122/front_en.15.400.jpg"
+    },
+    {
+      "id": "saffola_masala_oats",
+      "barcode": "8901088085203",
+      "name": "Saffola Masala Oats Classic Masala",
+      "brand": "Saffola",
+      "category": "Breakfast Cereals",
+      "claims": [
+        "100% Natural Wholegrain Oats",
+        "High in Fibre & Protein",
+        "Ready in 3 Minutes"
+      ],
+      "ingredients_text": "Rolled Oats (73.6%), Carrots, Green Peas, Onion, Spices and Condiments (Onion, Turmeric, Pepper, Clove, Red Chilli, Cumin, Garlic, Fenugreek), Iodised Salt, Sugar, Edible Vegetable Oil (Rice Bran Oil), Hydrolysed Vegetable Protein, Flavour Enhancer (INS 627, INS 631).",
+      "nutrition_per_100g": {
+        "energy_kcal": 389.0,
+        "protein_g": 10.5,
+        "carbohydrates_g": 68.0,
+        "total_sugars_g": 5.8,
+        "added_sugars_g": 2.0,
+        "fat_g": 8.0,
+        "saturated_fat_g": 1.8,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 890.0,
+        "fiber_g": 8.5
+      },
+      "serving_size_g": 38.0,
+      "mrp_inr": 35.0,
+      "net_quantity": "190 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/108/808/5203/front_en.9.400.jpg"
+    },
+    {
+      "id": "kelloggs_corn_flakes",
+      "barcode": "8901499010117",
+      "name": "Kellogg's Corn Flakes Original",
+      "brand": "Kellogg's",
+      "category": "Breakfast Cereals",
+      "claims": [
+        "Real Corn Goodness",
+        "Naturally Cholesterol Free",
+        "Enriched with 8 Essential Vitamins"
+      ],
+      "ingredients_text": "Milled Corn (89%), Sugar (8%), Malt Extract (3%), Iodised Salt, Vitamins & Minerals (Vitamin C, Vitamin B1, Vitamin B2, Vitamin B3, Vitamin B6, Folate, Vitamin B12, Iron).",
+      "nutrition_per_100g": {
+        "energy_kcal": 378.0,
+        "protein_g": 7.0,
+        "carbohydrates_g": 84.0,
+        "total_sugars_g": 8.5,
+        "added_sugars_g": 8.0,
+        "fat_g": 0.8,
+        "saturated_fat_g": 0.2,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 710.0,
+        "fiber_g": 2.8
+      },
+      "serving_size_g": 30.0,
+      "mrp_inr": 99.0,
+      "net_quantity": "250 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/149/901/0117/front_en.11.400.jpg"
+    },
+    {
+      "id": "tata_tea_gold",
+      "barcode": "8901052002013",
+      "name": "Tata Tea Gold Premium Black Tea",
+      "brand": "Tata Tea",
+      "category": "Malt Food Drinks",
+      "claims": [
+        "Rich Aroma & Taste",
+        "Gently Rolled Long Leaves"
+      ],
+      "ingredients_text": "100% Pure Indian CTC Tea with 15% Long Leaf Orthodox Tea.",
+      "nutrition_per_100g": {
+        "energy_kcal": 105.0,
+        "protein_g": 19.0,
+        "carbohydrates_g": 7.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.5,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 12.0,
+        "fiber_g": 35.0
+      },
+      "serving_size_g": 2.0,
+      "mrp_inr": 140.0,
+      "net_quantity": "250 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/105/200/2013/front_en.8.400.jpg"
+    },
+    {
+      "id": "nescafe_classic",
+      "barcode": "8901058859109",
+      "name": "Nescafé Classic 100% Pure Instant Coffee",
+      "brand": "Nescafé",
+      "category": "Malt Food Drinks",
+      "claims": [
+        "100% Pure Natural Coffee",
+        "Rich Aroma & Bold Taste"
+      ],
+      "ingredients_text": "100% Pure Soluble Coffee Powder from Selected Robusta and Arabica Beans.",
+      "nutrition_per_100g": {
+        "energy_kcal": 240.0,
+        "protein_g": 14.0,
+        "carbohydrates_g": 42.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.5,
+        "saturated_fat_g": 0.2,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 45.0,
+        "fiber_g": 28.0
+      },
+      "serving_size_g": 1.5,
+      "mrp_inr": 160.0,
+      "net_quantity": "50 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/105/885/9109/front_en.7.400.jpg"
+    },
+    {
+      "id": "amul_taaza_milk",
+      "barcode": "8901262151014",
+      "name": "Amul Taaza Homogenised Toned Milk",
+      "brand": "Amul",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "No Preservatives",
+        "Calcium & Protein Rich",
+        "UHT Treated"
+      ],
+      "ingredients_text": "Toned Milk, Vitamin A, Vitamin D2.",
+      "nutrition_per_100g": {
+        "energy_kcal": 58.0,
+        "protein_g": 3.1,
+        "carbohydrates_g": 4.7,
+        "total_sugars_g": 4.7,
+        "added_sugars_g": 0.0,
+        "fat_g": 3.0,
+        "saturated_fat_g": 1.9,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 50.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 72.0,
+      "net_quantity": "1000 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/126/215/1014/front_en.10.400.jpg"
+    },
+    {
+      "id": "kissan_fresh_tomato_ketchup",
+      "barcode": "8901030341011",
+      "name": "Kissan Fresh Tomato Ketchup",
+      "brand": "Kissan",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "100% Real Tomatoes",
+        "Chatpata Flavour"
+      ],
+      "ingredients_text": "Water, Tomato Paste (28%), Sugar (24%), Salt, Acidity Regulator (INS 260), Thickeners (INS 1422, INS 415), Onion Powder, Garlic Powder, Preservative (INS 211), Spices and Condiments.",
+      "nutrition_per_100g": {
+        "energy_kcal": 138.0,
+        "protein_g": 1.2,
+        "carbohydrates_g": 33.0,
+        "total_sugars_g": 28.0,
+        "added_sugars_g": 24.0,
+        "fat_g": 0.1,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 920.0,
+        "fiber_g": 1.2
+      },
+      "serving_size_g": 15.0,
+      "mrp_inr": 110.0,
+      "net_quantity": "950 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/034/1011/front_en.12.400.jpg"
+    },
+    {
+      "id": "dabur_pure_honey",
+      "barcode": "8901207020110",
+      "name": "Dabur 100% Pure Honey",
+      "brand": "Dabur",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "100% Pure Honey",
+        "Zero Sugar Adulteration",
+        "NMR Tested"
+      ],
+      "ingredients_text": "100% Pure Honey.",
+      "nutrition_per_100g": {
+        "energy_kcal": 320.0,
+        "protein_g": 0.3,
+        "carbohydrates_g": 80.0,
+        "total_sugars_g": 80.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 17.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 10.0,
+      "mrp_inr": 199.0,
+      "net_quantity": "500 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/120/702/0110/front_en.13.400.jpg"
+    },
+    {
+      "id": "fortune_sunflower_oil",
+      "barcode": "8906007280018",
+      "name": "Fortune Sunlite Refined Sunflower Oil",
+      "brand": "Fortune",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "Light and Healthy",
+        "Enriched with Vitamins A & D"
+      ],
+      "ingredients_text": "Refined Sunflower Oil, Antioxidants (INS 319), Antifoaming Agent (INS 900a), Vitamin A, Vitamin D2.",
+      "nutrition_per_100g": {
+        "energy_kcal": 900.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 0.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 100.0,
+        "saturated_fat_g": 11.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 0.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 15.0,
+      "mrp_inr": 155.0,
+      "net_quantity": "1000 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/600/728/0018/front_en.9.400.jpg"
+    },
+    {
+      "id": "tata_salt_iodised",
+      "barcode": "8901052001016",
+      "name": "Tata Salt Vacuum Evaporated Iodised Salt",
+      "brand": "Tata Salt",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "Desh Ka Namak",
+        "Vacuum Evaporated",
+        "Iodine Guarantee"
+      ],
+      "ingredients_text": "Edible Common Salt, Potassium Iodate, Anticaking Agent (INS 551).",
+      "nutrition_per_100g": {
+        "energy_kcal": 0.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 0.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 38700.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 5.0,
+      "mrp_inr": 28.0,
+      "net_quantity": "1000 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/105/200/1016/front_en.11.400.jpg"
+    },
+    {
+      "id": "dettol_original_soap",
+      "barcode": "8901396111019",
+      "name": "Dettol Original Antiseptic Bathing Bar Soap",
+      "brand": "Dettol",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "100% Better Germ Protection",
+        "Be 100% Sure"
+      ],
+      "ingredients_text": "Sodium Palmate, Sodium Palm Kernelate, Aqua, Glycerin, Chloroxylenol, Parfum, Sodium Chloride, Tetrasodium EDTA, Etidronic Acid, CI 11680, CI 12085.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 75.0,
+      "mrp_inr": 38.0,
+      "net_quantity": "75 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/139/611/1019/front_en.10.400.jpg"
+    },
+    {
+      "id": "colgate_strong_teeth",
+      "barcode": "8901314010110",
+      "name": "Colgate Strong Teeth Dental Cream Toothpaste",
+      "brand": "Colgate",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "Amino Shakti",
+        "2x Stronger Teeth",
+        "Cavity Protection"
+      ],
+      "ingredients_text": "Calcium Carbonate, Sorbitol, Sodium Lauryl Sulphate, Silica, Titanium Dioxide, Sodium Silicate, Sodium Monofluorophosphate, Sodium Carboxymethyl Cellulose, Sodium Saccharin, Flavour.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 2.0,
+      "mrp_inr": 60.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/131/401/0110/front_en.12.400.jpg"
+    },
+    {
+      "id": "parachute_coconut_oil",
+      "barcode": "8901088001012",
+      "name": "Parachute 100% Pure Coconut Hair Oil",
+      "brand": "Parachute",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "100% Pure Coconut Oil",
+        "Naturally Filtered",
+        "Edible Grade"
+      ],
+      "ingredients_text": "100% Pure Coconut Oil.",
+      "nutrition_per_100g": {
+        "energy_kcal": 900.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 0.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 100.0,
+        "saturated_fat_g": 90.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 0.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 10.0,
+      "mrp_inr": 45.0,
+      "net_quantity": "100 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/108/800/1012/front_en.14.400.jpg"
+    },
+    {
+      "id": "britannia_50_50",
+      "barcode": "8901063010128",
+      "name": "Britannia 50-50 Maska Chaska Biscuits",
+      "brand": "Britannia",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Maska Chaska",
+        "Buttery Herb Flavoured Crackers"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (67%), Refined Palm Oil, Sugar (12%), Butter, Invert Sugar Syrup, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt, Dehydrated Herbs (Parsley), Dough Conditioner [INS 223], Emulsifier [INS 322(i)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 490.0,
+        "protein_g": 7.5,
+        "carbohydrates_g": 67.0,
+        "total_sugars_g": 13.0,
+        "added_sugars_g": 11.5,
+        "fat_g": 21.0,
+        "saturated_fat_g": 10.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 710.0,
+        "fiber_g": 1.5
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 15.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/106/301/0128/front_en.11.400.jpg"
+    },
+    {
+      "id": "sunfeast_moms_magic",
+      "barcode": "8901725138126",
+      "name": "Sunfeast Mom's Magic Cashew & Almond Biscuits",
+      "brand": "Sunfeast",
+      "category": "Biscuits & Cookies",
+      "claims": [
+        "Rich Butter, Cashew & Almond Crunch",
+        "Just Like Mom's"
+      ],
+      "ingredients_text": "Refined Wheat Flour (Maida) (56%), Sugar (23%), Refined Palm Oil, Nuts (4.5%) [Cashew Bits, Almond Flakes], Butter (1.5%), Invert Sugar Syrup, Milk Solids, Raising Agents [INS 503(ii), INS 500(ii)], Edible Common Salt, Emulsifiers [INS 322, INS 471].",
+      "nutrition_per_100g": {
+        "energy_kcal": 498.0,
+        "protein_g": 7.2,
+        "carbohydrates_g": 66.0,
+        "total_sugars_g": 24.0,
+        "added_sugars_g": 22.0,
+        "fat_g": 22.5,
+        "saturated_fat_g": 10.2,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 320.0,
+        "fiber_g": 1.8
+      },
+      "serving_size_g": 25.0,
+      "mrp_inr": 20.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/172/513/8126/front_en.8.400.jpg"
+    },
+    {
+      "id": "cadbury_perk",
+      "barcode": "8901233025011",
+      "name": "Cadbury Perk Chocolate Coated Wafer",
+      "brand": "Cadbury",
+      "category": "Chocolates & Confectionery",
+      "claims": [
+        "Light & Crispy Chocolate Wafer",
+        "Thirakne Ka Mood Kare"
+      ],
+      "ingredients_text": "Milk Chocolate (53%) [Sugar, Cocoa Butter, Milk Solids, Cocoa Solids, Emulsifiers (INS 442, INS 476)], Wafer Layers (47%) [Refined Wheat Flour (Maida), Hydrogenated Vegetable Fat, Sugar, Cocoa Solids, Raising Agent (INS 500(ii)), Edible Salt, Emulsifier (INS 322)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 515.0,
+        "protein_g": 4.8,
+        "carbohydrates_g": 66.0,
+        "total_sugars_g": 49.0,
+        "added_sugars_g": 44.0,
+        "fat_g": 25.8,
+        "saturated_fat_g": 15.0,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 140.0,
+        "fiber_g": 1.5
+      },
+      "serving_size_g": 13.0,
+      "mrp_inr": 5.0,
+      "net_quantity": "13 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/123/302/5011/front_en.10.400.jpg"
+    },
+    {
+      "id": "cadbury_gems",
+      "barcode": "7622210402125",
+      "name": "Cadbury Gems Chocolate Buttons",
+      "brand": "Cadbury",
+      "category": "Chocolates & Confectionery",
+      "claims": [
+        "Crisp Sugar Shell with Real Milk Chocolate",
+        "No Added Colours from Artificial Dyes"
+      ],
+      "ingredients_text": "Sugar (58%), Hydrogenated Palm Kernel Oil, Milk Solids, Cocoa Solids (8%), Refined Wheat Flour (Maida), Glazing Agents (INS 903, INS 904), Permitted Synthetic Food Colours (INS 102, INS 110, INS 122, INS 133, INS 171), Emulsifier (INS 442).",
+      "nutrition_per_100g": {
+        "energy_kcal": 495.0,
+        "protein_g": 4.2,
+        "carbohydrates_g": 72.0,
+        "total_sugars_g": 66.0,
+        "added_sugars_g": 58.0,
+        "fat_g": 21.0,
+        "saturated_fat_g": 19.5,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 75.0,
+        "fiber_g": 1.5
+      },
+      "serving_size_g": 11.4,
+      "mrp_inr": 10.0,
+      "net_quantity": "23 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/762/221/040/2125/front_en.9.400.jpg"
+    },
+    {
+      "id": "nestle_munch",
+      "barcode": "8901058853015",
+      "name": "Nestlé Munch Crunchy Chocolate Wafer Bar",
+      "brand": "Nestlé",
+      "category": "Chocolates & Confectionery",
+      "claims": [
+        "Crunchilicious Taste",
+        "Extra Crunchy Wafer"
+      ],
+      "ingredients_text": "Compound Coating (52%) [Sugar, Hydrogenated Vegetable Fats (Palm Kernel), Milk Solids, Cocoa Solids (3.8%), Emulsifier (INS 322(i))], Wafer (48%) [Refined Wheat Flour (Maida), Hydrogenated Palm Oil, Sugar, Cocoa Solids, Raising Agent (INS 500(ii)), Edible Common Salt, Yeast].",
+      "nutrition_per_100g": {
+        "energy_kcal": 482.0,
+        "protein_g": 5.8,
+        "carbohydrates_g": 67.5,
+        "total_sugars_g": 42.0,
+        "added_sugars_g": 38.0,
+        "fat_g": 21.0,
+        "saturated_fat_g": 17.5,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 130.0,
+        "fiber_g": 1.8
+      },
+      "serving_size_g": 18.0,
+      "mrp_inr": 10.0,
+      "net_quantity": "18 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/105/885/3015/front_en.11.400.jpg"
+    },
+    {
+      "id": "haldirams_bhujia_sev",
+      "barcode": "8904004400502",
+      "name": "Haldiram's Bhujia Sev",
+      "brand": "Haldiram's",
+      "category": "Snacks & Chips",
+      "claims": [
+        "Traditional Bikaneri Bhujia Sev",
+        "Crisp Gram & Moth Bean Noodles"
+      ],
+      "ingredients_text": "Moth Bean Flour (42%), Chickpea Flour (28%), Edible Vegetable Oil (Palmolein Oil, Cottonseed Oil), Iodised Salt, Red Chilli Powder, Black Pepper, Clove Powder, Cardamom Powder, Ginger Powder.",
+      "nutrition_per_100g": {
+        "energy_kcal": 590.0,
+        "protein_g": 12.0,
+        "carbohydrates_g": 41.0,
+        "total_sugars_g": 1.5,
+        "added_sugars_g": 0.0,
+        "fat_g": 43.0,
+        "saturated_fat_g": 15.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 680.0,
+        "fiber_g": 5.0
+      },
+      "serving_size_g": 30.0,
+      "mrp_inr": 45.0,
+      "net_quantity": "150 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/400/440/0502/front_en.11.400.jpg"
+    },
+    {
+      "id": "haldirams_khatta_meetha",
+      "barcode": "8904004400649",
+      "name": "Haldiram's Khatta Meetha Mixture",
+      "brand": "Haldiram's",
+      "category": "Snacks & Chips",
+      "claims": [
+        "Sweet & Sour Crunchy Mixture",
+        "With Rice Flakes & Peanuts"
+      ],
+      "ingredients_text": "Chickpea Flour (25%), Edible Vegetable Oil (Palmolein), Rice Flakes (15%), Sugar (8%), Peanuts (7%), Green Peas, Gram Pulse, Iodised Salt, Turmeric, Mango Powder, Red Chilli, Black Salt, Acidity Regulator (INS 330).",
+      "nutrition_per_100g": {
+        "energy_kcal": 535.0,
+        "protein_g": 9.5,
+        "carbohydrates_g": 55.0,
+        "total_sugars_g": 11.0,
+        "added_sugars_g": 8.0,
+        "fat_g": 31.0,
+        "saturated_fat_g": 11.5,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 640.0,
+        "fiber_g": 4.5
+      },
+      "serving_size_g": 30.0,
+      "mrp_inr": 45.0,
+      "net_quantity": "150 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/400/440/0649/front_en.10.400.jpg"
+    },
+    {
+      "id": "limca_fresh_lemon",
+      "barcode": "8901764031129",
+      "name": "Limca Fresh Lemonised Drink",
+      "brand": "Limca",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "Mat Bano Bakra, Piyo Limca",
+        "Lemon & Lime Fizzy Refreshment"
+      ],
+      "ingredients_text": "Carbonated Water, Sugar (10.2%), Acidity Regulators (INS 330, INS 331(iii)), Stabilizers (INS 414, INS 471), Preservative (INS 211), Natural Lemon Flavour.",
+      "nutrition_per_100g": {
+        "energy_kcal": 41.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 10.2,
+        "total_sugars_g": 10.2,
+        "added_sugars_g": 10.2,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 18.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 40.0,
+      "net_quantity": "750 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/176/403/1129/front_en.10.400.jpg"
+    },
+    {
+      "id": "maaza_mango_drink",
+      "barcode": "8901764041128",
+      "name": "Maaza Mango Pulp Drink",
+      "brand": "Maaza",
+      "category": "Energy & Sports Drinks",
+      "claims": [
+        "Dildaar Mango",
+        "Rich Alphonsa Mango Pulp"
+      ],
+      "ingredients_text": "Water, Alphonso Mango Pulp (19.5%), Sugar (13.0%), Acidity Regulator (INS 330), Antioxidant (INS 300), Preservative (INS 211), Natural Mango Flavour.",
+      "nutrition_per_100g": {
+        "energy_kcal": 62.0,
+        "protein_g": 0.2,
+        "carbohydrates_g": 15.5,
+        "total_sugars_g": 14.5,
+        "added_sugars_g": 13.0,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 22.0,
+        "fiber_g": 0.5
+      },
+      "serving_size_g": 200.0,
+      "mrp_inr": 38.0,
+      "net_quantity": "600 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/176/404/1128/front_en.11.400.jpg"
+    },
+    {
+      "id": "chings_schezwan_noodles",
+      "barcode": "8901595852109",
+      "name": "Ching's Secret Schezwan Instant Noodles",
+      "brand": "Ching's Secret",
+      "category": "Noodles & Pasta",
+      "claims": [
+        "Desi Chinese Flavour",
+        "Fiery Schezwan Noodles"
+      ],
+      "ingredients_text": "Noodles [Wheat Flour (Maida) (78%), Palm Oil, Salt, Wheat Gluten, Mineral (Calcium Carbonate), Guar Gum], Seasoning [Garlic Powder, Red Chilli, Ginger, Onion, Soy Sauce Powder, Sugar, Salt, Hydrolysed Vegetable Protein, Flavour Enhancers (INS 627, INS 631), Caramel (INS 150d)].",
+      "nutrition_per_100g": {
+        "energy_kcal": 462.0,
+        "protein_g": 9.0,
+        "carbohydrates_g": 63.5,
+        "total_sugars_g": 3.8,
+        "added_sugars_g": 2.0,
+        "fat_g": 19.2,
+        "saturated_fat_g": 9.0,
+        "trans_fat_g": 0.1,
+        "sodium_mg": 1240.0,
+        "fiber_g": 3.2
+      },
+      "serving_size_g": 60.0,
+      "mrp_inr": 15.0,
+      "net_quantity": "60 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/159/585/2109/front_en.10.400.jpg"
+    },
+    {
+      "id": "lipton_green_tea",
+      "barcode": "8901030383707",
+      "name": "Lipton Pure & Light Green Tea",
+      "brand": "Lipton",
+      "category": "Malt Food Drinks",
+      "claims": [
+        "Zero Calories Without Milk & Sugar",
+        "Rich in Catechin Antioxidants",
+        "Natural Green Tea"
+      ],
+      "ingredients_text": "100% Pure Green Tea Leaves.",
+      "nutrition_per_100g": {
+        "energy_kcal": 0.0,
+        "protein_g": 0.0,
+        "carbohydrates_g": 0.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.0,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 0.0,
+        "fiber_g": 0.0
+      },
+      "serving_size_g": 2.0,
+      "mrp_inr": 175.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/038/3707/front_en.12.400.jpg"
+    },
+    {
+      "id": "brooke_bond_red_label",
+      "barcode": "8901030894562",
+      "name": "Brooke Bond Red Label Natural Care Tea",
+      "brand": "Brooke Bond",
+      "category": "Malt Food Drinks",
+      "claims": [
+        "5 Ayurvedic Ingredients: Ashwagandha, Tulsi, Mulethi, Cardamom, Ginger",
+        "Clinically Proven Immunity"
+      ],
+      "ingredients_text": "CTC Black Tea (98%), Ayurvedic Herbs & Spices (2%) [Cardamom, Ginger, Tulsi, Ashwagandha, Mulethi].",
+      "nutrition_per_100g": {
+        "energy_kcal": 110.0,
+        "protein_g": 18.5,
+        "carbohydrates_g": 8.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.5,
+        "saturated_fat_g": 0.0,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 14.0,
+        "fiber_g": 30.0
+      },
+      "serving_size_g": 2.0,
+      "mrp_inr": 150.0,
+      "net_quantity": "250 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/089/4562/front_en.11.400.jpg"
+    },
+    {
+      "id": "bru_instant_coffee",
+      "barcode": "8901030018128",
+      "name": "Bru Instant Coffee-Chicory Mix",
+      "brand": "Bru",
+      "category": "Malt Food Drinks",
+      "claims": [
+        "India's First Coffee-Chicory Blend",
+        "Authentic South Indian Coffee Aroma"
+      ],
+      "ingredients_text": "Soluble Coffee Powder (70%), Roasted Chicory (30%).",
+      "nutrition_per_100g": {
+        "energy_kcal": 280.0,
+        "protein_g": 11.0,
+        "carbohydrates_g": 56.0,
+        "total_sugars_g": 2.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 0.4,
+        "saturated_fat_g": 0.2,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 65.0,
+        "fiber_g": 22.0
+      },
+      "serving_size_g": 1.5,
+      "mrp_inr": 95.0,
+      "net_quantity": "50 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/001/8128/front_en.8.400.jpg"
+    },
+    {
+      "id": "aashirvaad_chakki_atta",
+      "barcode": "8901725111013",
+      "name": "Aashirvaad Superior MP Shudh Chakki Atta",
+      "brand": "Aashirvaad",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "100% Pure Whole Wheat",
+        "Traditional Chakki Process",
+        "4 Roti Fibre Guarantee"
+      ],
+      "ingredients_text": "100% Whole Wheat Flour (Atta).",
+      "nutrition_per_100g": {
+        "energy_kcal": 365.0,
+        "protein_g": 11.8,
+        "carbohydrates_g": 74.0,
+        "total_sugars_g": 2.2,
+        "added_sugars_g": 0.0,
+        "fat_g": 1.7,
+        "saturated_fat_g": 0.4,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 4.0,
+        "fiber_g": 11.2
+      },
+      "serving_size_g": 50.0,
+      "mrp_inr": 235.0,
+      "net_quantity": "5000 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/172/511/1013/front_en.11.400.jpg"
+    },
+    {
+      "id": "everest_garam_masala",
+      "barcode": "8901786101015",
+      "name": "Everest Super Garam Masala",
+      "brand": "Everest",
+      "category": "Dairy & Spreads",
+      "claims": [
+        "Taste Parikshak",
+        "Aromatic Blend of 13 Spices"
+      ],
+      "ingredients_text": "Coriander, Cumin, Black Pepper, Cardamom Seeds, Cassia Leaf, Clove, Cinnamon, Dry Ginger, Star Anise, Caraway, Mace, Nutmeg, Stone Flower.",
+      "nutrition_per_100g": {
+        "energy_kcal": 320.0,
+        "protein_g": 11.5,
+        "carbohydrates_g": 48.0,
+        "total_sugars_g": 0.0,
+        "added_sugars_g": 0.0,
+        "fat_g": 9.5,
+        "saturated_fat_g": 1.2,
+        "trans_fat_g": 0.0,
+        "sodium_mg": 85.0,
+        "fiber_g": 24.0
+      },
+      "serving_size_g": 3.0,
+      "mrp_inr": 48.0,
+      "net_quantity": "100 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/178/610/1015/front_en.10.400.jpg"
+    },
+    {
+      "id": "lifebuoy_soap",
+      "barcode": "8901030021012",
+      "name": "Lifebuoy Total 10 Germ Protection Bathing Bar",
+      "brand": "Lifebuoy",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "100% Stronger Germ Protection",
+        "Active Silver Shield Formula"
+      ],
+      "ingredients_text": "Sodium Palmate, Sodium Palm Kernelate, Water, Glycerin, Sodium Chloride, Silver Oxide, Thymol, Terpineol, Perfume, CI 12490, Tetrasodium EDTA.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 75.0,
+      "mrp_inr": 34.0,
+      "net_quantity": "75 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/002/1012/front_en.9.400.jpg"
+    },
+    {
+      "id": "dove_beauty_bar",
+      "barcode": "8901030031011",
+      "name": "Dove Cream Beauty Bathing Bar",
+      "brand": "Dove",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "1/4th Moisturising Cream",
+        "Soft & Smooth Skin",
+        "Mild Cleansers"
+      ],
+      "ingredients_text": "Sodium Cocoyl Isethionate, Stearic Acid, Lauric Acid, Sodium Palmitate, Water, Sodium Isethionate, Sodium Stearate, Cocamidopropyl Betaine, Sodium Palm Kernelate, Glycerin, Perfume, Titanium Dioxide, Zinc Oxide.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 75.0,
+      "mrp_inr": 60.0,
+      "net_quantity": "75 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/003/1011/front_en.10.400.jpg"
+    },
+    {
+      "id": "closeup_everfresh",
+      "barcode": "8901030041010",
+      "name": "Close Up Everfresh Red Hot Gel Toothpaste",
+      "brand": "Close Up",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "12 Hours Fresh Breath",
+        "Anti-Bacterial Zinc Mouthwash Formula"
+      ],
+      "ingredients_text": "Sorbitol, Water, Hydrated Silica, Sodium Lauryl Sulphate, PEG-32, Flavour, Cellulose Gum, Zinc Sulphate, Sodium Saccharin, Sodium Fluoride, CI 16035, CI 17200.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 2.0,
+      "mrp_inr": 65.0,
+      "net_quantity": "80 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/004/1010/front_en.11.400.jpg"
+    },
+    {
+      "id": "sensodyne_fresh_mint",
+      "barcode": "8901571001017",
+      "name": "Sensodyne Fresh Mint Sensitive Toothpaste",
+      "brand": "Sensodyne",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "Dentist Recommended Sensitivity Brand",
+        "Daily Sensitivity Protection"
+      ],
+      "ingredients_text": "Water, Sorbitol, Hydrated Silica, Glycerin, Potassium Nitrate (5%), Cocamidopropyl Betaine, Flavour, Xanthan Gum, Titanium Dioxide, Sodium Saccharin, Sodium Fluoride.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 2.0,
+      "mrp_inr": 115.0,
+      "net_quantity": "70 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/157/100/1017/front_en.10.400.jpg"
+    },
+    {
+      "id": "clinic_plus_shampoo",
+      "barcode": "8901030051019",
+      "name": "Clinic Plus Strong & Long Health Shampoo",
+      "brand": "Clinic Plus",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "Milk Protein Formula",
+        "Strength to Weak Hair Roots"
+      ],
+      "ingredients_text": "Water, Sodium Laureth Sulphate, Dimethiconol, TEA-Dodecylbenzenesulfonate, Cocamidopropyl Betaine, Sodium Chloride, Hydrolysed Milk Protein, Perfume, Carbomer, Guar Hydroxypropyltrimonium Chloride, Mica, Titanium Dioxide.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 10.0,
+      "mrp_inr": 80.0,
+      "net_quantity": "175 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/005/1019/front_en.12.400.jpg"
+    },
+    {
+      "id": "vaseline_deep_restore",
+      "barcode": "8901030061018",
+      "name": "Vaseline Intensive Care Deep Restore Body Lotion",
+      "brand": "Vaseline",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "Pure Oat Extract & Micro-droplets of Vaseline Jelly",
+        "Deep Moisture for 48 Hours"
+      ],
+      "ingredients_text": "Water, Mineral Oil, Glycerin, Cetostearyl Alcohol, Petrolatum, Avena Sativa (Oat) Straw Extract, Glyceryl Stearate, Dimethicone, Carbomer, Phenoxyethanol, Methylparaben, Fragrance.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 10.0,
+      "mrp_inr": 160.0,
+      "net_quantity": "200 ml",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/103/006/1018/front_en.11.400.jpg"
+    },
+    {
+      "id": "boroline_ayurvedic_cream",
+      "barcode": "8901107001017",
+      "name": "Boroline Antiseptic Ayurvedic Skin Cream",
+      "brand": "Boroline",
+      "category": "Personal Care & Hygiene",
+      "claims": [
+        "The Original Antiseptic Cream",
+        "Heals Dry Chapped Skin Since 1929"
+      ],
+      "ingredients_text": "Boric Acid (1% w/w), Zinc Oxide (3% w/w), White Petroleum Jelly, Anhydrous Lanolin, Microcrystalline Wax, Perfume.",
+      "nutrition_per_100g": {},
+      "serving_size_g": 5.0,
+      "mrp_inr": 42.0,
+      "net_quantity": "40 g",
+      "image_url": "https://images.openfoodfacts.org/images/products/890/110/700/1017/front_en.10.400.jpg"
     }
   ]
 }
