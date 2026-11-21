@@ -57,6 +57,8 @@ STATIC_DIR = Path(__file__).parent / "static"
 STITCH_DIR = Path(__file__).resolve().parent.parent.parent / "stitch_platform" / "stitch_packsure_ai_mobile_platform"
 if STITCH_DIR.exists():
     app.mount("/stitch", StaticFiles(directory=str(STITCH_DIR), html=True), name="stitch")
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
 @app.get("/")
@@ -65,6 +67,62 @@ def home():
     if idx.exists():
         return FileResponse(idx)
     return {"service": "TruthLens API v2.0.0"}
+
+
+@app.get("/manifest.json")
+def get_manifest():
+    f = STATIC_DIR / "manifest.json"
+    if f.exists():
+        return FileResponse(f, media_type="application/manifest+json")
+    raise HTTPException(404, "Manifest not found")
+
+
+@app.get("/sw.js")
+def get_sw():
+    f = STATIC_DIR / "sw.js"
+    if f.exists():
+        return FileResponse(f, media_type="application/javascript", headers={"Service-Worker-Allowed": "/"})
+    raise HTTPException(404, "Service Worker not found")
+
+
+@app.get("/favicon.ico")
+def get_favicon_ico():
+    f = STATIC_DIR / "favicon.ico"
+    if f.exists():
+        return FileResponse(f, media_type="image/x-icon")
+    raise HTTPException(404, "Favicon not found")
+
+
+@app.get("/favicon.svg")
+def get_favicon_svg():
+    f = STATIC_DIR / "favicon.svg"
+    if f.exists():
+        return FileResponse(f, media_type="image/svg+xml")
+    raise HTTPException(404, "Favicon SVG not found")
+
+
+@app.get("/icon-192.png")
+def get_icon_192():
+    f = STATIC_DIR / "icon-192.png"
+    if f.exists():
+        return FileResponse(f, media_type="image/png")
+    raise HTTPException(404)
+
+
+@app.get("/icon-512.png")
+def get_icon_512():
+    f = STATIC_DIR / "icon-512.png"
+    if f.exists():
+        return FileResponse(f, media_type="image/png")
+    raise HTTPException(404)
+
+
+@app.get("/apple-touch-icon.png")
+def get_apple_touch_icon():
+    f = STATIC_DIR / "apple-touch-icon.png"
+    if f.exists():
+        return FileResponse(f, media_type="image/png")
+    raise HTTPException(404)
 
 
 @app.get("/api/health")

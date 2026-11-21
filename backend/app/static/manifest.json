@@ -1,0 +1,61 @@
+{
+  "name": "TruthLens — Food Intelligence & PackSure",
+  "short_name": "TruthLens",
+  "description": "Know what's really inside packaged foods. AI food label analysis, hidden sugars, INS additives & legal metrology compliance.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FEF9F0",
+  "theme_color": "#1B4332",
+  "categories": ["food", "health", "lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Scan Food Label",
+      "short_name": "Scan",
+      "description": "Scan barcode or food nutrition label",
+      "url": "/#scan",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Voice Lens AI",
+      "short_name": "Voice",
+      "description": "Ask Gemini nutritional questions",
+      "url": "/#voice",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Rule 7 Letter Audit",
+      "short_name": "Legal Metrology",
+      "description": "Rule 7 Table-I height calibrator",
+      "url": "/#inspector",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

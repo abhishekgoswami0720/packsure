@@ -22,6 +22,29 @@ def test_web_app_served_at_root():
     assert "Know what's really inside" in res.text
 
 
+def test_pwa_and_favicon_assets():
+    # 1. Manifest
+    res = client.get("/manifest.json")
+    assert res.status_code == 200
+    assert res.headers["content-type"].startswith("application/manifest+json")
+    manifest = res.json()
+    assert manifest["name"] == "TruthLens — Food Intelligence & PackSure"
+    assert manifest["display"] == "standalone"
+    assert len(manifest["icons"]) >= 3
+
+    # 2. Service Worker
+    res = client.get("/sw.js")
+    assert res.status_code == 200
+    assert "application/javascript" in res.headers["content-type"]
+    assert "truthlens-pwa" in res.text
+
+    # 3. Favicon & Icons
+    for path in ("/favicon.svg", "/favicon.ico", "/icon-192.png", "/icon-512.png", "/apple-touch-icon.png"):
+        res = client.get(path)
+        assert res.status_code == 200, f"Failed for {path}"
+        assert len(res.content) > 0
+
+
 def test_barcode_lookup_endpoint_success():
     res = client.get("/api/truth/barcode/8901719101013")  # Parle-G
     assert res.status_code == 200

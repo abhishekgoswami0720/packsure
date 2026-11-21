@@ -2,8 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>TruthLens × PackSure — Food Intelligence & Statutory Metrology Platform</title>
+
+  <!-- PWA & Mobile Meta Tags -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1B4332">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TruthLens">
+  <meta name="application-name" content="TruthLens">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no">
+
+  <!-- Favicons & App Icons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -398,7 +416,7 @@
       border-top: 1px solid var(--hairline);
       display: flex;
       justify-content: space-around;
-      padding: 8px 10px 14px;
+      padding: 8px 10px calc(12px + env(safe-area-inset-bottom, 0px));
       z-index: 100;
     }
     @media(min-width: 1025px) {
@@ -412,6 +430,98 @@
     }
     .mob-btn.active { color: var(--brand); }
     body.role-inspector .mob-btn.active { color: var(--enforce); }
+
+    /* PWA Install Drawer & Floating Action */
+    .btn-pwa-install {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--brand);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(27,67,50,0.25);
+      transition: transform 0.18s, background 0.18s;
+    }
+    body.role-inspector .btn-pwa-install { background: var(--enforce); }
+    .btn-pwa-install:hover { transform: scale(1.04); }
+
+    .pwa-drawer {
+      position: fixed;
+      bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+      left: 16px;
+      right: 16px;
+      max-width: 440px;
+      margin: 0 auto;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 16px 40px -8px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.08);
+      z-index: 180;
+      animation: slideUpPwa 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media(min-width: 1025px) {
+      .pwa-drawer {
+        bottom: 24px;
+        right: 24px;
+        left: auto;
+        margin: 0;
+      }
+    }
+    @keyframes slideUpPwa {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pwa-drawer-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .pwa-drawer-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      flex-shrink: 0;
+    }
+    .pwa-drawer-text h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .pwa-drawer-text p {
+      font-size: 11px;
+      color: var(--ink-secondary);
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+    .pwa-close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      line-height: 1;
+      color: var(--ink-tertiary);
+      cursor: pointer;
+      padding: 4px;
+      margin-left: auto;
+    }
+    .pwa-drawer-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .pwa-drawer-actions .btn {
+      flex: 1;
+      font-size: 12px;
+      padding: 8px 12px;
+      justify-content: center;
+    }
 
     /* Floating Voice Lens Button */
     .floating-voice-lens {
@@ -577,6 +687,12 @@
       <nav class="desktop-nav" id="desktopNavLinks">
         <!-- Rendered via JS based on active role -->
       </nav>
+
+      <!-- PWA Download & Install Action -->
+      <button class="btn-pwa-install" id="btnPwaHeaderInstall" onclick="promptPwaInstall()" style="display: none;" title="Install App to Device">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        <span>Install App</span>
+      </button>
     </div>
 
     <!-- Sub-bar Breadcrumb & Live System Status -->
@@ -1471,6 +1587,47 @@
         <button class="btn btn-secondary" onclick="document.getElementById('newInspectionModal').classList.remove('active')">Cancel</button>
         <button class="btn btn-enforce" onclick="submitFieldInspectionAction()">Submit Field Dossier</button>
       </div>
+    </div>
+  </div>
+
+  <!-- PWA Install Bottom Drawer -->
+  <div id="pwaInstallDrawer" class="pwa-drawer" style="display: none;">
+    <div class="pwa-drawer-header">
+      <img src="/icon-192.png" alt="TruthLens Logo" class="pwa-drawer-icon" />
+      <div class="pwa-drawer-text">
+        <h4>Install TruthLens App</h4>
+        <p>Offline food scanning, camera AI, and instant analysis without app store delay.</p>
+      </div>
+      <button class="pwa-close-btn" onclick="dismissPwaDrawer()" aria-label="Close">&times;</button>
+    </div>
+    <div class="pwa-drawer-actions">
+      <button class="btn btn-primary" id="btnPwaDrawerAction" onclick="promptPwaInstall()">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        Download App
+      </button>
+      <button class="btn btn-secondary" onclick="dismissPwaDrawer()">Maybe Later</button>
+    </div>
+  </div>
+
+  <!-- iOS PWA Instruction Modal -->
+  <div id="iosInstallModal" class="modal-overlay" style="display: none;" onclick="if(event.target===this) closeIosInstallModal()">
+    <div class="modal-dialog" style="max-width: 400px; text-align: center;">
+      <img src="/icon-192.png" style="width: 60px; height: 60px; border-radius: 16px; margin: 0 auto 12px; display: block; box-shadow: 0 4px 12px rgba(27,67,50,0.2);" />
+      <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Install TruthLens on iPhone</h3>
+      <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 18px;">
+        Add TruthLens to your Home Screen for full-screen camera scanning and offline capability:
+      </p>
+      <div style="background: var(--surface-container-low); padding: 14px 16px; border-radius: 14px; text-align: left; font-size: 13px; line-height: 1.6; margin-bottom: 20px; border: 1px solid var(--hairline);">
+        <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+          <span style="background: var(--brand); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">1</span>
+          <span>Tap the <b>Share</b> button <svg style="display: inline-block; vertical-align: middle;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8m-4-6l-4-4m0 0L8 6m4-4v12"></path></svg> in Safari's bottom toolbar</span>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 10px;">
+          <span style="background: var(--brand); color: #fff; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; flex-shrink: 0; margin-top: 2px;">2</span>
+          <span>Scroll down and select <b>Add to Home Screen</b> 📲</span>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="closeIosInstallModal()">Got it!</button>
     </div>
   </div>
 
@@ -2643,6 +2800,94 @@
         .replace(/\n\n/g, '<br><br>')
         .replace(/\n- /g, '<br>• ')
         .replace(/\n/g, '<br>');
+    }
+
+    // --- Progressive Web App (PWA) & Mobile Installation Engine ---
+    let deferredPrompt = null;
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isInStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' })
+          .then((reg) => console.log('TruthLens PWA ServiceWorker active at:', reg.scope))
+          .catch((err) => console.warn('PWA ServiceWorker error:', err));
+      });
+    }
+
+    // Capture beforeinstallprompt for Android / Chrome / Edge
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const btnHeader = document.getElementById('btnPwaHeaderInstall');
+      if (btnHeader) btnHeader.style.display = 'inline-flex';
+
+      // Auto-display install bottom drawer on first visit if not in standalone
+      if (!localStorage.getItem('pwa_drawer_dismissed') && !isInStandalone) {
+        setTimeout(() => {
+          const drawer = document.getElementById('pwaInstallDrawer');
+          if (drawer) drawer.style.display = 'block';
+        }, 2200);
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('TruthLens PWA successfully installed to home screen.');
+      deferredPrompt = null;
+      dismissPwaDrawer();
+      const btnHeader = document.getElementById('btnPwaHeaderInstall');
+      if (btnHeader) btnHeader.style.display = 'none';
+    });
+
+    function promptPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User installed TruthLens');
+          }
+          dismissPwaDrawer();
+          deferredPrompt = null;
+        });
+      } else if (isIos && !isInStandalone) {
+        showIosInstallModal();
+      } else if (isInStandalone) {
+        alert('TruthLens is running in standalone app mode.');
+      } else {
+        // Fallback for browsers that don't support beforeinstallprompt
+        showIosInstallModal();
+      }
+    }
+
+    function dismissPwaDrawer() {
+      const drawer = document.getElementById('pwaInstallDrawer');
+      if (drawer) drawer.style.display = 'none';
+      localStorage.setItem('pwa_drawer_dismissed', 'true');
+    }
+
+    function showIosInstallModal() {
+      const modal = document.getElementById('iosInstallModal');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeIosInstallModal() {
+      const modal = document.getElementById('iosInstallModal');
+      if (modal) modal.style.display = 'none';
+    }
+
+    // iOS Safari detection & prompt banner
+    if (isIos && !isInStandalone) {
+      window.addEventListener('load', () => {
+        const btnHeader = document.getElementById('btnPwaHeaderInstall');
+        if (btnHeader) btnHeader.style.display = 'inline-flex';
+        if (!localStorage.getItem('pwa_drawer_dismissed')) {
+          setTimeout(() => {
+            const drawer = document.getElementById('pwaInstallDrawer');
+            if (drawer) drawer.style.display = 'block';
+          }, 3000);
+        }
+      });
     }
 
     // --- Initial Application Bootstrapping ---
