@@ -20,7 +20,7 @@ Results:
 | `legal/text/*.txt` | Extracted text, split by page |
 | `legal/manifest.json` | Source URL, publisher, official vs secondary copy, fetch time, SHA-256, extraction method |
 
-`sources.json` is the curated list. `--crawl` adds every matching PDF linked from the Department of Consumer Affairs and Goa Legal Metrology "Acts and Rules" pages.
+`sources.json` is the curated list. `--crawl` adds every matching PDF linked from the Department of Consumer Affairs "Acts and Rules" page.
 
 ## Which text is current (as of 21 Nov 2026)
 

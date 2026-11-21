@@ -8,16 +8,22 @@
       "authority": "official",
       "publisher": "India Code (Legislative Department)",
       "url": "https://www.indiacode.nic.in/bitstream/123456789/2102/1/2009l.pdf",
-      "notes": "Updated text including the Jan Vishwas (Amendment of Provisions) Acts 2023 and 2026."
+      "notes": "Updated text including the Jan Vishwas (Amendment of Provisions) Acts 2023 and 2026. Fallback (PRS India) is the ORIGINAL 2009 text without later amendments.",
+      "fallback_urls": [
+        "https://prsindia.org/files/bills_acts/acts_parliament/2009/the-legal-metrology-act,-2009.pdf"
+      ]
     },
     {
       "id": "lmpc-2011-original",
       "title": "Legal Metrology (Packaged Commodities) Rules, 2011 - G.S.R. 202(E), 7 March 2011",
       "kind": "rules",
       "authority": "official",
-      "publisher": "Department of Legal Metrology, Nagaland",
-      "url": "https://legalmetrology.nagaland.gov.in/documents/11/9_The_Legal_Metrology_Package_Commodities_Rules_2011.pdf",
-      "notes": "Original rules as notified."
+      "publisher": "Legal Metrology, Government of Meghalaya",
+      "url": "https://megweights.gov.in/acts/Legal-Metrology-Packaged-Commodities-Rules-2011.pdf",
+      "notes": "Original rules as notified.",
+      "fallback_urls": [
+        "https://legalmetrology.nagaland.gov.in/documents/11/9_The_Legal_Metrology_Package_Commodities_Rules_2011.pdf"
+      ]
     },
     {
       "id": "lmpc-2011-consolidated-2026-02",
@@ -97,13 +103,12 @@
       "id": "doca-acts-rules",
       "publisher": "Department of Consumer Affairs",
       "url": "https://consumeraffairs.nic.in/acts-and-rules/legal-metrology",
-      "match": ["packaged commodities", "legal metrology act", "jan vishwas", "guidelines"]
-    },
-    {
-      "id": "goa-clm-acts-rules",
-      "publisher": "Controller of Legal Metrology, Goa",
-      "url": "https://clm.goa.gov.in/acts-and-rules/",
-      "match": ["packaged commodities"]
+      "match": [
+        "packaged commodities",
+        "legal metrology act",
+        "jan vishwas",
+        "guidelines"
+      ]
     }
   ]
 }

@@ -25,6 +25,8 @@ import time
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
+import logging
+
 import requests
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
@@ -34,6 +36,8 @@ RAW, TEXT = HERE / "raw", HERE / "text"
 UA = "PackSure-legal-corpus/1.0 (student hackathon project; contact via GitHub abhishekgoswami0720)"
 DELAY_S = 1.5          # be polite to government servers
 MIN_CHARS_PER_PAGE = 80  # below this, treat the PDF as scanned
+TIMEOUT = (20, 300)     # (connect, read) seconds; some government PDFs are large and slow
+logging.getLogger("pypdf").setLevel(logging.ERROR)
 
 
 def session() -> requests.Session:
@@ -51,9 +55,9 @@ def slug(text: str) -> str:
 
 
 def download(s: requests.Session, url: str, dest: Path) -> dict:
-    r = s.get(url, timeout=60)
-    r.raise_for_status()
-    body = r.content
+    with s.get(url, timeout=TIMEOUT, stream=True) as r:
+        r.raise_for_status()
+        body = b"".join(r.iter_content(1 << 16))
     if not body.startswith(b"%PDF"):
         raise ValueError(f"not a PDF (content-type {r.headers.get('content-type')})")
     dest.write_bytes(body)
@@ -89,7 +93,7 @@ def gemini_text(path: Path) -> str:
 
 
 def crawl(s: requests.Session, page: dict) -> list[dict]:
-    r = s.get(page["url"], timeout=60)
+    r = s.get(page["url"], timeout=TIMEOUT)
     r.raise_for_status()
     soup = BeautifulSoup(r.text, "html.parser")
     found, seen = [], set()
@@ -143,7 +147,17 @@ def main() -> int:
         entry = {**d, "fetched_at": now}
         pdf = RAW / f"{d['id']}.pdf"
         try:
-            entry.update(download(s, d["url"], pdf))
+            errors = []
+            for url in [d["url"], *d.get("fallback_urls", [])]:
+                try:
+                    entry.update(download(s, url, pdf))
+                    entry["fetched_from"] = url
+                    break
+                except Exception as e:  # noqa: BLE001 - try the next copy
+                    errors.append(f"{urlparse(url).netloc}: {e}")
+                    print(f"[retry] {d['id']}  {urlparse(url).netloc} failed, trying next source")
+            else:
+                raise RuntimeError(" | ".join(errors))
             text, pages, scanned = pdf_text(pdf)
             entry.update(pages=pages, scanned=scanned, text_method="pdf_text_layer")
             if scanned and args.gemini:
