@@ -1,0 +1,109 @@
+{
+  "_note": "Curated list of legal sources for PackSure. 'official' = published by a government body. 'secondary' = a law firm or aggregator copy; use it to read, but cite the official notification. Entries with url=null were confirmed to exist but no direct PDF was found yet; scrape.py --crawl looks for them on the listing pages.",
+  "documents": [
+    {
+      "id": "lm-act-2009",
+      "title": "The Legal Metrology Act, 2009 (Act No. 1 of 2010), as on 7 May 2026",
+      "kind": "act",
+      "authority": "official",
+      "publisher": "India Code (Legislative Department)",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/2102/1/2009l.pdf",
+      "notes": "Updated text including the Jan Vishwas (Amendment of Provisions) Acts 2023 and 2026."
+    },
+    {
+      "id": "lmpc-2011-original",
+      "title": "Legal Metrology (Packaged Commodities) Rules, 2011 - G.S.R. 202(E), 7 March 2011",
+      "kind": "rules",
+      "authority": "official",
+      "publisher": "Department of Legal Metrology, Nagaland",
+      "url": "https://legalmetrology.nagaland.gov.in/documents/11/9_The_Legal_Metrology_Package_Commodities_Rules_2011.pdf",
+      "notes": "Original rules as notified."
+    },
+    {
+      "id": "lmpc-2011-consolidated-2026-02",
+      "title": "Legal Metrology (Packaged Commodities) Rules, 2011 - as amended up to 13 February 2026",
+      "kind": "rules_consolidated",
+      "authority": "secondary",
+      "publisher": "Khaitan & Co.",
+      "url": "https://www.khaitanco.com/sites/default/files/2026-03/Legal%20Metrology%20%28Packaged%20Commodities%29%20Rules%202011.pdf",
+      "notes": "Most recent consolidated text found. Does NOT include the Second and Third Amendment Rules, 2026 (April and May 2026)."
+    },
+    {
+      "id": "lmpc-amendments-2022-2023-thc",
+      "title": "LMPC Rules 2011 with 2022 and 2023 amendment notifications",
+      "kind": "rules_amendments",
+      "authority": "official",
+      "publisher": "High Court of Tripura library",
+      "url": "https://www.thc.nic.in/Central%20Governmental%20Rules/Legal%20Metrology%20(Packaged%20Commodities)%20Rules,2011.pdf",
+      "notes": "Includes the Amendment Rules 2022 (unit sale price etc.) and Amendment (Amendment) Rules 2023."
+    },
+    {
+      "id": "lmpc-amend-2026-gsr128",
+      "title": "Legal Metrology (Packaged Commodities) Amendment Rules, 2026 - G.S.R. 128(E), 13 February 2026, in force 1 July 2026",
+      "kind": "amendment",
+      "authority": "secondary",
+      "publisher": "Fox Mandal (copy of the Gazette of India)",
+      "url": "https://foxmandal.in/wp-content/uploads/2026/02/Legal-Metrology-Packaged-Commodities-Amendment-Rules-2026.pdf",
+      "notes": "Inserts Rule 6(10A): e-commerce entities must offer a searchable, sortable country-of-origin filter for imported packaged goods."
+    },
+    {
+      "id": "lmpc-amend-2025-gsr778",
+      "title": "Legal Metrology (Packaged Commodities) Amendment Rules, 2025 - G.S.R. 778(E), in force 24 October 2025",
+      "kind": "amendment",
+      "authority": "official",
+      "publisher": "Gazette of India",
+      "url": null,
+      "notes": "Medical devices: Medical Devices Rules 2017 prevail for font size and dimensions; Rule 33 exemptions do not apply where MDR 2017 applies."
+    },
+    {
+      "id": "lmpc-2nd-amend-2025-gsr881",
+      "title": "Legal Metrology (Packaged Commodities) Second Amendment Rules, 2025 - G.S.R. 881(E), 2 December 2025, in force 1 February 2026",
+      "kind": "amendment",
+      "authority": "official",
+      "publisher": "Gazette of India",
+      "url": null,
+      "notes": "Adds a proviso to Rule 26(a) excluding pan masala from the small-package exemption."
+    },
+    {
+      "id": "lmpc-2nd-amend-2026",
+      "title": "Legal Metrology (Packaged Commodities) Second Amendment Rules, 2026 - 27 April 2026, in force 1 July 2027",
+      "kind": "amendment",
+      "authority": "official",
+      "publisher": "Gazette of India",
+      "url": null,
+      "notes": "Country-of-origin related; NOT yet in force on 21 Nov 2026."
+    },
+    {
+      "id": "lmpc-3rd-amend-2026-gsr418",
+      "title": "Legal Metrology (Packaged Commodities) Third Amendment Rules, 2026 - G.S.R. 418(E), 29 May 2026, in force 1 June 2026",
+      "kind": "amendment",
+      "authority": "official",
+      "publisher": "Gazette of India",
+      "url": null,
+      "notes": "Rule 4: importers may affix declarations in AEO Tier-2/3 bonded warehouses. Rule 27: named responsible Director, annual online update, registration valid until cancelled."
+    },
+    {
+      "id": "ls-reply-2024-mandatory-declarations",
+      "title": "Lok Sabha reply on mandatory declarations on packaged commodities (2024)",
+      "kind": "parliament",
+      "authority": "official",
+      "publisher": "Department of Food & Public Distribution",
+      "url": "https://fcainfoweb.nic.in/PMS/writereaddata/2024_LS_B_2673.pdf",
+      "notes": "Plain-language list of mandatory declarations."
+    }
+  ],
+  "listing_pages": [
+    {
+      "id": "doca-acts-rules",
+      "publisher": "Department of Consumer Affairs",
+      "url": "https://consumeraffairs.nic.in/acts-and-rules/legal-metrology",
+      "match": ["packaged commodities", "legal metrology act", "jan vishwas", "guidelines"]
+    },
+    {
+      "id": "goa-clm-acts-rules",
+      "publisher": "Controller of Legal Metrology, Goa",
+      "url": "https://clm.goa.gov.in/acts-and-rules/",
+      "match": ["packaged commodities"]
+    }
+  ]
+}
