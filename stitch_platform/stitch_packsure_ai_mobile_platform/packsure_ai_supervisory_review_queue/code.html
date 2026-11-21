@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary": "#ffffff", "tertiary-fixed": "#f4ded1", "outline": "#87736a", "inverse-primary": "#ffb68f", "inverse-on-surface": "#f5f0e7", "on-primary-fixed": "#331100", "secondary-container": "#e2dfda", "surface-tint": "#924b20", "on-tertiary-container": "#4e4037", "on-secondary": "#ffffff", "surface": "#fef9f0", "on-error-container": "#93000a", "error-container": "#ffdad6", "surface-variant": "#e7e2d9", "secondary-fixed-dim": "#c8c6c1", "surface-container-lowest": "#ffffff", "background": "#fef9f0", "on-error": "#ffffff", "surface-container": "#f2ede4", "surface-bright": "#fef9f0", "surface-dim": "#ded9d1", "on-background": "#1d1c16", "tertiary-container": "#c0aca0", "on-tertiary-fixed-variant": "#52443b", "on-tertiary": "#ffffff", "primary": "#924b20", "inverse-surface": "#32302b", "tertiary-fixed-dim": "#d7c3b6", "on-tertiary-fixed": "#241912", "secondary-fixed": "#e5e2dd", "surface-container-highest": "#e7e2d9", "surface-container-low": "#f8f3ea", "on-primary-fixed-variant": "#743409", "primary-fixed-dim": "#ffb68f", "on-primary-container": "#6f3106", "outline-variant": "#d9c2b7", "secondary": "#5f5e5b", "on-secondary-fixed": "#1c1c19", "on-secondary-container": "#63635f", "primary-fixed": "#ffdbca", "on-surface-variant": "#54433b", "primary-container": "#f49a68", "on-surface": "#1d1c16", "surface-container-high": "#ece8df", "error": "#ba1a1a", "tertiary": "#6b5b51", "on-secondary-fixed-variant": "#474743" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.25rem", "gutter": "1rem", "space-xs": "0.25rem", "space-xl": "1.75rem", "space-md": "1rem", "margin": "1.25rem", "space-sm": "0.5rem" }, fontFamily: { "headline-lg": ["Inter"], "headline-xl-mobile": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "label-md": ["Inter"], "headline-xl": ["Inter"], "body-sm": ["Inter"], "label-sm": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "metric-display": ["Inter"] }, fontSize: { "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }], "headline-xl-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.025em", fontWeight: "700" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "-0.005em", fontWeight: "400" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }], "headline-xl": ["40px", { lineHeight: "48px", letterSpacing: "-0.03em", fontWeight: "700" }], "body-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "400" }], "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.04em", fontWeight: "700" }], "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["22px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }], "metric-display": ["30px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>body { min-height: max(884px, 100dvh); }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center text-primary flex-shrink-0 shadow-[0_2px_8px_-2px_rgba(146,75,32,0.12)]"><span class="material-symbols-outlined text-[22px]">shield_person</span></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface truncate font-semibold">PackSure AI Gov</span><span class="material-symbols-outlined text-primary text-[15px] fill-current">verified</span></div><span class="font-label-sm text-label-sm text-secondary truncate">Supervisory &amp; Enforcement Cell</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span></button><button aria-label="Supervisor Profile" class="w-9 h-9 rounded-full bg-surface-container-high border border-outline-variant/40 flex items-center justify-center ml-0.5 hover:bg-surface-container active:scale-95 transition-all"><span class="material-symbols-outlined text-primary text-[20px]">admin_panel_settings</span></button></div></div></header><main class="flex flex-col relative w-full pt-16 pb-28 bg-surface px-margin min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- Top Progress & Queue Header -->
+<section class="flex flex-col gap-space-sm pt-space-xs pb-space-md">
+<div class="flex items-center justify-between">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-container/20 text-on-primary-container text-label-sm font-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        LEGAL METROLOGY ACT, 2009
+      </div>
+<div class="flex items-center gap-1 text-secondary text-body-sm font-body-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">schedule</span>
+<span>Court Cutoff: 17:30 IST</span>
+</div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-headline-md font-headline-md text-on-surface tracking-tight">Supervisory Review Queue</h1>
+<p class="text-body-sm font-body-sm text-secondary">Section 15 Inspection Filings &amp; Section 36 Enforcement Dossiers</p>
+</div>
+<!-- Triage Metrics Summary Cards -->
+<div class="grid grid-cols-3 gap-2 mt-1">
+<div class="flex flex-col p-2.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-secondary uppercase">Pending</span>
+<span class="material-symbols-outlined text-primary text-[18px]">pending_actions</span>
+</div>
+<span class="text-headline-sm font-headline-sm text-on-surface mt-1">04</span>
+<span class="text-[10px] font-label-sm text-primary font-semibold tracking-tight">Awaiting Sign-off</span>
+</div>
+<div class="flex flex-col p-2.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-secondary uppercase">Passed</span>
+<span class="material-symbols-outlined text-[18px] text-[#31865C]" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<span class="text-headline-sm font-headline-sm text-on-surface mt-1">12</span>
+<span class="text-[10px] font-label-sm text-[#31865C] font-semibold tracking-tight">Orders Issued</span>
+</div>
+<div class="flex flex-col p-2.5 rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-secondary uppercase">Returned</span>
+<span class="material-symbols-outlined text-[18px] text-[#C28B3F]">replay</span>
+</div>
+<span class="text-headline-sm font-headline-sm text-on-surface mt-1">02</span>
+<span class="text-[10px] font-label-sm text-[#C28B3F] font-semibold tracking-tight">Re-Inspection</span>
+</div>
+</div>
+</section>
+<!-- Search & Segmented Multi-Filter -->
+<section class="flex flex-col gap-space-sm mb-space-md">
+<!-- Search Bar -->
+<div class="relative w-full flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">search</span>
+<input class="w-full h-12 pl-11 pr-10 rounded-xl bg-surface-container-lowest text-on-surface placeholder:text-secondary/70 text-body-md font-body-md shadow-sm focus:outline-none focus:ring-0" placeholder="Dossier ID, Brand, Inspector, Rule..." type="search"/>
+<button aria-label="Clear or filter parameters" class="absolute right-2.5 w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+<!-- Filter Pills (Scrollable) -->
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 -mx-margin px-margin">
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-inverse-surface text-on-primary text-label-md font-label-md whitespace-nowrap shadow-sm">
+<span>All</span>
+<span class="w-4 h-4 rounded-full bg-primary-container text-on-primary-container text-[10px] flex items-center justify-center font-bold">4</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container text-label-md font-label-md whitespace-nowrap shadow-sm">
+<span>Font Deficit (Rule 7)</span>
+<span class="text-secondary text-[11px]">1</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container text-label-md font-label-md whitespace-nowrap shadow-sm">
+<span>Dual MRP (Rule 18)</span>
+<span class="text-secondary text-[11px]">1</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container text-label-md font-label-md whitespace-nowrap shadow-sm">
+<span>USP Missing</span>
+<span class="text-secondary text-[11px]">1</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-container text-label-md font-label-md whitespace-nowrap shadow-sm">
+<span>Re-Check</span>
+<span class="text-secondary text-[11px]">1</span>
+</button>
+</div>
+<!-- Active Sorting State Indicator -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1.5 text-secondary text-label-sm font-label-sm">
+<span class="material-symbols-outlined text-[15px]">swap_vert</span>
+<span>Sorted by: <strong class="text-on-surface font-semibold">Priority &amp; Statutory Cutoff</strong></span>
+</div>
+<button class="text-primary text-label-sm font-label-sm font-semibold hover:underline">Select All</button>
+</div>
+</section>
+<!-- Dossier List Stream -->
+<section class="flex flex-col gap-space-md">
+<!-- Card 1: Critical Font Deficit Case -->
+<article class="flex flex-col rounded-2xl bg-surface-container-lowest shadow-sm overflow-hidden relative">
+<div class="h-1.5 w-full bg-[#BE343B]"></div>
+<div class="p-space-md flex flex-col gap-3">
+<!-- Top Meta Row -->
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<input checked="" class="w-4 h-4 rounded text-primary accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-bold tracking-tight">#LMD-2024-KA-8841-F6</span>
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-[10px] font-bold uppercase tracking-wider">Critical</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Insp. Rajesh K. • 45m ago</span>
+</div>
+</div>
+<span class="text-[11px] font-label-sm text-error font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">timer</span> 2h 45m left
+          </span>
+</div>
+<!-- Product Block with visual asset thumbnail -->
+<div class="flex items-center gap-3 p-2.5 rounded-xl bg-surface-container-low">
+<img class="w-14 h-14 rounded-lg object-cover flex-shrink-0" data-alt="Macro product shot of Harvest Crunch Granola package label under inspection lighting on warm neutral studio surface with calibrated digital reticle overlay showcasing optical measurements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTrSw3p-kt455bT9cc92aD2xqwquEFyxZCcak9ZlxT87E7JZZAP5ZX20ET1BBFG5Q7h8eUERFhF1M7WbQxg0sDAtdU9LXSWdbqtExRYfBeldCSedcbniLlL00m1fZ7IhQrpBmSAvk-X4auwniyiPGrFtiJ_ld5Yx18cAeDKQUHkyAvI8PULzGTLsTUH2hy6VFHHdcIql4xVm2O3fJNubm4eUChyMgcL_FwLm96HKk"/>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-label-md font-label-md text-on-surface font-bold truncate">Harvest Crunch Granola 400g</span>
+<span class="text-body-sm font-body-sm text-secondary truncate">PureHarvest Organics Pvt Ltd</span>
+<span class="text-[11px] font-label-sm text-primary font-semibold">SKU: CRN-400-ORG • Retail Lot #B8</span>
+</div>
+</div>
+<!-- Core Statutory Infraction Box -->
+<div class="flex flex-col p-2.5 rounded-xl bg-error-container/30">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-bold text-[#BE343B] uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">gavel</span> Rule 7(1) Table-I Deficit
+            </span>
+<span class="font-label-sm text-[11px] font-bold text-[#BE343B]">-46.5% Deviation</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-snug">
+            Mandatory numeral height <strong class="text-on-surface">4.00mm</strong> vs Optical scan <strong class="text-error font-bold">2.14mm</strong> on Net Weight declaration.
+          </p>
+</div>
+<!-- Evidence Stack Row -->
+<div class="flex items-center justify-between py-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">attachment</span>
+<span class="text-label-sm font-label-sm text-secondary font-medium">4 Evidence Artifacts:</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="px-1.5 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-[10px]" title="AR Reticle Calibrated">AR Mesh</span>
+<span class="px-1.5 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-[10px]">OCR Array</span>
+<span class="px-1.5 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-[10px]">GPS GeoTag</span>
+<span class="px-1.5 py-0.5 rounded-md bg-surface-container text-on-surface font-label-sm text-[10px]">Audio</span>
+</div>
+</div>
+<!-- Proposed Order & Card CTA -->
+<div class="pt-1 flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-secondary">Proposed Determination:</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Sec 36(1) Notice • ₹25,000 Fine</span>
+</div>
+<button class="w-full h-12 rounded-xl bg-inverse-surface text-surface-bright font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 hover:bg-black active:scale-[0.99] transition-all shadow-md">
+<span>Open Dossier &amp; Issue Notice</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: High Priority E-Commerce Unit Sale Price -->
+<article class="flex flex-col rounded-2xl bg-surface-container-lowest shadow-sm overflow-hidden relative">
+<div class="h-1.5 w-full bg-primary-container"></div>
+<div class="p-space-md flex flex-col gap-3">
+<!-- Top Meta Row -->
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 rounded text-primary accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-bold tracking-tight">#LMD-2024-KA-8839-F1</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-[10px] font-bold uppercase tracking-wider">High</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Insp. Vikram S. • 2h ago</span>
+</div>
+</div>
+<span class="text-[11px] font-label-sm text-secondary font-medium">Dark Store Audit</span>
+</div>
+<!-- Product Block -->
+<div class="flex items-center gap-3 p-2.5 rounded-xl bg-surface-container-low">
+<img class="w-14 h-14 rounded-lg object-cover flex-shrink-0" data-alt="Crisp amber glass bottle of Aura Cold Pressed Sesame Oil standing upright in warehouse setting with digital measurement bounding boxes around bottle labels and volume markings." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2RU9W4LZGs47FD2cIlj6e6ps1xoRSEqRAFcTmd90WMz9G1AdRxju-ouERJ0lhDXtLTMDGC7Idf-4BvEo_zbqX2Tpx3KTpYhETxyOUKUvdHwzENc6hzEmO5sgeuWQwwDeWQ4oMnFdgXaIGy7E12IDjIQQVpTs6sxMvTtnwyWz4dM_Vj218tTPxX3iqh9KWJh7t7GYV4zshNnDEnFQCjS3B09QqhXMMCYgWVKK_WGo"/>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-label-md font-label-md text-on-surface font-bold truncate">Aura Cold Pressed Sesame Oil 1L</span>
+<span class="text-body-sm font-body-sm text-secondary truncate">Aura Agro Foods • Blinkit Hub #4</span>
+<span class="text-[11px] font-label-sm text-[#C28B3F] font-semibold">Listing: BLNK-BLR-0994</span>
+</div>
+</div>
+<!-- Infraction Description -->
+<div class="flex flex-col p-2.5 rounded-xl bg-surface-container-high/60">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-primary">warning</span> Rule 6(1)(da) USP Omission
+          </span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-snug">
+            Unit Sale Price (<span class="font-semibold text-on-surface">₹/100ml</span>) missing on quick-commerce digital catalogue listing during automated harvest.
+          </p>
+</div>
+<!-- Footer / Action Row -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-secondary text-body-sm font-body-sm">
+<span class="material-symbols-outlined text-[16px]">image</span>
+<span>2 Screen Extracts</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-2 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-variant active:scale-95 transition-all">
+              Review OCR
+            </button>
+<button class="px-3.5 py-2 rounded-xl bg-inverse-surface text-surface-bright font-label-md text-label-md font-semibold hover:bg-black active:scale-95 transition-all">
+              Sign Notice
+            </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3: Dual MRP Sticker Tampering (Medium Priority) -->
+<article class="flex flex-col rounded-2xl bg-surface-container-lowest shadow-sm overflow-hidden relative">
+<div class="h-1.5 w-full bg-[#C28B3F]"></div>
+<div class="p-space-md flex flex-col gap-3">
+<!-- Top Meta Row -->
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 rounded text-primary accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-bold tracking-tight">#LMD-2024-KA-8835-F6</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-[10px] font-bold uppercase tracking-wider">Medium</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Insp. Rajesh K. • 3h ago</span>
+</div>
+</div>
+<span class="text-[11px] font-label-sm text-[#C28B3F] font-semibold">Storefront Seizure</span>
+</div>
+<!-- Product Block -->
+<div class="flex items-center gap-3 p-2.5 rounded-xl bg-surface-container-low">
+<img class="w-14 h-14 rounded-lg object-cover flex-shrink-0" data-alt="Macro legal inspection photo of a packaged cow ghee jar with peeled adhesive label revealing contradictory higher retail price over factory printing under white balanced forensic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMGXNciWQ4v0H6Cvxax7MS_yklBehh_66R3TqaWR1pBHG9E4FS6kqtp4r5hxBhv7AmOAl4nSGx-HtqhkeByBmdHiUIOP4DhWEjg94VfyPVE7dsiFuBffmeasvHundpqKQbjc-xCDQGQXIqV5UdqDZWhyTP1Ng2lz5_BCn7Z8r-MR6Lqn5DnHWillR6XkfOdbAciMWnSXaAB9xwYqUYVUthZjzGLKbW0kqlb-08jho"/>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-label-md font-label-md text-on-surface font-bold truncate">Fresh Valley Cow Ghee 500ml</span>
+<span class="text-body-sm font-body-sm text-secondary truncate">Valley Dairy Products • Sri Rama Supermarket</span>
+<span class="text-[11px] font-label-sm text-error font-semibold">Overcharge: +₹25.00 (+7.9%)</span>
+</div>
+</div>
+<!-- Infraction Description -->
+<div class="flex flex-col p-2.5 rounded-xl bg-surface-container-high/60">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wide flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-[#C28B3F]">label_important</span> Rule 18(2) Dual Pricing
+          </span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-snug">
+            Altered retail sticker <strong class="text-on-surface">₹340.00</strong> affixed over pre-printed factory packaging price of <strong class="text-on-surface">₹315.00</strong>.
+          </p>
+</div>
+<!-- Footer / Action Row -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-secondary text-body-sm font-body-sm">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+<span>Receipt Attached</span>
+</div>
+<button class="px-3.5 py-2 rounded-xl bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-variant active:scale-95 transition-all">
+            Review Summons
+          </button>
+</div>
+</div>
+</article>
+<!-- Card 4: Clarification Resubmitted (Ready for Seal) -->
+<article class="flex flex-col rounded-2xl bg-surface-container-lowest shadow-sm overflow-hidden relative">
+<div class="h-1.5 w-full bg-[#31865C]"></div>
+<div class="p-space-md flex flex-col gap-3">
+<!-- Top Meta Row -->
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 rounded text-primary accent-primary cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-bold tracking-tight">#LMD-2024-KA-8820-REV</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container text-[#31865C] font-label-sm text-[10px] font-bold uppercase tracking-wider">Re-Inspection</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary">Insp. Priya M. • 4h ago</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 text-[11px] font-label-sm text-[#31865C] font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Calibrated
+          </span>
+</div>
+<!-- Product Block -->
+<div class="flex items-center gap-3 p-2.5 rounded-xl bg-surface-container-low">
+<div class="w-14 h-14 rounded-lg bg-surface-container flex items-center justify-center text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[28px]">verified</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-label-md font-label-md text-on-surface font-bold truncate">SunGold Sunflower Oil 5L Can</span>
+<span class="text-body-sm font-body-sm text-secondary truncate">SunGold Refineries Ltd</span>
+<span class="text-[11px] font-label-sm text-[#31865C] font-semibold">Caliper verified: 4.02mm (Compliant)</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-secondary leading-snug">
+          Physical vernier caliper verification uploaded following merchant appeal. Print dimensions satisfy First Schedule standards.
+        </p>
+<!-- Footer / Action Row -->
+<div class="flex items-center justify-between pt-1">
+<span class="text-body-sm font-body-sm text-secondary">Action: Close &amp; Issue Seal</span>
+<button class="px-3.5 py-2 rounded-xl bg-[#31865C] text-on-primary font-label-md text-label-md font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Authorize Clearance
+          </button>
+</div>
+</div>
+</article>
+</section>
+<!-- Sticky Supervisor Quick Dispatch Bar -->
+<aside class="sticky bottom-20 z-40 mt-space-lg w-full">
+<div class="w-full p-3 rounded-2xl bg-inverse-surface text-surface-bright shadow-2xl flex items-center justify-between gap-2 backdrop-blur-md">
+<div class="flex items-center gap-2 pl-1">
+<div class="w-2.5 h-2.5 rounded-full bg-primary-container"></div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-surface-bright">1 Case Selected</span>
+<span class="font-label-sm text-[10px] text-secondary-fixed-dim">3 pending in queue</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-2.5 rounded-xl bg-surface-container-high/20 hover:bg-surface-container-high/30 text-surface-bright font-label-md text-label-md transition-colors">
+          Reject Batch
+        </button>
+<button class="px-4 py-2.5 rounded-xl bg-primary-container text-on-primary-fixed font-label-md text-label-md font-bold flex items-center gap-1.5 shadow-md active:scale-95 transition-all">
+<span>Review Next</span>
+<span class="material-symbols-outlined text-[16px]">fast_forward</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+<script>
+  // Simple micro-interaction for active queue counters
+  document.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+      const dispatchText = document.querySelector('aside .font-label-md');
+      if (dispatchText) {
+        dispatchText.textContent = `${checkedCount} Case${checkedCount === 1 ? '' : 's'} Selected`;
+      }
+    });
+  });
+</script></main><div class="fixed bottom-0 w-full z-50 pb-safe px-margin pointer-events-none mb-3"><nav class="pointer-events-auto max-w-md mx-auto h-16 rounded-full bg-inverse-surface/95 backdrop-blur-xl shadow-[0_12px_32px_-4px_rgba(37,37,34,0.30)] px-3 flex items-center justify-between" data-active-classes="text-primary-container font-semibold"><a class="flex flex-col items-center justify-center min-w-[54px] h-12 text-secondary-fixed-dim hover:text-surface-bright transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[20px]">insights</span><span class="font-label-sm text-[10px] mt-0.5 tracking-tight">Overview</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[54px] h-12 transition-colors relative text-primary-container font-semibold" data-path="reviews" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[20px]">rule</span><span class="absolute -top-1 -right-3 px-1 py-0.2 rounded-full bg-primary-container text-inverse-surface font-label-sm text-[8px] font-bold tracking-tight shadow-sm leading-tight">4</span></div><span class="font-label-sm text-[10px] mt-0.5 tracking-tight">Reviews</span></a><a class="flex flex-col items-center justify-center min-w-[54px] h-12 text-secondary-fixed-dim hover:text-surface-bright transition-colors" data-path="inspections" href="#"><span class="material-symbols-outlined text-[20px]">fact_check</span><span class="font-label-sm text-[10px] mt-0.5 tracking-tight">Inspections</span></a><a class="flex flex-col items-center justify-center min-w-[54px] h-12 text-secondary-fixed-dim hover:text-surface-bright transition-colors" data-path="reports" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-label-sm text-[10px] mt-0.5 tracking-tight">Reports</span></a><a class="flex flex-col items-center justify-center min-w-[54px] h-12 text-secondary-fixed-dim hover:text-surface-bright transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-label-sm text-[10px] mt-0.5 tracking-tight">Profile</span></a></nav></div></body></html>

@@ -1,0 +1,60 @@
+{
+  "allergens": [
+    {
+      "id": "gluten",
+      "name": "Gluten",
+      "keywords": ["wheat", "atta", "maida", "suji", "semolina", "barley", "rye", "malt", "spelt", "gluten", "triticale", "durum"],
+      "severity": "high",
+      "condition": "Celiac Disease / Non-Celiac Gluten Sensitivity (NCGS)"
+    },
+    {
+      "id": "dairy",
+      "name": "Milk & Dairy",
+      "keywords": ["milk", "milk solids", "whey", "casein", "caseinate", "lactose", "butter", "ghee", "cheese", "cream", "curd", "yogurt", "skimmed milk powder"],
+      "severity": "high",
+      "condition": "Lactose Intolerance / Cow's Milk Protein Allergy (CMPA)"
+    },
+    {
+      "id": "soy",
+      "name": "Soy / Soya",
+      "keywords": ["soy", "soya", "soybean", "soy lecithin", "soya lecithin", "soy protein", "tofu", "edamame"],
+      "severity": "moderate",
+      "condition": "Soy Allergy"
+    },
+    {
+      "id": "peanuts",
+      "name": "Peanuts",
+      "keywords": ["peanut", "peanuts", "groundnut", "groundnuts", "monkey nuts"],
+      "severity": "critical",
+      "condition": "Severe Anaphylactic Risk"
+    },
+    {
+      "id": "tree_nuts",
+      "name": "Tree Nuts",
+      "keywords": ["almond", "almonds", "cashew", "cashews", "kaju", "walnut", "walnuts", "akhrot", "pistachio", "pista", "hazelnut", "hazelnuts", "pecan", "macadamia"],
+      "severity": "critical",
+      "condition": "Severe Anaphylactic Risk"
+    },
+    {
+      "id": "egg",
+      "name": "Egg",
+      "keywords": ["egg", "eggs", "egg white", "egg yolk", "albumin", "ovalbumin", "lysozyme", "lecithin (egg)"],
+      "severity": "high",
+      "condition": "Egg Allergy"
+    },
+    {
+      "id": "sesame",
+      "name": "Sesame",
+      "keywords": ["sesame", "sesame seeds", "til", "tahini", "sesame oil"],
+      "severity": "high",
+      "condition": "Sesame Allergy"
+    },
+    {
+      "id": "sulfites",
+      "name": "Sulfites / Sulphites",
+      "keywords": ["sulphite", "sulfite", "sulphur dioxide", "sulfur dioxide", "ins 220", "ins 221", "ins 222", "ins 223", "ins 224"],
+      "severity": "moderate",
+      "condition": "Asthma and Bronchospasm Trigger"
+    }
+  ]
+}

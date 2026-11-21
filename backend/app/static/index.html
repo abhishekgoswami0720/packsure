@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>TruthLens — Know what's really inside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FBF9F5;
+      --surface: #FFFFFF;
+      --ink: #1E221F;
+      --ink-secondary: #5A635B;
+      --ink-tertiary: #8D968E;
+      --hairline: #E7E4DC;
+      --brand: #1B4332;
+      --brand-strong: #143628;
+      --brand-soft: #E8F1EC;
+      --success: #2D6A4F;
+      --success-soft: #D8F3DC;
+      --warning: #D97706;
+      --warning-soft: #FEF3C7;
+      --danger: #DC2626;
+      --danger-soft: #FEE2E2;
+      --radius: 18px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 20px -2px rgba(27, 67, 50, 0.06), 0 2px 6px -1px rgba(0,0,0,0.03);
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      line-height: 1.5;
+      padding-bottom: 90px;
+      min-height: 100vh;
+    }
+
+    /* Layout */
+    .container { max-width: 720px; margin: 0 auto; padding: 16px 20px; }
+    
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: rgba(251, 249, 245, 0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .brand-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .brand-logo {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--brand); display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 19px;
+    }
+    .brand-text h1 { font-size: 19px; font-weight: 800; color: var(--brand); letter-spacing: -0.3px; line-height: 1.1; }
+    .brand-text p { font-size: 11px; font-weight: 600; color: var(--ink-tertiary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Nav Bar (Bottom for Mobile, Elegant for Desktop) */
+    .nav-bar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid var(--hairline);
+      display: flex; justify-content: space-around;
+      padding: 8px 12px 14px;
+      z-index: 100;
+      max-width: 720px; margin: 0 auto;
+    }
+    .nav-btn {
+      background: none; border: none; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      color: var(--ink-tertiary); font-family: var(--font);
+      font-size: 11px; font-weight: 600; transition: all 0.2s;
+      flex: 1;
+    }
+    .nav-btn svg { width: 22px; height: 22px; stroke-width: 2.2; }
+    .nav-btn.active { color: var(--brand); }
+    .nav-btn.scan-btn {
+      color: #fff; background: var(--brand);
+      border-radius: 30px; padding: 6px 14px; margin-top: -8px;
+      box-shadow: 0 4px 14px rgba(27, 67, 50, 0.3);
+    }
+    .nav-btn.scan-btn.active { background: var(--brand-strong); }
+
+    /* Screens */
+    .screen { display: none; animation: fadeIn 0.25s ease-out; }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Cards & Components with Smooth Animations */
+    .card {
+      background: var(--surface); border: 1px solid var(--hairline);
+      border-radius: var(--radius); padding: 20px; margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px -4px rgba(27,67,50,0.08), 0 4px 12px -2px rgba(0,0,0,0.03);
+    }
+    .hero-card {
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+      color: #fff; border: none; position: relative; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(27, 67, 50, 0.22);
+    }
+    .hero-card::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 60%);
+      animation: ambientFloat 14s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-card::after {
+      content: ''; position: absolute; right: -30px; bottom: -30px;
+      width: 150px; height: 150px; background: rgba(255,255,255,0.08);
+      border-radius: 50%; pointer-events: none;
+      animation: orbPulse 6s ease-in-out infinite alternate;
+    }
+    @keyframes ambientFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(25px, 12px) rotate(180deg); }
+    }
+    @keyframes orbPulse {
+      0% { transform: scale(1); opacity: 0.08; }
+      100% { transform: scale(1.22); opacity: 0.16; }
+    }
+    .hero-card h2 { font-size: 22px; font-weight: 800; line-height: 1.25; margin-bottom: 6px; letter-spacing: -0.4px; }
+    .hero-card p { font-size: 13px; opacity: 0.9; margin-bottom: 16px; line-height: 1.45; }
+
+    /* Buttons with Micro-interactions */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 14px;
+      cursor: pointer; border: none; font-family: var(--font);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: #fff; color: var(--brand); box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+    .btn-primary:active { transform: scale(0.97); background: #f0f0f0; }
+    .btn-brand { background: var(--brand); color: #fff; width: 100%; box-shadow: 0 4px 14px rgba(27,67,50,0.25); }
+    .btn-brand:hover { background: var(--brand-strong); box-shadow: 0 6px 18px rgba(27,67,50,0.35); }
+    .btn-brand:active { transform: scale(0.98); }
+    .btn-secondary { background: var(--brand-soft); color: var(--brand); }
+    .btn-secondary:hover { background: #dceae1; }
+
+    /* Search Bar with Focus Pulse */
+    .search-bar {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface); border: 1.5px solid var(--hairline);
+      border-radius: 14px; padding: 10px 14px; margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .search-bar:focus-within {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px rgba(27, 67, 50, 0.12), 0 4px 14px rgba(0,0,0,0.05);
+      transform: translateY(-1px);
+    }
+    .search-bar input {
+      border: none; outline: none; width: 100%;
+      font-size: 15px; font-family: var(--font); color: var(--ink);
+      background: transparent;
+    }
+    .search-bar svg { color: var(--ink-tertiary); width: 20px; height: 20px; flex-shrink: 0; transition: color 0.2s; }
+    .search-bar:focus-within svg { color: var(--brand); }
+
+    /* Section Headers */
+    .sec-head { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 12px; }
+    .sec-head h3 { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.3px; }
+    .sec-head a {
+      font-size: 13px; font-weight: 700; color: var(--brand); text-decoration: none; cursor: pointer;
+      transition: transform 0.2s, color 0.2s; display: inline-block;
+    }
+    .sec-head a:hover { transform: translateX(3px); color: var(--brand-strong); }
+
+    /* Product Grid & Animated Cards */
+    .prod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width: 480px) { .prod-grid { grid-template-columns: 1fr; } }
+    .prod-card {
+      background: var(--surface); border: 1px solid var(--hairline);
+      border-radius: var(--radius); padding: 14px; cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; justify-content: space-between;
+      animation: cardFadeUp 0.35s ease-out backwards;
+    }
+    .prod-card:hover {
+      transform: translateY(-4px) scale(1.015);
+      border-color: var(--brand);
+      box-shadow: 0 12px 28px -4px rgba(27,67,50,0.12);
+    }
+    .prod-card:active { transform: scale(0.985); }
+    .prod-img-wrap {
+      width: 100%; height: 120px; border-radius: 12px; background: #FAF9F6;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .prod-img-wrap img {
+      max-height: 105px; max-width: 90%; object-fit: contain;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .prod-card:hover .prod-img-wrap img { transform: scale(1.08); }
+    .prod-title { font-size: 14px; font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
+    .prod-brand { font-size: 12px; font-weight: 600; color: var(--ink-secondary); margin-bottom: 10px; }
+    @keyframes cardFadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .badge-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+    .score-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px;
+      transition: transform 0.2s;
+    }
+    .prod-card:hover .score-badge { transform: scale(1.05); }
+    .score-a { background: var(--success-soft); color: var(--success); }
+    .score-b { background: #E0F2FE; color: #0369A1; }
+    .score-c { background: var(--warning-soft); color: var(--warning); }
+    .score-d, .score-e { background: var(--danger-soft); color: var(--danger); }
+    
+    .nova-badge {
+      font-size: 10px; font-weight: 800; padding: 3px 6px; border-radius: 5px;
+      text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .nova-1 { background: #DCFCE7; color: #15803D; }
+    .nova-2 { background: #E0F2FE; color: #0284C7; }
+    .nova-3 { background: #FEF3C7; color: #B45309; }
+    .nova-4 { background: #FEE2E2; color: #B91C1C; }
+
+    /* Product Analysis Detail View & Animated Score Gauge */
+    .analysis-hero { text-align: center; padding: 24px 20px; }
+    .score-gauge {
+      width: 106px; height: 106px; border-radius: 50%; margin: 0 auto 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: var(--surface); border: 6px solid var(--brand);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      animation: gaugeEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1), gaugePulse 3.5s ease-in-out infinite 0.6s;
+    }
+    @keyframes gaugeEntrance {
+      from { transform: scale(0.65) rotate(-30deg); opacity: 0; }
+      to { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+    @keyframes gaugePulse {
+      0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
+      50% { box-shadow: 0 8px 30px rgba(27,67,50,0.22); transform: scale(1.02); }
+    }
+    .score-gauge .num { font-size: 34px; font-weight: 800; line-height: 1; color: var(--ink); }
+    .score-gauge .lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; color: var(--ink-tertiary); letter-spacing: 0.5px; }
+
+    /* Traffic Light Grid with Pop Effect */
+    .traffic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+    .traffic-box {
+      border-radius: var(--radius-sm); padding: 12px 10px; text-align: center;
+      border: 1px solid var(--hairline);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .traffic-box:hover { transform: translateY(-2px) scale(1.03); }
+    .traffic-box.green { background: var(--success-soft); border-color: rgba(45, 106, 79, 0.25); }
+    .traffic-box.amber { background: var(--warning-soft); border-color: rgba(217, 119, 6, 0.25); }
+    .traffic-box.red { background: var(--danger-soft); border-color: rgba(220, 38, 38, 0.25); }
+    .traffic-val { font-size: 16px; font-weight: 800; line-height: 1.1; }
+    .traffic-lbl { font-size: 11px; font-weight: 600; color: var(--ink-secondary); margin-top: 3px; }
+
+    /* Deceptive Claim Alerts */
+    .claim-item {
+      padding: 12px 14px; border-radius: 12px; margin-bottom: 10px;
+      background: #FFFBEB; border-left: 4px solid var(--warning);
+      transition: transform 0.2s;
+    }
+    .claim-item:hover { transform: translateX(2px); }
+    .claim-item.verified-inconsistency {
+      background: #FEF2F2; border-left-color: var(--danger);
+    }
+    .claim-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .claim-title { font-weight: 800; font-size: 13px; }
+    .claim-pill { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+    .claim-item p { font-size: 12px; color: var(--ink-secondary); line-height: 1.4; }
+
+    /* Additives list */
+    .additive-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;
+      transition: background 0.15s, padding-left 0.15s;
+    }
+    .additive-row:hover { background: rgba(0,0,0,0.015); padding-left: 4px; }
+    .additive-row:last-child { border-bottom: none; }
+    .add-name { font-weight: 700; font-size: 13px; }
+    .add-class { font-size: 11px; color: var(--ink-tertiary); }
+    .abroad-flag {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700; color: var(--danger);
+      background: var(--danger-soft); padding: 3px 6px; border-radius: 4px;
+    }
+
+    /* Tabs inside Scanner */
+    .tab-pills { display: flex; gap: 8px; margin-bottom: 16px; background: rgba(0,0,0,0.03); padding: 4px; border-radius: 12px; }
+    .tab-pill {
+      flex: 1; padding: 8px 12px; text-align: center; border-radius: 8px;
+      font-size: 12px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: var(--ink-secondary);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tab-pill.active { background: var(--surface); color: var(--brand); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .tab-pill:hover:not(.active) { color: var(--ink); background: rgba(0,0,0,0.02); }
+
+    /* Laser Scanner Viewfinder Animation */
+    .scanner-viewfinder {
+      position: relative; width: 100%; height: 160px;
+      background: #141815; border-radius: 14px; overflow: hidden;
+      margin-bottom: 14px; display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .scan-laser {
+      position: absolute; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, transparent 0%, #34D399 50%, transparent 100%);
+      box-shadow: 0 0 12px #34D399, 0 0 4px #fff;
+      animation: scanLaserAnim 2.2s ease-in-out infinite alternate;
+      z-index: 2;
+    }
+    @keyframes scanLaserAnim {
+      0% { top: 8%; opacity: 0.7; }
+      100% { top: 92%; opacity: 1; }
+    }
+    .scan-corner {
+      position: absolute; width: 16px; height: 16px;
+      border-color: #34D399; border-style: solid; z-index: 3;
+    }
+    .scan-corner.top-left { top: 10px; left: 10px; border-width: 2px 0 0 2px; border-radius: 4px 0 0 0; }
+    .scan-corner.top-right { top: 10px; right: 10px; border-width: 2px 2px 0 0; border-radius: 0 4px 0 0; }
+    .scan-corner.bottom-left { bottom: 10px; left: 10px; border-width: 0 0 2px 2px; border-radius: 0 0 0 4px; }
+    .scan-corner.bottom-right { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; border-radius: 0 0 4px 0; }
+
+    /* Inputs */
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
+    .form-input {
+      width: 100%; padding: 12px 14px; border-radius: 12px;
+      border: 1.5px solid var(--hairline); background: var(--surface);
+      font-family: var(--font); font-size: 14px; color: var(--ink); outline: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .form-input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(27,67,50,0.1);
+    }
+    textarea.form-input { resize: vertical; min-height: 90px; }
+
+    /* Sample chips with Micro-Bounce */
+    .chip-wrap { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .chip {
+      background: var(--brand-soft); color: var(--brand); padding: 5px 10px;
+      border-radius: 20px; font-size: 11px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .chip:hover {
+      transform: translateY(-2px) scale(1.04);
+      background: var(--brand); color: #fff;
+      box-shadow: 0 4px 10px rgba(27,67,50,0.15);
+    }
+    .chip:active { transform: scale(0.96); }
+
+    /* Floating Action Button (Voice Lens) with Ambient Ripple */
+    #floatingVoiceBtn {
+      animation: fabFloat 3.2s ease-in-out infinite, fabRipple 2.6s infinite;
+    }
+    @keyframes fabFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes fabRipple {
+      0% { box-shadow: 0 0 0 0 rgba(27, 67, 50, 0.45); }
+      70% { box-shadow: 0 0 0 16px rgba(27, 67, 50, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(27, 67, 50, 0); }
+    }
+
+    /* Sound wave equalizer animation */
+    .sound-wave {
+      display: inline-flex; align-items: center; gap: 3px; height: 18px;
+    }
+    .sound-bar {
+      width: 3px; height: 6px; background: var(--brand); border-radius: 2px;
+      animation: soundEqualizer 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes soundEqualizer {
+      0% { height: 4px; }
+      100% { height: 18px; }
+    }
+
+    /* Modal / Drawer */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      z-index: 200; display: none; align-items: flex-end; justify-content: center;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-sheet {
+      background: var(--surface); border-radius: 24px 24px 0 0; padding: 24px;
+      width: 100%; max-width: 640px; max-height: 85vh; overflow-y: auto;
+      animation: slideUp 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Comparison Table */
+    .comp-table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+    .comp-table th, .comp-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--hairline); font-size: 13px; }
+    .comp-table th { background: var(--bg); font-weight: 800; color: var(--brand); }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header>
+    <div class="brand-wrap" onclick="navTo('home')">
+      <div class="brand-logo">T</div>
+      <div class="brand-text">
+        <h1>TruthLens</h1>
+        <p>Know what's really inside</p>
+      </div>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button class="btn btn-secondary" onclick="openAssistantModal()" style="padding: 7px 11px; font-size: 12px; display: flex; align-items: center; gap: 4px; background: var(--brand-soft); color: var(--brand); font-weight: 700;">
+        🎙️ Voice Lens
+      </button>
+      <button class="btn btn-secondary" onclick="navTo('stitch')" style="padding: 7px 11px; font-size: 12px; display: flex; align-items: center; gap: 4px;">
+        🎨 Stitch UI
+      </button>
+      <button class="btn btn-secondary" onclick="navTo('profile')" style="padding: 7px 11px; font-size: 12px;">
+        <span id="headerProfileLabel">Profile</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- SCREEN 1: HOME -->
+    <div id="screen-home" class="screen active">
+      <div class="hero-card card">
+        <h2>Uncover Hidden Additives, Sugars & Claims</h2>
+        <p>Scan any Indian packaged food to decode INS numbers, expose deceptive marketing, and find genuinely cleaner alternatives.</p>
+        <button class="btn btn-primary" onclick="navTo('scan')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 7V5a2 2 0 012-2h2m12 0h2a2 2 0 012 2v2m0 10v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"></path></svg>
+          Scan Product Now
+        </button>
+      </div>
+
+      <!-- Voice Lens & Stitch Showcase Promo Cards -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+        <div class="card" onclick="openAssistantModal()" style="cursor: pointer; background: linear-gradient(135deg, #FBF9F5 0%, #E8F1EC 100%); border: 1px solid var(--hairline); padding: 14px; margin-bottom: 0;">
+          <div style="font-size: 24px; margin-bottom: 6px;">🎙️</div>
+          <b style="font-size: 14px; color: var(--brand); display: block;">Voice Lens AI</b>
+          <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 2px;">Ask Gemini about additives, sugars & metrology rules</p>
+        </div>
+        <div class="card" onclick="navTo('stitch')" style="cursor: pointer; background: linear-gradient(135deg, #FFF9F0 0%, #FEF3C7 100%); border: 1px solid #F49A68; padding: 14px; margin-bottom: 0;">
+          <div style="font-size: 24px; margin-bottom: 6px;">🎨</div>
+          <b style="font-size: 14px; color: #924B20; display: block;">Stitch 15 Screens</b>
+          <p style="font-size: 11px; color: #6B5B51; margin-top: 2px;">Explore 15 mobile screens designed in Google Stitch</p>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="search-bar">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input type="text" id="homeSearchInput" placeholder="Search by product, brand, or barcode..." onkeyup="handleHomeSearch(event)">
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="chip-wrap" style="margin-bottom: 16px;">
+        <span class="chip" onclick="filterCategory('')">All Foods</span>
+        <span class="chip" onclick="filterCategory('Biscuits')">Biscuits</span>
+        <span class="chip" onclick="filterCategory('Instant Noodles')">Noodles</span>
+        <span class="chip" onclick="filterCategory('Malt')">Malt Drinks</span>
+        <span class="chip" onclick="filterCategory('Dairy')">Dairy</span>
+        <span class="chip" onclick="filterCategory('Snacks')">Chips</span>
+      </div>
+
+      <!-- Popular Indian Foods -->
+      <div class="sec-head">
+        <h3>Popular Packaged Foods</h3>
+        <a onclick="navTo('compare')">Compare Foods →</a>
+      </div>
+      <div class="prod-grid" id="popularGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <!-- SCREEN 2: SCANNER -->
+    <div id="screen-scan" class="screen">
+      <div class="card">
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">Product Scanner</h2>
+        <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 16px;">Scan a barcode, snap label photos, or paste ingredients from Blinkit/Zepto.</p>
+
+        <!-- Mode Switcher -->
+        <div class="tab-pills">
+          <button class="tab-pill active" onclick="switchScanTab('barcode')">Barcode</button>
+          <button class="tab-pill" onclick="switchScanTab('photo')">Photo Label OCR</button>
+          <button class="tab-pill" onclick="switchScanTab('manual')">Paste Ingredients</button>
+        </div>
+
+        <!-- TAB 1: BARCODE -->
+        <div id="tab-barcode" class="scan-tab-content">
+          <div class="form-group">
+            <label>Scan or Enter EAN-13 Barcode</label>
+            <input type="text" id="barcodeInput" class="form-input" placeholder="e.g. 8901719101013">
+          </div>
+          <div style="margin-bottom: 14px;">
+            <span style="font-size: 11px; font-weight: 700; color: var(--ink-tertiary);">TRY POPULAR INDIAN PRODUCTS:</span>
+            <div class="chip-wrap">
+              <span class="chip" onclick="setBarcode('8901719101013')">Parle-G Biscuit</span>
+              <span class="chip" onclick="setBarcode('8901058852230')">Maggi Masala</span>
+              <span class="chip" onclick="setBarcode('8901233010123')">Bournvita</span>
+              <span class="chip" onclick="setBarcode('8908013210041')">Whole Truth PB</span>
+            </div>
+          </div>
+          <button class="btn btn-brand" onclick="lookupBarcodeAction()">
+            Lookup Barcode & Analyze
+          </button>
+        </div>
+
+        <!-- TAB 2: PHOTO OCR -->
+        <div id="tab-photo" class="scan-tab-content" style="display: none;">
+          <!-- Animated Laser Viewfinder -->
+          <div class="scanner-viewfinder">
+            <div class="scan-laser"></div>
+            <div class="scan-corner top-left"></div>
+            <div class="scan-corner top-right"></div>
+            <div class="scan-corner bottom-left"></div>
+            <div class="scan-corner bottom-right"></div>
+            <div style="z-index: 3; text-align: center; color: rgba(255,255,255,0.75); font-size: 12px; pointer-events: none;">
+              <span style="font-size: 26px; display: block; margin-bottom: 4px;">📷</span>
+              Live Scanner Reticle Active
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Upload or Capture Photo of Ingredient Label</label>
+            <input type="file" id="photoInput" accept="image/*" class="form-input" capture="environment">
+          </div>
+          <div class="form-group">
+            <label>Product Name (Optional)</label>
+            <input type="text" id="photoProdName" class="form-input" placeholder="e.g. Marie Gold Biscuit">
+          </div>
+          <button class="btn btn-brand" onclick="uploadPhotoAction()">
+            Analyze Photo with OCR
+          </button>
+        </div>
+
+        <!-- TAB 3: PASTE TEXT -->
+        <div id="tab-manual" class="scan-tab-content" style="display: none;">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input type="text" id="manualName" class="form-input" placeholder="e.g. Crunchy Atta Cookies">
+          </div>
+          <div class="form-group">
+            <label>Front Packaging Claims (comma separated)</label>
+            <input type="text" id="manualClaims" class="form-input" placeholder="e.g. 100% Atta, No Added Sugar, Zero Preservatives">
+          </div>
+          <div class="form-group">
+            <label>Ingredients List (from back of pack)</label>
+            <textarea id="manualIngredients" class="form-input" placeholder="Paste full ingredient text (e.g. Refined Wheat Flour (Maida), Sugar, Palm Oil, Invert Syrup, INS 500(ii), INS 211...)"></textarea>
+          </div>
+          <button class="btn btn-brand" onclick="submitManualAction()">
+            Decode Ingredients & Claims
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3: SEARCH -->
+    <div id="screen-search" class="screen">
+      <div class="sec-head">
+        <h3>Search Food Catalogue</h3>
+      </div>
+      <div class="search-bar">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input type="text" id="mainSearchInput" placeholder="Search name, brand, or ingredient (e.g. palm oil)..." oninput="performCatalogueSearch()">
+      </div>
+      <div class="prod-grid" id="searchResultsGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <!-- SCREEN 4: PRODUCT ANALYSIS (HERO DETAIL VIEW) -->
+    <div id="screen-analysis" class="screen">
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div style="background: var(--brand-soft); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center;">
+          <button onclick="navTo('home')" style="background:none; border:none; cursor:pointer; font-weight:700; color:var(--brand); display:flex; align-items:center; gap:4px;">
+            ← Back
+          </button>
+          <span id="analysisSourceBadge" style="font-size: 11px; font-weight: 800; color: var(--brand); text-transform: uppercase;">Verified Product</span>
+        </div>
+
+        <div class="analysis-hero">
+          <div id="analysisImageWrap" style="height: 120px; margin-bottom: 12px; display:flex; align-items:center; justify-content:center;"></div>
+          <h2 id="analysisName" style="font-size: 22px; font-weight: 800; letter-spacing: -0.4px;">-</h2>
+          <p id="analysisBrandCategory" style="font-size: 13px; font-weight: 600; color: var(--ink-secondary); margin-bottom: 18px;">-</p>
+
+          <!-- Hero TruthScore Gauge -->
+          <div class="score-gauge" id="analysisGauge">
+            <div class="num" id="analysisScoreNum">--</div>
+            <div class="lbl">TruthScore</div>
+          </div>
+          <p id="analysisGradeLabel" style="font-size: 13px; font-weight: 800;">-</p>
+          <div id="analysisNovaBadge" style="margin-top: 8px;"></div>
+        </div>
+      </div>
+
+      <!-- Voice Lens Assistant Prompt Banner for Scanned Product -->
+      <div class="card" style="background: var(--brand-soft); border: 1px solid rgba(27, 67, 50, 0.2); display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px;">
+        <div>
+          <b style="font-size: 13px; color: var(--brand); display: flex; align-items: center; gap: 6px;">
+            <span>🎙️</span> Ask Voice Lens about this Product
+          </b>
+          <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 2px;">Ask Gemini about diabetic safety, palm oil, or clean alternatives.</p>
+        </div>
+        <button class="btn btn-brand" onclick="openAssistantModalWithCurrentProduct()" style="padding: 8px 14px; font-size: 12px; white-space: nowrap;">
+          Ask AI
+        </button>
+      </div>
+
+      <!-- Deceptive Marketing Claims Card -->
+      <div class="card" id="claimsCard">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+          <span>🚨 Deceptive Claim Buster</span>
+        </h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Comparing front packaging marketing against back-of-pack realities.</p>
+        <div id="claimsList"></div>
+      </div>
+
+      <!-- Traffic Light Nutrition Grid -->
+      <div class="card">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">FSSAI Traffic Light Nutrition</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Standardized per 100g / 100ml.</p>
+        <div class="traffic-grid" id="trafficGrid"></div>
+      </div>
+
+      <!-- INS Additives & Chemical Decoder -->
+      <div class="card">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">Additives & INS Decoder</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Tap any additive for European Union / US regulatory status and health insights.</p>
+        <div id="additivesList"></div>
+      </div>
+
+      <!-- Hidden Sugars & Industrial Fats -->
+      <div class="card">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 10px;">Hidden Sugars & Industrial Fats</h3>
+        <div id="sugarsFatsAlerts"></div>
+      </div>
+
+      <!-- Personalized Health Warnings -->
+      <div class="card">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 10px;">Personalized Health Profiles</h3>
+        <div id="healthProfilesList"></div>
+      </div>
+
+      <!-- Clean Alternatives Recommendation Engine -->
+      <div class="card" style="border: 2px solid var(--success);">
+        <h3 style="font-size: 16px; font-weight: 800; color: var(--success); margin-bottom: 4px;">🌱 Cleaner Alternatives</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Healthier, minimally processed substitutes in this category.</p>
+        <div id="alternativesList"></div>
+      </div>
+
+      <!-- Legal Metrology (PackSure Statutory Standards) -->
+      <div class="card">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">⚖️ Legal Metrology Compliance</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Legal Metrology (Packaged Commodities) Rules, 2011 (Rule 6).</p>
+        <div id="complianceList"></div>
+      </div>
+    </div>
+
+    <!-- SCREEN 5: COMPARE -->
+    <div id="screen-compare" class="screen">
+      <div class="card">
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 6px;">Product Comparison</h2>
+        <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 16px;">Compare two packaged foods side-by-side to find the cleaner option.</p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+          <div>
+            <label style="font-size: 11px; font-weight: 700;">Product 1</label>
+            <select id="compareSelect1" class="form-input"></select>
+          </div>
+          <div>
+            <label style="font-size: 11px; font-weight: 700;">Product 2</label>
+            <select id="compareSelect2" class="form-input"></select>
+          </div>
+        </div>
+        <button class="btn btn-brand" onclick="runComparisonAction()">Compare Products</button>
+
+        <div id="compareResultWrap" style="margin-top: 20px; display: none;"></div>
+      </div>
+    </div>
+
+    <!-- SCREEN 6: PROFILE -->
+    <div id="screen-profile" class="screen">
+      <div class="card">
+        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 4px;">Health Preferences & Settings</h2>
+        <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 18px;">Customize which health warnings appear on product analyses.</p>
+
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <label style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--hairline);">
+            <div>
+              <b style="font-size: 14px;">Diabetic & Pre-Diabetic Mode</b>
+              <p style="font-size: 12px; color: var(--ink-secondary);">Flag maltodextrin, high-GI syrups, and sugar spikes</p>
+            </div>
+            <input type="checkbox" id="prefDiabetic" checked style="width: 18px; height: 18px;">
+          </label>
+          <label style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--hairline);">
+            <div>
+              <b style="font-size: 14px;">Heart & Blood Pressure (Low Sodium)</b>
+              <p style="font-size: 12px; color: var(--ink-secondary);">Flag high sodium and saturated palm fats</p>
+            </div>
+            <input type="checkbox" id="prefHeart" checked style="width: 18px; height: 18px;">
+          </label>
+          <label style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--hairline);">
+            <div>
+              <b style="font-size: 14px;">PCOS & Hormonal Health</b>
+              <p style="font-size: 12px; color: var(--ink-secondary);">Flag endocrine disruptor additives and high sugar</p>
+            </div>
+            <input type="checkbox" id="prefPCOS" checked style="width: 18px; height: 18px;">
+          </label>
+          <label style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--hairline);">
+            <div>
+              <b style="font-size: 14px;">Gut Health & IBS Friendly</b>
+              <p style="font-size: 12px; color: var(--ink-secondary);">Flag carrageenan, CMC, and artificial sweeteners</p>
+            </div>
+            <input type="checkbox" id="prefGut" checked style="width: 18px; height: 18px;">
+          </label>
+          <label style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+            <div>
+              <b style="font-size: 14px;">Child Safe & Family Protection</b>
+              <p style="font-size: 12px; color: var(--ink-secondary);">Flag Southampton dyes and artificial non-caloric sweeteners</p>
+            </div>
+            <input type="checkbox" id="prefChild" checked style="width: 18px; height: 18px;">
+          </label>
+        </div>
+
+        <button class="btn btn-brand" style="margin-top: 18px;" onclick="savePreferences()">Save Preferences</button>
+      </div>
+
+      <!-- Privacy & History -->
+      <div class="card">
+        <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 8px;">Privacy & Local Data</h3>
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">
+          TruthLens operates under strict consumer privacy. Your scan history and health preferences are stored locally on your device. We do not sell your personal dietary data.
+        </p>
+        <button class="btn btn-secondary" onclick="clearHistoryAction()" style="color: var(--danger); background: var(--danger-soft); width: 100%;">
+          Clear Local Scan History & Cache
+        </button>
+      </div>
+    </div>
+
+    <!-- SCREEN 6: STITCH UI SHOWCASE (15 SCREENS) -->
+    <div id="screen-stitch" class="screen">
+      <div class="card" style="background: linear-gradient(135deg, #FFF9F0 0%, #FEF3C7 100%); border-color: #F49A68;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h2 style="font-size: 20px; font-weight: 800; color: #924B20;">🎨 Google Stitch Mobile Platform</h2>
+          <button onclick="navTo('home')" style="background:none; border:none; cursor:pointer; font-weight:700; color:#924B20;">✕ Back</button>
+        </div>
+        <p style="font-size: 13px; color: #6B5B51; margin-top: 6px;">
+          15 high-fidelity screens designed for PackSure & TruthLens using the Google Stitch editorial intelligence design system.
+        </p>
+      </div>
+
+      <!-- Stitch Category Filter Chips -->
+      <div class="chip-wrap" style="margin-bottom: 16px;">
+        <span class="chip active" id="stitchChipAll" onclick="filterStitchScreens('all')">All 15 Screens</span>
+        <span class="chip" id="stitchChipConsumer" onclick="filterStitchScreens('consumer')">Consumer (8)</span>
+        <span class="chip" id="stitchChipEnforce" onclick="filterStitchScreens('enforcement')">Enforcement & Legal (7)</span>
+      </div>
+
+      <!-- Screens List -->
+      <div id="stitchScreensList" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;">
+        <!-- Loaded via loadStitchScreens() -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="nav-bar">
+    <button class="nav-btn active" id="nav-btn-home" onclick="navTo('home')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+      <span>Home</span>
+    </button>
+    <button class="nav-btn scan-btn" id="nav-btn-scan" onclick="navTo('scan')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7V5a2 2 0 012-2h2m12 0h2a2 2 0 012 2v2m0 10v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"></path></svg>
+      <span>Scan</span>
+    </button>
+    <button class="nav-btn" id="nav-btn-search" onclick="navTo('search')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.3-4.3"></path></svg>
+      <span>Search</span>
+    </button>
+    <button class="nav-btn" id="nav-btn-compare" onclick="navTo('compare')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+      <span>Compare</span>
+    </button>
+    <button class="nav-btn" id="nav-btn-profile" onclick="navTo('profile')">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      <span>Profile</span>
+    </button>
+  </div>
+
+  <!-- Floating Voice Lens AI Button -->
+  <button id="floatingVoiceBtn" onclick="openAssistantModal()" title="Ask Voice Lens AI" style="position: fixed; bottom: 78px; right: 20px; width: 54px; height: 54px; border-radius: 50%; background: var(--brand); color: #fff; border: 3px solid #fff; box-shadow: 0 4px 18px rgba(27,67,50,0.35); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 90; transition: transform 0.2s;" onmouseenter="this.style.transform='scale(1.08)'" onmouseleave="this.style.transform='scale(1)'">
+    🎙️
+  </button>
+
+  <!-- Voice Lens AI Assistant Modal Drawer -->
+  <div class="modal-overlay" id="assistantModal" onclick="closeAssistantModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()" style="max-height: 90vh; display: flex; flex-direction: column; padding: 20px;">
+      <!-- Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--hairline); padding-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 20px;">
+            🎙️
+          </div>
+          <div>
+            <h3 style="font-size: 17px; font-weight: 800; color: var(--brand); line-height: 1.1;">Voice Lens Assistant</h3>
+            <span style="font-size: 11px; font-weight: 700; color: var(--success); display: flex; align-items: center; gap: 4px;">
+              <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--success); display: inline-block;"></span>
+              Powered by Google Gemini 3.1 Flash
+            </span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="sound-wave" id="assistantVoiceWave" style="display: none; align-items: center; gap: 3px; height: 18px;">
+            <span class="sound-bar" style="animation-delay: 0s;"></span>
+            <span class="sound-bar" style="animation-delay: 0.15s;"></span>
+            <span class="sound-bar" style="animation-delay: 0.3s;"></span>
+            <span class="sound-bar" style="animation-delay: 0.45s;"></span>
+          </div>
+          <button onclick="closeAssistantModal()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--ink-secondary);">✕</button>
+        </div>
+      </div>
+
+      <!-- Active Context Pill (if product selected) -->
+      <div id="assistantProductContextPill" style="display: none; background: var(--brand-soft); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; font-size: 12px; color: var(--brand); justify-content: space-between; align-items: center;">
+        <span id="assistantContextLabel">Context: <b>Product</b></span>
+        <button onclick="clearAssistantProductContext()" style="background: none; border: none; font-size: 11px; color: var(--ink-secondary); cursor: pointer; text-decoration: underline;">Clear Context</button>
+      </div>
+
+      <!-- Suggested Prompts / Chips -->
+      <div style="margin-bottom: 10px;">
+        <span style="font-size: 11px; font-weight: 700; color: var(--ink-tertiary); text-transform: uppercase;">Suggested Questions</span>
+        <div style="display: flex; gap: 6px; overflow-x: auto; padding-top: 6px; padding-bottom: 4px;" id="suggestedPromptsList">
+          <button class="chip" onclick="askAssistantPrompt('Is this product safe for a diabetic patient?')">Diabetic Safe?</button>
+          <button class="chip" onclick="askAssistantPrompt('Does this contain hidden sugars or palm oil?')">Hidden Sugars / Fats?</button>
+          <button class="chip" onclick="askAssistantPrompt('Explain the INS additives in simple language')">Explain INS Additives</button>
+          <button class="chip" onclick="askAssistantPrompt('What are the legal metrology declaration requirements under Rule 6?')">Rule 6 Metrology</button>
+          <button class="chip" onclick="askAssistantPrompt('Suggest 3 clean label healthy alternatives to this')">Clean Alternatives</button>
+        </div>
+      </div>
+
+      <!-- Chat Messages Scroll Area -->
+      <div id="assistantMessages" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 10px 0; min-height: 220px; max-height: 45vh;">
+        <div style="display: flex; gap: 8px;">
+          <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--brand-soft); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">🌿</div>
+          <div style="background: var(--bg); padding: 12px 14px; border-radius: 14px; font-size: 13px; color: var(--ink); line-height: 1.5; border: 1px solid var(--hairline);">
+            Namaste! I am your <b>TruthLens Voice & AI Assistant</b>. Ask me anything about packaged food ingredients, hidden sugars, INS additives, health impact, or Legal Metrology packaging compliance in India.
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <div style="display: flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--hairline);">
+        <input type="text" id="assistantInput" placeholder="Ask Voice Lens about food or label rules..." style="flex: 1; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--hairline); font-family: var(--font); font-size: 13px; outline: none;" onkeyup="handleAssistantKey(event)">
+        <button class="btn btn-brand" id="assistantSendBtn" onclick="sendAssistantQuery()" style="padding: 10px 16px; font-size: 14px;">
+          Ask
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Stitch Live Preview Modal -->
+  <div class="modal-overlay" id="stitchPreviewModal" onclick="closeStitchPreview(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()" style="max-height: 94vh; height: 94vh; display: flex; flex-direction: column; padding: 16px; max-width: 760px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <div>
+          <b id="stitchPreviewTitle" style="font-size: 16px; color: var(--ink);">Screen Preview</b>
+          <p id="stitchPreviewSubtitle" style="font-size: 11px; color: var(--ink-secondary);">-</p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <a id="stitchPreviewExternalLink" target="_blank" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+            Full Screen ↗
+          </a>
+          <button onclick="closeStitchPreview()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--ink-secondary);">✕</button>
+        </div>
+      </div>
+      <iframe id="stitchPreviewIframe" style="flex: 1; width: 100%; border: 1px solid var(--hairline); border-radius: 14px; background: #fff;" src=""></iframe>
+    </div>
+  </div>
+
+  <!-- Additive Explainer Modal -->
+  <div class="modal-overlay" id="additiveModal" onclick="closeAdditiveModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span id="modalAddCode" style="font-size:12px; font-weight:800; color:var(--brand); text-transform:uppercase;">INS Additive</span>
+        <button onclick="document.getElementById('additiveModal').classList.remove('active')" style="background:none; border:none; font-size:22px; cursor:pointer;">✕</button>
+      </div>
+      <h2 id="modalAddName" style="font-size:20px; font-weight:800; margin-bottom:6px;">Additive Name</h2>
+      <p id="modalAddClass" style="font-size:13px; font-weight:600; color:var(--ink-secondary); margin-bottom:14px;">Functional Class</p>
+      
+      <div class="card" style="background: var(--bg); padding:14px; margin-bottom:12px;">
+        <b style="font-size:12px; color:var(--ink-secondary);">Why is it used?</b>
+        <p id="modalAddDesc" style="font-size:13px; margin-top:4px; line-height:1.4;">Description</p>
+      </div>
+
+      <div class="card" style="background: var(--bg); padding:14px; margin-bottom:12px;">
+        <b style="font-size:12px; color:var(--ink-secondary);">Health & Gut Considerations</b>
+        <p id="modalAddHealth" style="font-size:13px; margin-top:4px; line-height:1.4;">Health info</p>
+      </div>
+
+      <div id="modalAddAbroad" style="margin-top:10px;"></div>
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script>
+    let currentProducts = [];
+    let currentAnalyzedProduct = null;
+    let activeCategory = '';
+    let stitchScreens = [];
+
+    // Navigation handler
+    function navTo(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      
+      const s = document.getElementById('screen-' + screenId);
+      if (s) s.classList.add('active');
+      const b = document.getElementById('nav-btn-' + screenId);
+      if (b) b.classList.add('active');
+      window.scrollTo(0, 0);
+
+      if (screenId === 'compare') {
+        populateCompareDropdowns();
+      } else if (screenId === 'stitch') {
+        if (!stitchScreens.length) loadStitchScreens();
+      }
+    }
+
+    // Tab switcher inside scanner
+    function switchScanTab(tabName) {
+      document.querySelectorAll('.scan-tab-content').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.tab-pill').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById('tab-' + tabName).style.display = 'block';
+      event.target.classList.add('active');
+    }
+
+    function setBarcode(code) {
+      document.getElementById('barcodeInput').value = code;
+    }
+
+    // Load Popular Products on Start
+    async function loadPopular() {
+      try {
+        const res = await fetch('/api/truth/popular');
+        const data = await res.json();
+        currentProducts = data;
+        renderProductGrid('popularGrid', data);
+        renderProductGrid('searchResultsGrid', data);
+        populateCompareDropdowns();
+      } catch (e) {
+        console.error('Failed to load products', e);
+      }
+    }
+
+    function renderProductGrid(elementId, prods) {
+      const container = document.getElementById(elementId);
+      if (!prods.length) {
+        container.innerHTML = '<p style="color:var(--ink-tertiary); grid-column: 1/-1; text-align:center; padding: 20px;">No products found.</p>';
+        return;
+      }
+      container.innerHTML = prods.map(p => {
+        const score = p.truth_score ? p.truth_score.score : 50;
+        let scoreClass = 'score-c';
+        if (score >= 80) scoreClass = 'score-a';
+        else if (score >= 60) scoreClass = 'score-b';
+        else if (score < 40) scoreClass = 'score-d';
+
+        const novaGrp = p.nova ? p.nova.group : 4;
+        const img = p.image_url || '/assets/favicon.svg';
+
+        return `
+          <div class="prod-card" onclick="viewProduct('${p.id}')">
+            <div class="prod-img-wrap">
+              <img src="${img}" alt="${p.name}" onerror="this.src='/favicon.svg'">
+            </div>
+            <div>
+              <div class="prod-title">${p.name}</div>
+              <div class="prod-brand">${p.brand || 'Packaged Food'}</div>
+            </div>
+            <div class="badge-row">
+              <span class="score-badge ${scoreClass}">★ ${score}</span>
+              <span class="nova-badge nova-${novaGrp}">NOVA ${novaGrp}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Filter by category
+    function filterCategory(cat) {
+      activeCategory = cat;
+      const filtered = currentProducts.filter(p => !cat || (p.category && p.category.toLowerCase().includes(cat.toLowerCase())));
+      renderProductGrid('popularGrid', filtered);
+    }
+
+    // Search Handlers
+    function handleHomeSearch(e) {
+      if (e.key === 'Enter') {
+        const q = e.target.value.trim();
+        document.getElementById('mainSearchInput').value = q;
+        navTo('search');
+        performCatalogueSearch();
+      }
+    }
+
+    async function performCatalogueSearch() {
+      const q = document.getElementById('mainSearchInput').value.trim();
+      try {
+        const res = await fetch('/api/truth/search?q=' + encodeURIComponent(q));
+        const data = await res.json();
+        renderProductGrid('searchResultsGrid', data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // View Product Detail Analysis
+    async function viewProduct(prodId) {
+      try {
+        let p = currentProducts.find(x => x.id === prodId);
+        if (!p) {
+          const res = await fetch('/api/truth/products/' + prodId);
+          p = await res.json();
+        }
+        renderAnalysisScreen(p);
+        navTo('analysis');
+      } catch (e) {
+        alert('Could not load product: ' + e.message);
+      }
+    }
+
+    // Render Hero Analysis Screen
+    function renderAnalysisScreen(data) {
+      currentAnalyzedProduct = data;
+      document.getElementById('analysisName').textContent = data.name;
+      document.getElementById('analysisBrandCategory').textContent = `${data.brand || ''} · ${data.category || ''}`;
+      
+      const imgWrap = document.getElementById('analysisImageWrap');
+      if (data.image_url) {
+        imgWrap.innerHTML = `<img src="${data.image_url}" style="max-height:100px; max-width:180px; object-fit:contain;">`;
+      } else {
+        imgWrap.innerHTML = `<div class="brand-logo" style="width:60px; height:60px; font-size:30px;">T</div>`;
+      }
+
+      // TruthScore Gauge
+      const score = data.truth_score ? data.truth_score.score : 50;
+      document.getElementById('analysisScoreNum').textContent = score;
+      document.getElementById('analysisGradeLabel').textContent = data.truth_score ? data.truth_score.grade : '';
+
+      const gauge = document.getElementById('analysisGauge');
+      if (score >= 80) gauge.style.borderColor = 'var(--success)';
+      else if (score >= 60) gauge.style.borderColor = '#0284C7';
+      else if (score >= 40) gauge.style.borderColor = 'var(--warning)';
+      else gauge.style.borderColor = 'var(--danger)';
+
+      // NOVA Badge
+      const nova = data.nova || { group: 4, title: 'Ultra-Processed Food', reasons: [] };
+      document.getElementById('analysisNovaBadge').innerHTML = `
+        <span class="nova-badge nova-${nova.group}" style="font-size:12px; padding:4px 10px;">NOVA Group ${nova.group}: ${nova.title}</span>
+        ${nova.reasons ? `<p style="font-size:11px; color:var(--ink-secondary); margin-top:6px;">${nova.reasons.join(' · ')}</p>` : ''}
+      `;
+
+      // 1. Deceptive Claims
+      const claimsCard = document.getElementById('claimsCard');
+      const claimsList = document.getElementById('claimsList');
+      if (data.claim_verdicts && data.claim_verdicts.length) {
+        claimsCard.style.display = 'block';
+        claimsList.innerHTML = data.claim_verdicts.map(c => `
+          <div class="claim-item ${c.status}">
+            <div class="claim-top">
+              <span class="claim-title">"${c.claim}"</span>
+              <span class="claim-pill" style="background:${c.status === 'verified_inconsistency' ? 'var(--danger)' : (c.status === 'potential_inconsistency' ? 'var(--warning)' : 'var(--success)')}; color:#fff;">
+                ${c.status.replace('_', ' ')}
+              </span>
+            </div>
+            <p>${c.explanation}</p>
+            <small style="color:var(--ink-tertiary); font-weight:600;">Evidence: ${c.evidence}</small>
+          </div>
+        `).join('');
+      } else {
+        claimsCard.style.display = 'none';
+      }
+
+      // 2. Traffic Lights Grid
+      const tl = data.traffic_lights || {};
+      const trafficGrid = document.getElementById('trafficGrid');
+      const items = [
+        { key: 'sugar', label: 'Sugars', obj: tl.sugar },
+        { key: 'saturated_fat', label: 'Sat. Fat', obj: tl.saturated_fat },
+        { key: 'sodium', label: 'Sodium', obj: tl.sodium },
+      ];
+      trafficGrid.innerHTML = items.map(it => {
+        if (!it.obj) return '';
+        return `
+          <div class="traffic-box ${it.obj.status}">
+            <div class="traffic-val">${it.obj.value}${it.obj.unit}</div>
+            <div class="traffic-lbl">${it.label}</div>
+          </div>
+        `;
+      }).join('');
+
+      // 3. Additives & INS List
+      const adds = data.additives || [];
+      const addList = document.getElementById('additivesList');
+      if (!adds.length) {
+        addList.innerHTML = '<p style="font-size:13px; color:var(--success); font-weight:600;">✓ No synthetic chemical additives or artificial colors detected.</p>';
+      } else {
+        addList.innerHTML = adds.map(a => `
+          <div class="additive-row" onclick="openAdditiveModal('${a.ins}')">
+            <div>
+              <div class="add-name">INS ${a.ins} — ${a.name}</div>
+              <div class="add-class">${a.class}</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="score-badge ${a.safety_rating === 'safe' ? 'score-a' : (a.safety_rating === 'caution' ? 'score-c' : 'score-d')}">${a.safety_rating.toUpperCase()}</span>
+              ${a.abroad_status && Object.keys(a.abroad_status).length ? `<div class="abroad-flag" style="margin-top:4px;">⚠ Banned/Restricted Abroad</div>` : ''}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      // 4. Hidden Sugars & Fats
+      const sfWrap = document.getElementById('sugarsFatsAlerts');
+      let sfHtml = '';
+      if (data.hidden_sugars && data.hidden_sugars.length) {
+        sfHtml += `<div style="margin-bottom:8px;"><b style="font-size:13px; color:var(--warning);">🍬 Disguised / Added Sugars Found:</b><div class="chip-wrap" style="margin-top:4px;">${data.hidden_sugars.map(s => `<span class="chip" style="background:var(--warning-soft); color:var(--warning);">GI ${s.gi}: ${s.name}</span>`).join('')}</div></div>`;
+      }
+      if (data.industrial_fats && data.industrial_fats.length) {
+        sfHtml += `<div><b style="font-size:13px; color:var(--danger);">🌴 Refined Industrial Fats:</b><div class="chip-wrap" style="margin-top:4px;">${data.industrial_fats.map(f => `<span class="chip" style="background:var(--danger-soft); color:var(--danger);">${f.name} (${f.saturated_fat_pct}% Sat. Fat)</span>`).join('')}</div></div>`;
+      }
+      if (!sfHtml) sfHtml = '<p style="font-size:13px; color:var(--success);">✓ Free of palm oil, hydrogenated fats, and maltodextrin syrups.</p>';
+      sfWrap.innerHTML = sfHtml;
+
+      // 5. Health Profiles
+      const hp = data.health_profiles || {};
+      const hpList = document.getElementById('healthProfilesList');
+      hpList.innerHTML = `
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          ${renderHpItem('Diabetic Impact', hp.diabetic)}
+          ${renderHpItem('Heart & BP', hp.heart_bp)}
+          ${renderHpItem('PCOS Risk', hp.pcos)}
+          ${renderHpItem('Gut & IBS', hp.gut_health)}
+          ${renderHpItem('Child Safe', hp.child_safe)}
+        </div>
+      `;
+
+      // 6. Clean Alternatives
+      const altWrap = document.getElementById('alternativesList');
+      const alts = data.alternatives || [];
+      if (!alts.length) {
+        altWrap.innerHTML = '<p style="font-size:13px; color:var(--ink-secondary);">This product already has a strong clean-label profile, or no direct alternative is catalogued yet.</p>';
+      } else {
+        altWrap.innerHTML = alts.map(a => `
+          <div style="background:var(--surface); border:1px solid var(--hairline); border-radius:12px; padding:12px; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <b style="font-size:14px; color:var(--brand);">${a.name}</b>
+              <span class="score-badge score-a">Clean Score: ${a.clean_score}</span>
+            </div>
+            <p style="font-size:12px; color:var(--ink-secondary); margin-top:4px;">${a.why_clean}</p>
+            ${a.key_improvements ? `<ul style="font-size:11px; color:var(--success); margin:6px 0 0 16px;">${a.key_improvements.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
+          </div>
+        `).join('');
+      }
+
+      // 7. Compliance
+      const comp = data.compliance || { verdict: 'compliant', checks: [] };
+      const compList = document.getElementById('complianceList');
+      compList.innerHTML = (comp.checks || []).map(c => `
+        <div style="display:flex; justify-content:space-between; font-size:12px; padding:6px 0; border-bottom:1px solid var(--hairline);">
+          <span>${c.label}</span>
+          <b style="color:${c.status === 'pass' ? 'var(--success)' : (c.status === 'warn' ? 'var(--warning)' : 'var(--danger)')};">${c.status.toUpperCase()}</b>
+        </div>
+      `).join('');
+    }
+
+    function renderHpItem(label, prof) {
+      if (!prof) return '';
+      const color = prof.status === 'caution' ? 'var(--danger)' : (prof.status === 'moderate' ? 'var(--warning)' : 'var(--success)');
+      return `
+        <div style="padding:8px 12px; border-radius:8px; background:var(--bg); border-left:3px solid ${color};">
+          <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:800;">
+            <span>${label}</span>
+            <span style="color:${color}; text-transform:uppercase;">${prof.status}</span>
+          </div>
+          <p style="font-size:11px; color:var(--ink-secondary); margin-top:2px;">${prof.recommendation || (prof.alerts && prof.alerts[0]) || 'Suitable'}</p>
+        </div>
+      `;
+    }
+
+    // Modal Additive Inspector
+    function openAdditiveModal(insCode) {
+      fetch('/api/truth/ingredients/lookup?q=' + encodeURIComponent(insCode))
+        .then(r => r.json())
+        .then(d => {
+          if (d.results && d.results.length) {
+            const a = d.results[0];
+            document.getElementById('modalAddCode').textContent = `INS ${a.ins} · ${a.safety_rating.toUpperCase()}`;
+            document.getElementById('modalAddName').textContent = a.name;
+            document.getElementById('modalAddClass').textContent = a.class;
+            document.getElementById('modalAddDesc').textContent = a.description;
+            document.getElementById('modalAddHealth').textContent = a.health_considerations;
+
+            let abroadHtml = '';
+            if (a.abroad_status && Object.keys(a.abroad_status).length) {
+              abroadHtml = '<div class="card" style="background:#FEF2F2; padding:12px;"><b style="font-size:12px; color:var(--danger);">Regulatory Bans & Warnings Abroad:</b>';
+              for (const [region, note] of Object.entries(a.abroad_status)) {
+                abroadHtml += `<p style="font-size:11px; margin-top:4px;"><b>${region}:</b> ${note}</p>`;
+              }
+              abroadHtml += '</div>';
+            }
+            document.getElementById('modalAddAbroad').innerHTML = abroadHtml;
+            document.getElementById('additiveModal').classList.add('active');
+          }
+        });
+    }
+
+    function closeAdditiveModal(e) {
+      document.getElementById('additiveModal').classList.remove('active');
+    }
+
+    // Scan Actions
+    async function lookupBarcodeAction() {
+      const code = document.getElementById('barcodeInput').value.trim();
+      if (!code) return alert('Enter a barcode number.');
+      try {
+        const res = await fetch('/api/truth/barcode/' + encodeURIComponent(code));
+        if (!res.ok) throw new Error((await res.json()).detail || 'Not found');
+        const prod = await res.json();
+        renderAnalysisScreen(prod);
+        navTo('analysis');
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    async function uploadPhotoAction() {
+      const fileInput = document.getElementById('photoInput');
+      if (!fileInput.files.length) return alert('Select or capture a photo first.');
+      const name = document.getElementById('photoProdName').value.trim();
+
+      const form = new FormData();
+      form.append('image', fileInput.files[0]);
+      form.append('name', name);
+
+      try {
+        const res = await fetch('/api/truth/scan', { method: 'POST', body: form });
+        const prod = await res.json();
+        renderAnalysisScreen(prod);
+        navTo('analysis');
+      } catch (err) {
+        alert('OCR Processing failed: ' + err.message);
+      }
+    }
+
+    async function submitManualAction() {
+      const name = document.getElementById('manualName').value.trim() || 'Custom Product';
+      const claimsRaw = document.getElementById('manualClaims').value;
+      const ingText = document.getElementById('manualIngredients').value.trim();
+      if (!ingText) return alert('Paste ingredient text.');
+
+      const claims = claimsRaw.split(',').map(s => s.trim()).filter(Boolean);
+      try {
+        const res = await fetch('/api/truth/scan/manual', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, claims, ingredients_text: ingText })
+        });
+        const prod = await res.json();
+        renderAnalysisScreen(prod);
+        navTo('analysis');
+      } catch (err) {
+        alert('Analysis error: ' + err.message);
+      }
+    }
+
+    // Compare Screen Dropdowns
+    function populateCompareDropdowns() {
+      const sel1 = document.getElementById('compareSelect1');
+      const sel2 = document.getElementById('compareSelect2');
+      if (!currentProducts.length) return;
+
+      const opts = currentProducts.map((p, idx) => `<option value="${p.id}">${p.name}</option>`).join('');
+      sel1.innerHTML = opts;
+      sel2.innerHTML = opts;
+      if (currentProducts.length >= 2) sel2.selectedIndex = 1;
+    }
+
+    async function runComparisonAction() {
+      const id1 = document.getElementById('compareSelect1').value;
+      const id2 = document.getElementById('compareSelect2').value;
+
+      try {
+        const res = await fetch('/api/truth/compare', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id_1: id1, product_id_2: id2 })
+        });
+        const d = await res.json();
+        const wrap = document.getElementById('compareResultWrap');
+        wrap.style.display = 'block';
+
+        const p1 = d.product_1;
+        const p2 = d.product_2;
+        wrap.innerHTML = `
+          <div style="background:var(--brand-soft); padding:14px; border-radius:12px; margin-bottom:14px;">
+            <b style="font-size:14px; color:var(--brand);">Comparison Verdict: ${d.overall_winner}</b>
+            <p style="font-size:12px; color:var(--ink-secondary); margin-top:2px;">${d.reason}</p>
+            ${d.goal_advice ? `<div style="margin-top:6px; font-size:11px; font-weight:700; color:var(--ink);">${d.goal_advice.join('<br>')}</div>` : ''}
+          </div>
+          <table class="comp-table">
+            <thead>
+              <tr><th>Metric</th><th>${p1.name}</th><th>${p2.name}</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>TruthScore</td><td><b>${p1.truth_score.score}/100</b></td><td><b>${p2.truth_score.score}/100</b></td></tr>
+              <tr><td>NOVA Classification</td><td>NOVA ${p1.nova.group}</td><td>NOVA ${p2.nova.group}</td></tr>
+              <tr><td>Total Sugars (100g)</td><td>${p1.nutrition_per_100g.total_sugars_g || 0}g</td><td>${p2.nutrition_per_100g.total_sugars_g || 0}g</td></tr>
+              <tr><td>Saturated Fat (100g)</td><td>${p1.nutrition_per_100g.saturated_fat_g || 0}g</td><td>${p2.nutrition_per_100g.saturated_fat_g || 0}g</td></tr>
+              <tr><td>Sodium (100g)</td><td>${p1.nutrition_per_100g.sodium_mg || 0}mg</td><td>${p2.nutrition_per_100g.sodium_mg || 0}mg</td></tr>
+              <tr><td>Additives Count</td><td>${p1.additives.length}</td><td>${p2.additives.length}</td></tr>
+            </tbody>
+          </table>
+        `;
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    function savePreferences() {
+      alert('Preferences saved locally!');
+      navTo('home');
+    }
+
+    function clearHistoryAction() {
+      if (confirm('Clear local scan history and cached product data?')) {
+        alert('Local data cleared.');
+        navTo('home');
+      }
+    }
+
+    // --- Voice Lens Assistant Functions ---
+    function openAssistantModal() {
+      document.getElementById('assistantModal').classList.add('active');
+      if (currentAnalyzedProduct) {
+        document.getElementById('assistantProductContextPill').style.display = 'flex';
+        document.getElementById('assistantContextLabel').innerHTML = `Context: <b>${escapeHtml(currentAnalyzedProduct.name)}</b> (${escapeHtml(currentAnalyzedProduct.brand || '')})`;
+      } else {
+        document.getElementById('assistantProductContextPill').style.display = 'none';
+      }
+      setTimeout(() => document.getElementById('assistantInput').focus(), 150);
+    }
+
+    function openAssistantModalWithCurrentProduct() {
+      openAssistantModal();
+    }
+
+    function closeAssistantModal(e) {
+      if (e && e.target !== document.getElementById('assistantModal')) return;
+      document.getElementById('assistantModal').classList.remove('active');
+    }
+
+    function clearAssistantProductContext() {
+      currentAnalyzedProduct = null;
+      document.getElementById('assistantProductContextPill').style.display = 'none';
+    }
+
+    function askAssistantPrompt(text) {
+      document.getElementById('assistantInput').value = text;
+      sendAssistantQuery();
+    }
+
+    function handleAssistantKey(e) {
+      if (e.key === 'Enter') sendAssistantQuery();
+    }
+
+    async function sendAssistantQuery() {
+      const input = document.getElementById('assistantInput');
+      const query = input.value.trim();
+      if (!query) return;
+
+      const messagesContainer = document.getElementById('assistantMessages');
+      const sendBtn = document.getElementById('assistantSendBtn');
+
+      // Append user message
+      const userMsgHtml = `
+        <div style="display: flex; justify-content: flex-end;">
+          <div style="background: var(--brand); color: #fff; padding: 10px 14px; border-radius: 14px 14px 2px 14px; font-size: 13px; max-width: 85%;">
+            ${escapeHtml(query)}
+          </div>
+        </div>
+      `;
+      messagesContainer.insertAdjacentHTML('beforeend', userMsgHtml);
+      input.value = '';
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      // Loading state
+      const loadingId = 'loading-' + Date.now();
+      const loadingHtml = `
+        <div id="${loadingId}" style="display: flex; gap: 8px;">
+          <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--brand-soft); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">🌿</div>
+          <div style="background: var(--bg); padding: 10px 14px; border-radius: 14px; font-size: 13px; color: var(--ink-secondary); border: 1px solid var(--hairline); display: flex; align-items: center; gap: 8px;">
+            <span style="display: inline-block; width: 12px; height: 12px; border: 2px solid var(--hairline); border-top-color: var(--brand); border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+            Voice Lens AI is analyzing...
+          </div>
+        </div>
+      `;
+      messagesContainer.insertAdjacentHTML('beforeend', loadingHtml);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      sendBtn.disabled = true;
+      const waveEl = document.getElementById('assistantVoiceWave');
+      if (waveEl) waveEl.style.display = 'inline-flex';
+
+      try {
+        const res = await fetch('/api/truth/voice-assistant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: query,
+            product_context: currentAnalyzedProduct
+          })
+        });
+        const data = await res.json();
+        const loadingEl = document.getElementById(loadingId);
+        if (loadingEl) loadingEl.remove();
+
+        const answerText = data.answer || "Sorry, I couldn't reach the intelligence engine right now.";
+        const formattedAnswer = formatAiResponse(answerText);
+        const botMsgHtml = `
+          <div style="display: flex; gap: 8px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--brand-soft); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">🌿</div>
+            <div style="background: var(--bg); padding: 12px 14px; border-radius: 14px; font-size: 13px; color: var(--ink); line-height: 1.5; border: 1px solid var(--hairline); max-width: 85%;">
+              ${formattedAnswer}
+            </div>
+          </div>
+        `;
+        messagesContainer.insertAdjacentHTML('beforeend', botMsgHtml);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      } catch (err) {
+        const loadingEl = document.getElementById(loadingId);
+        if (loadingEl) loadingEl.remove();
+        messagesContainer.insertAdjacentHTML('beforeend', `
+          <div style="display: flex; gap: 8px;">
+            <div style="width: 28px; height: 28px; border-radius: 50%; background: var(--danger-soft); display: flex; align-items: center; justify-content: center; font-size: 14px;">⚠️</div>
+            <div style="background: var(--danger-soft); color: var(--danger); padding: 10px 14px; border-radius: 14px; font-size: 12px;">
+              Voice Assistant could not connect to server.
+            </div>
+          </div>
+        `);
+      } finally {
+        sendBtn.disabled = false;
+        const waveEl = document.getElementById('assistantVoiceWave');
+        if (waveEl) waveEl.style.display = 'none';
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function formatAiResponse(text) {
+      if (!text) return '';
+      return escapeHtml(text)
+        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+        .replace(/\*(.*?)\*/g, '<i>$1</i>')
+        .replace(/\n\n/g, '<br><br>')
+        .replace(/\n- /g, '<br>• ')
+        .replace(/\n/g, '<br>');
+    }
+
+    // --- Google Stitch Platform Showcase Functions ---
+    async function loadStitchScreens() {
+      try {
+        const res = await fetch('/api/stitch/screens');
+        const data = await res.json();
+        stitchScreens = data.screens || [];
+        renderStitchScreens('all');
+      } catch (e) {
+        console.error('Failed to load stitch screens', e);
+      }
+    }
+
+    function filterStitchScreens(category) {
+      document.querySelectorAll('#screen-stitch .chip').forEach(c => c.classList.remove('active'));
+      if (category === 'all') document.getElementById('stitchChipAll').classList.add('active');
+      if (category === 'consumer') document.getElementById('stitchChipConsumer').classList.add('active');
+      if (category === 'enforcement') document.getElementById('stitchChipEnforce').classList.add('active');
+      renderStitchScreens(category);
+    }
+
+    function renderStitchScreens(category) {
+      const list = document.getElementById('stitchScreensList');
+      let filtered = stitchScreens;
+      if (category === 'consumer') {
+        filtered = stitchScreens.filter(s => s.id.includes('consumer') || s.id.includes('product') || s.id.includes('triple') || s.id.includes('voice') || s.id.includes('sugar') || s.id.includes('ins') || s.id.includes('log'));
+      } else if (category === 'enforcement') {
+        filtered = stitchScreens.filter(s => s.id.includes('inspector') || s.id.includes('supervisor') || s.id.includes('review') || s.id.includes('letter') || s.id.includes('declaration') || s.id.includes('complaints'));
+      }
+
+      list.innerHTML = filtered.map((s, idx) => `
+        <div class="card" style="margin-bottom: 0; padding: 14px; border: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+              <span style="font-size: 11px; font-weight: 800; background: var(--brand-soft); color: var(--brand); padding: 2px 7px; border-radius: 6px;">#${idx+1}</span>
+              <b style="font-size: 14px; color: var(--ink);">${escapeHtml(s.title)}</b>
+            </div>
+            <p style="font-size: 12px; color: var(--ink-secondary); line-height: 1.3;">${escapeHtml(s.desc)}</p>
+          </div>
+          <div style="display: flex; gap: 6px; flex-shrink: 0;">
+            <button class="btn btn-secondary" onclick="openStitchPreview('${s.id}', '${escapeHtml(s.title)}', '${s.url}')" style="padding: 6px 10px; font-size: 11px; font-weight: 700;">
+              Preview
+            </button>
+            <a href="${s.url}" target="_blank" class="btn btn-brand" style="padding: 6px 10px; font-size: 11px; text-decoration: none;">
+              Full ↗
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openStitchPreview(id, title, url) {
+      document.getElementById('stitchPreviewTitle').textContent = title;
+      document.getElementById('stitchPreviewSubtitle').textContent = `Screen ID: ${id}`;
+      document.getElementById('stitchPreviewExternalLink').href = url;
+      document.getElementById('stitchPreviewIframe').src = url;
+      document.getElementById('stitchPreviewModal').classList.add('active');
+    }
+
+    function closeStitchPreview(e) {
+      if (e && e.target !== document.getElementById('stitchPreviewModal')) return;
+      document.getElementById('stitchPreviewModal').classList.remove('active');
+      document.getElementById('stitchPreviewIframe').src = '';
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', loadPopular);
+  </script>
+</body>
+</html>

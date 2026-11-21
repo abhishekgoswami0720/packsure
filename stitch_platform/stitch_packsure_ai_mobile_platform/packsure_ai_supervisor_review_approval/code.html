@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-primary": "#ffffff", "tertiary-fixed": "#f4ded1", "outline": "#87736a", "inverse-primary": "#ffb68f", "inverse-on-surface": "#f5f0e7", "on-primary-fixed": "#331100", "secondary-container": "#e2dfda", "surface-tint": "#924b20", "on-tertiary-container": "#4e4037", "on-secondary": "#ffffff", "surface": "#fef9f0", "on-error-container": "#93000a", "error-container": "#ffdad6", "surface-variant": "#e7e2d9", "secondary-fixed-dim": "#c8c6c1", "surface-container-lowest": "#ffffff", "background": "#fef9f0", "on-error": "#ffffff", "surface-container": "#f2ede4", "surface-bright": "#fef9f0", "surface-dim": "#ded9d1", "on-background": "#1d1c16", "tertiary-container": "#c0aca0", "on-tertiary-fixed-variant": "#52443b", "on-tertiary": "#ffffff", "primary": "#924b20", "inverse-surface": "#32302b", "tertiary-fixed-dim": "#d7c3b6", "on-tertiary-fixed": "#241912", "secondary-fixed": "#e5e2dd", "surface-container-highest": "#e7e2d9", "surface-container-low": "#f8f3ea", "on-primary-fixed-variant": "#743409", "primary-fixed-dim": "#ffb68f", "on-primary-container": "#6f3106", "outline-variant": "#d9c2b7", "secondary": "#5f5e5b", "on-secondary-fixed": "#1c1c19", "on-secondary-container": "#63635f", "primary-fixed": "#ffdbca", "on-surface-variant": "#54433b", "primary-container": "#f49a68", "on-surface": "#1d1c16", "surface-container-high": "#ece8df", "error": "#ba1a1a", "tertiary": "#6b5b51", "on-secondary-fixed-variant": "#474743" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.25rem", "gutter": "1rem", "space-xs": "0.25rem", "space-xl": "1.75rem", "space-md": "1rem", "margin": "1.25rem", "space-sm": "0.5rem" }, fontFamily: { "headline-lg": ["Inter"], "headline-xl-mobile": ["Inter"], "label-lg": ["Inter"], "body-lg": ["Inter"], "label-md": ["Inter"], "headline-xl": ["Inter"], "body-sm": ["Inter"], "label-sm": ["Inter"], "headline-sm": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "metric-display": ["Inter"] }, fontSize: { "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }], "headline-xl-mobile": ["32px", { lineHeight: "40px", letterSpacing: "-0.025em", fontWeight: "700" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "-0.005em", fontWeight: "400" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "600" }], "headline-xl": ["40px", { lineHeight: "48px", letterSpacing: "-0.03em", fontWeight: "700" }], "body-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.01em", fontWeight: "400" }], "label-sm": ["10px", { lineHeight: "12px", letterSpacing: "0.04em", fontWeight: "700" }], "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "-0.01em", fontWeight: "600" }], "headline-md": ["22px", { lineHeight: "28px", letterSpacing: "-0.015em", fontWeight: "600" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }], "metric-display": ["30px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;min-height:100%;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>body { min-height: max(884px, 100dvh); }</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><button aria-label="Go Back" class="w-11 h-11 -ml-2 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><div class="flex flex-col min-w-0"><h1 class="font-headline-sm text-headline-sm text-on-surface truncate">Review Detail</h1><div class="flex items-center gap-1.5 mt-0.5"><span class="inline-flex items-center px-1.5 py-0.5 rounded-full bg-primary/10 text-on-primary-container font-label-sm text-[10px] uppercase font-semibold tracking-wider">Enforcement &amp; Legal Approval</span></div></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Filter Findings" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">filter_list</span></button><button aria-label="Search Case Files" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container active:scale-95 transition-all"><span class="material-symbols-outlined text-[22px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center ml-1 shadow-[0_2px_6px_rgba(244,154,104,0.3)]"><span class="material-symbols-outlined text-[18px]">gavel</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface px-margin min-h-screen"><div class="flex flex-col w-full pb-12 space-y-5">
+<!-- 1. Top Dossier Banner -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-3.5 relative overflow-hidden">
+<div class="absolute -right-6 -top-6 w-28 h-28 bg-primary/5 rounded-full pointer-events-none"></div>
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Official Enforcement Case</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">DOSSIER #LMD-2024-KA-8841-F6</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 truncate">Govt. of Karnataka • Division 4B • PureHarvest Organics Pvt Ltd</p>
+</div>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md flex-shrink-0 shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        Under Supervisory Review
+      </span>
+</div>
+<div class="flex items-center justify-between pt-3 bg-surface-container-low rounded-lg px-3 py-2">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+</div>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface truncate">Insp. Rajesh K. (#IN-7492)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[11px] truncate">Field Enforcement Unit 11</p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary flex-shrink-0">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm uppercase">Aadhaar eSign Verified</span>
+</div>
+</div>
+</div>
+<!-- 2. Product & Infraction Snapshot (Bento Grid) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">search_insights</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Target Seizure &amp; Infraction</h3>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm uppercase">
+        Severe Non-Compliance
+      </span>
+</div>
+<!-- Product Meta Block -->
+<div class="flex gap-3 items-center bg-surface-container-low p-2.5 rounded-lg">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="Close-up editorial macro product packaging photography of PureHarvest Organics Harvest Crunch Multigrain Granola 400g craft paper packaging with soft studio warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5pKhfjsVw6dhYcUn4ZmwoZa4tGhubrKjUGpeZ-g_Ib-4dDDYzmphbxpiAt8Xbc_9Z1S-gYpx7lQm-MczkmA5vbyoARJbzarvdBF7C87XfdC1mJ0IFoFFEl22eWyj7tYYD_zRdO5S-5rdqzmEZUuK0UsTjOC8f6wMsfKKnJx_yi3cIulszeiQJfinQD8yvQVJttg6TP7WHobJIIhFH4OK1moRplaiEEzX7q0kz1dI"/>
+</div>
+<div class="min-w-0 flex-1">
+<span class="font-label-sm text-label-sm text-outline uppercase">Principal Display Panel</span>
+<h4 class="font-label-lg text-label-lg text-on-surface truncate">Harvest Crunch Multigrain Granola 400g</h4>
+<p class="font-body-sm text-body-sm text-error font-medium truncate mt-0.5">
+          Infraction: Rule 7(1) read with Schedule I Table-1 Deficit
+        </p>
+</div>
+</div>
+<!-- Caliper Optical Measurement Breakdown -->
+<div class="space-y-2">
+<div class="flex items-center justify-between text-on-surface">
+<span class="font-label-md text-label-md text-on-surface-variant">Optical Font Caliper Analysis</span>
+<span class="font-label-md text-label-md text-error font-semibold">-46.5% Deficit</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container-low p-2.5 rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Mandated</span>
+<span class="font-headline-sm text-headline-sm text-on-surface mt-0.5">4.00<span class="text-xs font-normal text-on-surface-variant">mm</span></span>
+<span class="font-body-sm text-[10px] text-on-surface-variant">Rule 7(1) Min</span>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Detected</span>
+<span class="font-headline-sm text-headline-sm text-error mt-0.5">2.14<span class="text-xs font-normal text-error">mm</span></span>
+<span class="font-body-sm text-[10px] text-on-surface-variant">Optical Scan</span>
+</div>
+<div class="bg-error-container/50 p-2.5 rounded-lg flex flex-col">
+<span class="font-label-sm text-label-sm text-on-error-container">Variance</span>
+<span class="font-headline-sm text-headline-sm text-error mt-0.5">-1.86<span class="text-xs font-normal text-error">mm</span></span>
+<span class="font-body-sm text-[10px] text-on-error-container font-medium">Critical Deficit</span>
+</div>
+</div>
+</div>
+<!-- Macro Reticle Preview Card -->
+<div class="relative rounded-lg overflow-hidden h-36 bg-inverse-surface text-inverse-on-surface flex items-center justify-center">
+<img class="absolute inset-0 w-full h-full object-cover opacity-70" data-alt="Microscopic 1200 DPI calibration reticle overlay showing optical measurement crosshairs on numeral 4 with digital measurement vectors in warm peach highlight tones and crisp forensic alignment markers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR132ADfTgW4UFi0GHurY5i3VnMN-U9Gghl7BChXJ9A_YIGb_fxTRsn50isa7GSueG0Ye9fF1zUwNOreZXN1rqINGb4pJSajHi8UzuklylxqN-0fSUj87-pVAfYf05IQQj-6Q1sRXf6oIbV3GUx2VvTd8Y85PtjN8-k4zDC9ObY80PowYiSbk7sDNHFF1zS7IwMx-kfq5_WV5yBfuRGTD-UDEx5lFj5GyaYrTw7ow"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface via-transparent to-transparent"></div>
+<!-- Overlay Reticle UI Elements -->
+<div class="absolute top-2.5 left-2.5 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-inverse-surface/80 backdrop-blur-sm text-inverse-on-surface font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+        Calibrated Crosshair HUD • 1200 DPI
+      </div>
+<div class="absolute bottom-2.5 inset-x-2.5 flex items-center justify-between text-inverse-on-surface">
+<div class="flex items-center gap-1 font-body-sm text-[11px] font-mono opacity-85 truncate">
+<span class="material-symbols-outlined text-[14px] text-primary-container">lock</span>
+          SHA-256: 8f4a3e9cdb01...b82a
+        </div>
+<button aria-label="Expand forensic reticle scan" class="flex items-center gap-1 px-2 py-0.5 rounded bg-surface/20 backdrop-blur text-surface font-label-sm text-label-sm hover:bg-surface/30" type="button">
+<span class="material-symbols-outlined text-[13px]">fullscreen</span> Full Forensic
+        </button>
+</div>
+</div>
+</div>
+<!-- 3. Evidentiary Audit Checklist -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Evidentiary Record</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Statutory chain of custody verification</p>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-1 rounded bg-secondary-container text-on-secondary-container">
+        4 of 4 Verified
+      </span>
+</div>
+<div class="space-y-2 pt-1">
+<!-- Item 1: AR Reticle -->
+<div class="p-3 rounded-lg bg-surface-container-low flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-surface-tint/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">loupe</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-1">
+<h4 class="font-label-md text-label-md text-on-surface truncate">Calibrated AR Macro Reticle</h4>
+<span class="font-label-sm text-[10px] text-primary font-semibold">VALIDATED</span>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 truncate">Optical 1200 DPI scan linked to Cryptographic SHA-256 Seal</p>
+</div>
+</div>
+<!-- Item 2: Rule 6 Array -->
+<div class="p-3 rounded-lg bg-surface-container-low flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-surface-tint/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">checklist_rtl</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-1">
+<h4 class="font-label-md text-label-md text-on-surface truncate">Rule 6 8-Point Compliance Matrix</h4>
+<span class="font-label-sm text-[10px] text-primary font-semibold">1 DEFICIT</span>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 truncate">1 Deficit (Font Size), 1 Scrutiny (Barcode), 6 Passed</p>
+</div>
+</div>
+<!-- Item 3: Geotagged Location -->
+<div class="p-3 rounded-lg bg-surface-container-low flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-surface-tint/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-1">
+<h4 class="font-label-md text-label-md text-on-surface truncate">Storefront Geofence Ledger</h4>
+<span class="font-label-sm text-[10px] text-primary font-semibold">IN-BOUNDS</span>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5 truncate">18.5204° N, 73.8567° E • Koramangala Hub (Jurisdiction 4B)</p>
+</div>
+</div>
+<!-- Item 4: Inspector Audio Memo -->
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-surface-tint/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">mic</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between gap-1">
+<h4 class="font-label-md text-label-md text-on-surface truncate">Inspector Audio Statement</h4>
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">00:42 SEC</span>
+</div>
+<!-- Interactive waveform visualizer mockup -->
+<div class="flex items-center gap-1.5 mt-2">
+<button aria-label="Play inspector memo" class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center flex-shrink-0" type="button">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+</button>
+<div class="flex-1 flex items-center gap-0.5 h-5 px-1 bg-surface rounded">
+<span class="w-1 bg-primary h-2 rounded-full"></span>
+<span class="w-1 bg-primary h-3 rounded-full"></span>
+<span class="w-1 bg-primary h-4 rounded-full"></span>
+<span class="w-1 bg-primary h-2 rounded-full"></span>
+<span class="w-1 bg-primary-container h-5 rounded-full"></span>
+<span class="w-1 bg-primary-container h-3 rounded-full"></span>
+<span class="w-1 bg-primary-container h-4 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-2 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-3 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-1 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-3 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-2 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-1 rounded-full"></span>
+<span class="w-1 bg-outline-variant h-2 rounded-full"></span>
+</div>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant italic mt-1.5 bg-surface p-1.5 rounded">
+              “Confirmed font height violation on principal display panel net quantity numeral 4.”
+            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. Supervisory Determination & Statutory Legal Options -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">policy</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Legal Determination</h3>
+</div>
+<div class="text-right">
+<span class="font-label-sm text-[10px] text-outline uppercase block">Statutory Penalty</span>
+<span class="font-metric-display text-metric-display text-primary leading-tight">₹25,000</span>
+</div>
+</div>
+<!-- Statutory Section Notice -->
+<div class="p-2.5 rounded-lg bg-primary-fixed/30 flex items-center gap-2 text-on-primary-fixed-variant">
+<span class="material-symbols-outlined text-[18px]">balance</span>
+<span class="font-label-md text-label-md">Section 36(1) Standards of Weights and Measures Act, 2009</span>
+</div>
+<!-- Legal Route Selector (Interactive Options) -->
+<div class="space-y-2 pt-1" id="legal-decision-group">
+<!-- Option A (Default Selected) -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container cursor-pointer transition-all">
+<input checked="" class="mt-1 accent-primary w-4 h-4" name="legal_determination" type="radio" value="summons"/>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Approve Form-6 &amp; Issue Statutory Notice</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Formal statutory summon requiring appearance before Controller within 15 days.</p>
+</div>
+</label>
+<!-- Option B -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all">
+<input class="mt-1 accent-primary w-4 h-4" name="legal_determination" type="radio" value="compounding"/>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Accept Pre-Trial Compounding under Sec 48</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Direct settlement upon payment of compounding fee of ₹25,000 without court filing.</p>
+</div>
+</label>
+<!-- Option C -->
+<label class="flex items-start gap-3 p-3 rounded-lg bg-surface-container-low hover:bg-surface-container cursor-pointer transition-all">
+<input class="mt-1 accent-primary w-4 h-4" name="legal_determination" type="radio" value="return"/>
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-on-surface font-semibold">Return for Re-Calibration / Secondary Witness</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-0.5">Send back dossier to Inspector Rajesh K. for additional evidentiary backing.</p>
+</div>
+</label>
+</div>
+<!-- Supervisory Order Notes -->
+<div class="space-y-1.5 pt-1">
+<label class="font-label-md text-label-md text-on-surface" for="supervisor-notes">Supervisory Review Directive</label>
+<div class="relative">
+<textarea class="w-full p-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm outline-none focus:bg-surface-container-lowest resize-none" id="supervisor-notes" placeholder="Enter formal supervisor findings..." rows="3">Optical deficit is clear and corroborated by 1200 DPI calibration reticle. Notice to be served with 15-day compliance window to PureHarvest Organics Pvt Ltd.</textarea>
+</div>
+</div>
+<!-- Automated Dispatch Toggle -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="material-symbols-outlined text-primary text-[20px]">public</span>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface truncate">Karnataka State Gazette Auto-Dispatch</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant truncate">Push to NIC Metrology National Compliance Repository</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-secondary-container peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+</label>
+</div>
+</div>
+<!-- 5. Dual Supervisory Action Buttons -->
+<div class="space-y-3 pt-2">
+<!-- Primary CTA: Dark Charcoal Button -->
+<button class="w-full h-14 rounded-full bg-inverse-surface text-inverse-on-surface font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md hover:bg-black active:scale-[0.98] transition-all" id="approve-btn" type="button">
+<span>Approve Dossier &amp; Issue Form-6 Summons</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<!-- Secondary CTA: Warm Neutral Fill -->
+<button class="w-full h-12 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">replay</span>
+<span>Return for Additional Evidence</span>
+</button>
+<!-- Tertiary Auxiliary Link -->
+<div class="flex items-center justify-center pt-1">
+<a class="inline-flex items-center gap-1.5 font-label-md text-label-md text-primary hover:underline" href="javascript:void(0)">
+<span class="material-symbols-outlined text-[16px]">description</span>
+<span>View Raw Gazette PDF (Form-6 Draft)</span>
+</a>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const radioInputs = document.querySelectorAll('input[name="legal_determination"]');
+    const approveBtn = document.getElementById('approve-btn');
+
+    radioInputs.forEach(input => {
+      input.addEventListener('change', (e) => {
+        // Clear active container styling across parent labels
+        radioInputs.forEach(r => {
+          const label = r.closest('label');
+          if (label) {
+            label.classList.remove('bg-surface-container');
+            label.classList.add('bg-surface-container-low');
+          }
+        });
+
+        // Set active styling on chosen option
+        const parentLabel = e.target.closest('label');
+        if (parentLabel) {
+          parentLabel.classList.remove('bg-surface-container-low');
+          parentLabel.classList.add('bg-surface-container');
+        }
+
+        // Dynamically adjust primary CTA label
+        if (approveBtn) {
+          if (e.target.value === 'summons') {
+            approveBtn.innerHTML = '<span>Approve Dossier & Issue Form-6 Summons</span><span class="material-symbols-outlined text-[20px]">arrow_forward</span>';
+          } else if (e.target.value === 'compounding') {
+            approveBtn.innerHTML = '<span>Issue Compounding Order (₹25,000)</span><span class="material-symbols-outlined text-[20px]">check_circle</span>';
+          } else {
+            approveBtn.innerHTML = '<span>Confirm Return to Field Inspector</span><span class="material-symbols-outlined text-[20px]">undo</span>';
+          }
+        }
+      });
+    });
+  })();
+</script></main></body></html>

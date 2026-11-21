@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-bright": "#fef9f0", "error": "#ba1a1a", "inverse-primary": "#ffb68f", "secondary": "#5f5e5b", "surface-variant": "#e7e2d9", "secondary-container": "#e2dfda", "surface-container-highest": "#e7e2d9", "surface": "#fef9f0", "on-error": "#ffffff", "tertiary-fixed-dim": "#d7c3b6", "primary-fixed-dim": "#ffb68f", "inverse-surface": "#32302b", "on-primary-fixed-variant": "#743409", "on-tertiary-container": "#4e4037", "on-primary-container": "#6f3106", "inverse-on-surface": "#f5f0e7", "surface-dim": "#ded9d1", "primary-container": "#f49a68", "surface-container-high": "#ece8df", "tertiary": "#6b5b51", "primary": "#924b20", "on-surface-variant": "#54433b", "secondary-fixed": "#e5e2dd", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "on-secondary-fixed-variant": "#474743", "outline-variant": "#d9c2b7", "outline": "#87736a", "surface-tint": "#924b20", "on-tertiary-fixed-variant": "#52443b", "background": "#fef9f0", "on-background": "#1d1c16", "on-secondary": "#ffffff", "on-surface": "#1d1c16", "tertiary-container": "#c0aca0", "surface-container-low": "#f8f3ea", "on-primary": "#ffffff", "primary-fixed": "#ffdbca", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#1c1c19", "secondary-fixed-dim": "#c8c6c1", "on-secondary-container": "#63635f", "on-primary-fixed": "#331100", "tertiary-fixed": "#f4ded1", "surface-container": "#f2ede4", "on-tertiary-fixed": "#241912" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "margin": "1.25rem", "gutter": "1rem", "space-lg": "1.25rem", "space-sm": "0.5rem", "space-md": "1rem", "space-xl": "1.75rem" }, "fontFamily": { "label-md": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "headline-xl-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "headline-sm": ["Inter"], "metric-display": ["Inter"], "label-sm": ["Inter"], "headline-xl": ["Inter"], "label-lg": ["Inter"], "body-sm": ["Inter"] }, "fontSize": { "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}], "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}], "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}], "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "700"}], "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}], "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "metric-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "label-sm": ["10px", {"lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700"}], "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700"}], "label-lg": ["14px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600"}], "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#fef9f0;color:#1d1c16;font-family:'Inter',sans-serif;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-inverse-surface flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-primary-container text-[20px]">verified_user</span></div><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Daily Product Log</span></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-28 bg-surface"><div class="flex flex-col w-full">
+<!-- Interactive Date Navigator -->
+<section class="px-margin pt-space-xs pb-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<button aria-label="Previous day" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Diary Timeline</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Today, 24 Oct</span>
+</div>
+<button aria-label="Next day" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<!-- Quick Mode Trigger -->
+<button class="flex items-center gap-space-xs px-space-md py-2 rounded-full bg-inverse-surface text-inverse-on-surface shadow-sm hover:opacity-95 transition-all" id="quickLogTrigger">
+<span class="material-symbols-outlined text-primary-container text-[18px]">add</span>
+<span class="font-label-md text-label-md">Log Product</span>
+</button>
+</section>
+<!-- Clean Intake & Formulation Score Hero -->
+<section class="px-margin mb-space-lg">
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_20px_-4px_rgba(95,94,91,0.08)] relative overflow-hidden">
+<!-- Ambient Sunburst Background -->
+<div class="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-primary-container/15 blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold tracking-wide">Daily Clean Formulation</span>
+</div>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">4 Items Logged</span>
+</div>
+<!-- Segmented Arc Visualization -->
+<div class="flex flex-col items-center justify-center my-space-xs relative">
+<svg class="w-56 h-32" fill="none" viewbox="0 0 200 115">
+<!-- Background Segments -->
+<path d="M 20 100 A 80 80 0 0 1 180 100" stroke="#f2ede4" stroke-dasharray="16 7" stroke-linecap="round" stroke-width="12"></path>
+<!-- Active Compliance Segments (92%) -->
+<path d="M 20 100 A 80 80 0 0 1 168 55" stroke="#f49a68" stroke-dasharray="16 7" stroke-linecap="round" stroke-width="12"></path>
+</svg>
+<div class="absolute bottom-1 flex flex-col items-center">
+<span class="font-metric-display text-metric-display text-on-surface font-bold">92<span class="text-primary-container font-headline-md text-headline-md">%</span></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider -mt-1">Purity Index</span>
+</div>
+</div>
+<!-- Compliance Metrics Matrix -->
+<div class="grid grid-cols-3 gap-2 mt-space-sm pt-space-sm bg-surface-container-low rounded-lg p-2.5">
+<div class="flex flex-col items-center text-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">0</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Palm Oil</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-headline-sm text-headline-sm text-error font-bold">1</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Sugar Alert</span>
+</div>
+<div class="flex flex-col items-center text-center">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">0</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Banned E-Nos</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Input Drawer (Expandable state preview) -->
+<section class="px-margin mb-space-lg" id="quickInputSheet">
+<div class="bg-surface-container rounded-xl p-space-sm flex items-center justify-between gap-space-xs shadow-inner">
+<button class="flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface shadow-sm hover:scale-[1.02] active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary text-[22px]">barcode_scanner</span>
+<span class="font-label-sm text-label-sm mt-1">Barcode</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface shadow-sm hover:scale-[1.02] active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary-container text-[22px]">photo_camera</span>
+<span class="font-label-sm text-label-sm mt-1">Live Lens</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface shadow-sm hover:scale-[1.02] active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-secondary text-[22px]">screenshot_region</span>
+<span class="font-label-sm text-label-sm mt-1">Nutrition Label</span>
+</button>
+<button class="flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-lg bg-surface-container-lowest text-on-surface shadow-sm hover:scale-[1.02] active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-secondary text-[22px]">edit_note</span>
+<span class="font-label-sm text-label-sm mt-1">Manual</span>
+</button>
+</div>
+</section>
+<!-- Chronological Product & Food Timeline -->
+<section class="px-margin mb-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Today's Consumption</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-semibold uppercase">Chronological</span>
+</div>
+<!-- Timeline Item 1: Breakfast -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_16px_-2px_rgba(95,94,91,0.06)] flex flex-col gap-space-sm relative">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<img class="w-12 h-12 rounded-lg object-cover bg-surface-container" data-alt="A minimalist aesthetic glass bottle of pure unsweetened organic almond milk standing on a warm linen table, warm ambient morning sunlight, high-end editorial food photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjx0tzbTPdX3DtJFpMfFBI1VyFQADJ5yYkjNORCx5FDp-SuD0y26LoD7i93rdct4NHaKcsZXpOTgCUrIk6-_wmlxL9WKprv4DEA1QRnZ0_Owiuri9bagoDuymaOLFVjiTtUjAzGlQOfUe46GvLH5iVCMtRv_LEb3yjad90RuEAi0bqhtfC_FNQyHS4djFJ5xGQlOuM8QEowqmeR0zSXmBOtYP4GDwNky-2feQqHwM"/>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Breakfast</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">08:30 AM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5 leading-snug">Organic Almond Milk (500ml)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">PureHarvest Dairy • Nova 1</p>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-block px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md">94 / 100</span>
+<span class="block font-label-sm text-label-sm text-primary font-bold mt-1">Clean Formulation</span>
+</div>
+</div>
+<!-- Macro Chips -->
+<div class="flex items-center gap-2 pt-space-xs">
+<div class="px-2.5 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface">
+<span class="font-semibold text-on-surface">120</span> kcal
+        </div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+          P: <span class="font-semibold text-on-surface">5g</span>
+</div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+          C: <span class="font-semibold text-on-surface">2g</span>
+</div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+          F: <span class="font-semibold text-on-surface">8g</span>
+</div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant">
+          Sugars: <span class="font-semibold text-on-surface">0.5g</span>
+</div>
+</div>
+<!-- Statutory Verification Note -->
+<div class="flex items-center gap-1.5 text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span>Statutory declarations &amp; organic cert verified compliant.</span>
+</div>
+</div>
+<!-- Timeline Item 2: Morning Snack with Flagged Sugar Warning -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_16px_-2px_rgba(95,94,91,0.06)] flex flex-col gap-space-sm relative overflow-hidden">
+<!-- High Sugar Accent Stripe -->
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-error"></div>
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<img class="w-12 h-12 rounded-lg object-cover bg-surface-container" data-alt="Artisanal glass bowl filled with toasted berry granola and yogurt, sprinkled with fresh blueberries, soft warm peach background, magazine food styling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo6835Ve-boEZhor4fwrMYHcRaoJX_dt8kbxnSgUu3g8rh_yWFULpoGXj8mXLm3-8upZhVgcDPsF9ut2gtksnPuYfVKlCQYqU6yShReQDNnEO5ntDpqGc1GtnVuUJnv8sc5Ls_-fpUxpi2SvEjlzMm7-GuqCLAUf7PHxIBkIxFwNTlAl5RSZBBNcbbN5MQDYu3vRKN6u2-i8xF4UCHeT4tBbH8Pvxhw_z3IpFs6Cs"/>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Morning Snack</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">11:00 AM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5 leading-snug">Harvest Crunch Granola</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">40g Serving • Nova 3</p>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-block px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md">84 / 100</span>
+<span class="block font-label-sm text-label-sm text-error font-bold mt-1">High Sugar Flag</span>
+</div>
+</div>
+<!-- Callout Badge -->
+<div class="p-2.5 rounded-lg bg-error-container text-on-error-container flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-[18px] text-error shrink-0 mt-0.5" style="font-variation-settings: 'FILL' 1;">error</span>
+<div class="text-body-sm font-body-sm">
+<span class="font-bold">Added Sugar Alert (14.8g / 100g):</span> Contains Maltodextrin &amp; Invert Sugar Syrup. Exceeds morning target by 18%.
+        </div>
+</div>
+<div class="text-body-sm text-on-surface-variant italic">
+        Notes: “Consumed 40g with homemade unsweetened curd.”
+      </div>
+</div>
+<!-- Timeline Item 3: Lunch Bowl -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_16px_-2px_rgba(95,94,91,0.06)] flex flex-col gap-space-sm relative">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<img class="w-12 h-12 rounded-lg object-cover bg-surface-container" data-alt="Ready-to-eat colorful quinoa bowl loaded with edamame, roasted sweet potatoes, and avocado, top down warm lighting, vibrant wholesome presentation" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvlEkgBc_AJl4YPnlTnzoc3fJzJT6qqzpIP3xLi555LX90rCEvfZtvQhJT-u10JzFaa4LHEIAR3JXmP8wWIBgEXmlZ1yVbNv2tgwVJyHdBNV6VC78_h7PFB9KvMe1BqME4ONehKst6LNpdbGSEg28dBJxoZR-hJKjWPnxxGTRBEyDtFgLC5VoY5EYKttC-6beJYCgfjb8kGM9BGumwXpm1B277AvCp-CYS6BcAzgA"/>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Lunch</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">01:45 PM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5 leading-snug">Quinoa Veggie Bowl (250g)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ready-to-Eat • Nova 2</p>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-block px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md">96 / 100</span>
+<span class="block font-label-sm text-label-sm text-primary font-bold mt-1">Excellent</span>
+</div>
+</div>
+<!-- Nutrients Row -->
+<div class="flex items-center gap-2 pt-space-xs overflow-x-auto">
+<div class="px-2.5 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface whitespace-nowrap">
+<span class="font-semibold text-on-surface">693</span> kcal
+        </div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">
+          P: <span class="font-semibold text-on-surface">48g</span>
+</div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">
+          C: <span class="font-semibold text-on-surface">83g</span>
+</div>
+<div class="px-2 py-1 rounded-md bg-surface-container-low font-body-sm text-body-sm text-on-surface-variant whitespace-nowrap">
+          F: <span class="font-semibold text-on-surface">25g</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Additives: INS 330 (Citric acid) verified safe and natural.</span>
+</div>
+</div>
+<!-- Timeline Item 4: Non-Food Commodity (LMPC Compliant) -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_4px_16px_-2px_rgba(95,94,91,0.06)] flex flex-col gap-space-xs relative">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-[24px]">soap</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">Daily Commodity</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">LMPC Verified</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5 leading-snug">Herbal Nourishing Handwash</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Personal Care • 250ml</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[22px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<!-- Legal Metrology Checklist Grid -->
+<div class="mt-2 grid grid-cols-3 gap-2 bg-surface-container-low rounded-lg p-2 text-center text-body-sm">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Net Qty</span>
+<span class="font-semibold text-on-surface">250 ml</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Declared MRP</span>
+<span class="font-semibold text-on-surface">₹125</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Best Before</span>
+<span class="font-semibold text-on-surface">11 / 2026</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Pantry Expiry Watch Widget -->
+<section class="px-margin mb-space-xl">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container text-[20px]">hourglass_top</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Pantry Expiry Watch</h2>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm">2 Expiring Soon</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
+<!-- Expiry Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_2px_12px_-2px_rgba(95,94,91,0.06)] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-error-container text-error flex items-center justify-center font-bold text-label-lg">
+            2d
+          </div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold text-sm leading-tight">FarmFresh Cow Milk 1L</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expires Sat, 26 Oct</p>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md hover:bg-opacity-90 active:scale-95 transition-all">
+          Use Today
+        </button>
+</div>
+<!-- Expiry Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_2px_12px_-2px_rgba(95,94,91,0.06)] flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-surface flex items-center justify-center font-bold text-label-lg">
+            4d
+          </div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold text-sm leading-tight">Artisan Greek Yogurt</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Expires Mon, 28 Oct</p>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors">
+          Dismiss
+        </button>
+</div>
+</div>
+</section>
+<!-- Export & External Health Integrations -->
+<section class="px-margin mb-space-xl flex flex-col gap-space-sm">
+<button class="w-full h-14 rounded-full bg-inverse-surface text-inverse-on-surface font-label-lg text-label-lg flex items-center justify-center gap-space-sm shadow-md hover:bg-opacity-95 active:scale-[0.99] transition-transform">
+<span class="material-symbols-outlined text-[20px] text-primary-container">picture_as_pdf</span>
+<span>Export Weekly Transparency Report (PDF)</span>
+</button>
+<button class="w-full h-12 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-space-xs hover:bg-surface-variant active:scale-[0.99] transition-all">
+<span class="material-symbols-outlined text-[18px] text-primary">sync_saved_locally</span>
+<span>Sync with Apple Health • Health Connect</span>
+</button>
+</section>
+</div>
+<script>
+  // Dynamic Tab Activation for 'My Log'
+  document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      const isMyLog = link.getAttribute('data-path') === 'daily-product-log';
+      if (isMyLog) {
+        link.className = 'flex items-center gap-space-xs h-12 px-space-md rounded-full bg-primary-container text-inverse-surface shadow-sm font-label-md text-label-md transition-all';
+      } else {
+        link.className = 'flex items-center gap-space-xs h-12 px-space-md rounded-full text-on-surface-variant/80 hover:text-surface-bright transition-all font-label-md text-label-md';
+      }
+    });
+
+    // Micro-interaction for Log New Product Drawer
+    const trigger = document.getElementById('quickLogTrigger');
+    const sheet = document.getElementById('quickInputSheet');
+    if (trigger && sheet) {
+      trigger.addEventListener('click', () => {
+        sheet.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        sheet.classList.add('scale-105');
+        setTimeout(() => sheet.classList.remove('scale-105'), 200);
+      });
+    }
+  });
+</script></main><div class="fixed bottom-0 w-full z-50 pb-safe pointer-events-none px-margin mb-3"><nav class="pointer-events-auto max-w-md mx-auto h-16 bg-inverse-surface text-inverse-on-surface rounded-full flex items-center justify-between px-space-sm shadow-[0_12px_32px_-4px_rgba(37,37,34,0.24)] backdrop-blur-xl" data-active-classes="bg-primary-container text-inverse-surface shadow-sm font-label-md text-label-md"><a class="flex items-center gap-space-xs h-12 px-space-md rounded-full text-on-surface-variant/80 hover:text-surface-bright transition-all font-label-md text-label-md" data-path="consumer-complaints" href="#"><span class="material-symbols-outlined text-[20px]">gavel</span><span>Complaints</span></a><a aria-current="page" class="flex items-center gap-space-xs h-12 px-space-md rounded-full transition-all bg-primary-container text-inverse-surface shadow-sm font-label-md text-label-md" data-path="daily-product-log" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>My Log</span></a><a class="flex items-center gap-space-xs h-12 px-space-md rounded-full text-on-surface-variant/80 hover:text-surface-bright transition-all font-label-md text-label-md" data-path="safety-recalls" href="#"><span class="material-symbols-outlined text-[20px]">warning</span><span>Recalls</span></a></nav></div></body></html>

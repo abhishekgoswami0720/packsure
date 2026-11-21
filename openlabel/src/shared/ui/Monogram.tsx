@@ -1,0 +1,20 @@
+import { SvgXml } from 'react-native-svg';
+import { palette } from '@/core/theme';
+
+/** The OpenLabel monogram (the two-card mark). Vector, so it stays crisp at any
+ *  size and tints via `color` (e.g. white over the camera). Aspect 317:500. */
+const RATIO = 317 / 500;
+
+const XML = `<svg width="317" height="500" viewBox="0 0 317 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M116.789 303.075L283.631 374.568V113.492L116.789 41.9833V303.075ZM317 399.871C317 411.099 306.235 418.907 295.819 415.951L293.749 415.202L93.539 329.404C88.1692 327.103 84.4434 322.197 83.6001 316.533L83.4209 314.073V16.6969C83.422 4.72187 95.6636 -3.34845 106.671 1.36536L306.882 87.1632C313.014 89.7913 316.997 95.8232 317 102.495V399.871Z" fill="currentColor"/>
+<path d="M0 100.121C0 88.1435 12.2471 80.068 23.2564 84.7863L223.467 170.589C229.601 173.218 233.579 179.25 233.579 185.924V483.298C233.579 495.276 221.332 503.351 210.322 498.633L10.112 412.83C3.97747 410.201 0 404.169 0 397.495V100.121Z" fill="currentColor"/>
+</svg>`;
+
+export interface MonogramProps {
+  height?: number;
+  color?: string;
+}
+
+export function Monogram({ height = 24, color = palette.ink }: MonogramProps) {
+  return <SvgXml xml={XML} width={height * RATIO} height={height} color={color} />;
+}

@@ -1,0 +1,66 @@
+{
+  "alternatives": [
+    {
+      "category": "Biscuits & Cookies",
+      "target_ids": ["parle_g", "britannia_nutrichoice_atta"],
+      "recommended": {
+        "name": "Early Foods Organic Ragi & Almond Cookies",
+        "brand": "Early Foods",
+        "why_clean": "Made with 100% sprouted ragi flour and cold-pressed jaggery with zero refined flour (maida), zero palm oil, zero preservatives, and zero raising agents.",
+        "key_improvements": [
+          "No refined palm oil (uses real butter/ghee)",
+          "No artificial additives or raising agents",
+          "Sprouted whole millets instead of maida",
+          "Rich in dietary fiber (8g vs 1.2g per 100g)"
+        ],
+        "clean_score": 92
+      }
+    },
+    {
+      "category": "Instant Noodles & Pasta",
+      "target_ids": ["maggi_masala_noodles"],
+      "recommended": {
+        "name": "Slurrp Farm 100% Millet Noodles (Foxtail & Little Millet)",
+        "brand": "Slurrp Farm",
+        "why_clean": "Sun-dried/air-dried un-fried noodles made from unpolished native millets, without maida, without palm oil, and without artificial flavor enhancers like INS 635.",
+        "key_improvements": [
+          "Not fried in palm oil (air-dried)",
+          "0% refined maida (100% whole grain millets)",
+          "Sodium reduced by 45% compared to regular instant noodles",
+          "No added MSG or nucleotide enhancers"
+        ],
+        "clean_score": 88
+      }
+    },
+    {
+      "category": "Malt Food Drinks",
+      "target_ids": ["cadbury_bournvita"],
+      "recommended": {
+        "name": "Organic Tattva Sprouted Ragi Malt",
+        "brand": "Organic Tattva",
+        "why_clean": "100% pure sprouted finger millet (ragi) without added sucrose, without liquid glucose syrup, and without artificial caramel colors.",
+        "key_improvements": [
+          "Zero added sugar (0g vs 32.2g per 100g in malt drinks)",
+          "Rich in natural bioavailable calcium and iron",
+          "No maltodextrin or synthetic flavor additives"
+        ],
+        "clean_score": 95
+      }
+    },
+    {
+      "category": "Snacks & Chips",
+      "target_ids": ["lays_magic_masala"],
+      "recommended": {
+        "name": "The Whole Truth Roasted Makhana (Foxnuts)",
+        "brand": "The Whole Truth",
+        "why_clean": "Slow-roasted foxnuts seasoned with cold-pressed olive oil, pink rock salt, and real ground Indian spices. Zero palmolein oil and zero anti-caking additives.",
+        "key_improvements": [
+          "Zero palm oil or palmolein (uses cold-pressed oil)",
+          "High plant protein and low glycemic index",
+          "70% lower saturated fat than commercial potato chips"
+        ],
+        "clean_score": 94
+      }
+    }
+  ]
+}

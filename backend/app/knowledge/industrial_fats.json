@@ -1,0 +1,60 @@
+{
+  "industrial_fats": [
+    {
+      "name": "Palm Oil",
+      "aliases": ["edible vegetable oil (palm)", "palm fruit oil", "refined palm oil", "elaeis guineensis"],
+      "type": "Refined Tropical Oil",
+      "saturated_fat_pct": 50,
+      "risk": "High in saturated palmitic acid (approx. 50%), which elevates LDL ('bad') cholesterol and cardiovascular risk when consumed chronically. Used primarily for low wholesale cost and long shelf stability."
+    },
+    {
+      "name": "Palmolein",
+      "aliases": ["refined palmolein", "palmolein oil", "edible vegetable oil (palmolein)"],
+      "type": "Liquid Fraction of Palm Oil",
+      "saturated_fat_pct": 46,
+      "risk": "The liquid fraction obtained by fractionating palm oil. Ubiquitous in Indian packaged namkeens, chips, and instant noodles due to low cost and high thermal stability for repeated frying."
+    },
+    {
+      "name": "Palm Kernel Oil",
+      "aliases": ["refined palm kernel oil", "palm kernel fat"],
+      "type": "Lauric Tropical Oil",
+      "saturated_fat_pct": 82,
+      "risk": "Extracted from the kernel of the palm fruit; exceptionally high in saturated fat (over 80%), similar to coconut oil, but heavily refined and stripped of natural micronutrients."
+    },
+    {
+      "name": "Hydrogenated Vegetable Oil",
+      "aliases": ["partially hydrogenated vegetable oil", "hydrogenated vegetable fat", "hydrogenated fat"],
+      "type": "Industrial Trans-Fat Source",
+      "saturated_fat_pct": 60,
+      "risk": "Industrial catalytic hydrogenation turns liquid vegetable oils into solid fats. Partial hydrogenation generates artificial trans-fatty acids, proven to raise LDL, lower HDL, and cause vascular endothelial inflammation."
+    },
+    {
+      "name": "Vanaspati",
+      "aliases": ["dalda", "vanaspati ghee", "hydrogenated edible vegetable oil"],
+      "type": "Commercial Hardened Fat",
+      "saturated_fat_pct": 55,
+      "risk": "Historically high in trans fats (capped at 2% by FSSAI in 2022). High in saturated fatty acids and associated with cardiovascular disease."
+    },
+    {
+      "name": "Interesterified Vegetable Fat",
+      "aliases": ["interesterified fat", "interesterified vegetable oil", "enzymatically interesterified oil"],
+      "type": "Chemically Rearranged Fat",
+      "saturated_fat_pct": 45,
+      "risk": "Engineered replacement for trans-fats created by chemically rearranging fatty acids on the glycerol backbone. Clinical trials show adverse impacts on glucose metabolism and post-prandial lipemia."
+    },
+    {
+      "name": "Fractionated Palm Oil",
+      "aliases": ["palm stearin", "palm superolein"],
+      "type": "Fractionated Oil Component",
+      "saturated_fat_pct": 65,
+      "risk": "Hard solid fraction of palm oil utilized as a cheap cocoa butter substitute (CBR/CBS) in confectioneries and biscuit fillings."
+    },
+    {
+      "name": "Refined Cottonseed Oil",
+      "aliases": ["cottonseed oil", "edible vegetable oil (cottonseed)"],
+      "type": "Refined Seed Oil",
+      "saturated_fat_pct": 26,
+      "risk": "High in inflammatory Omega-6 linoleic acid (over 50%); requires intensive caustic refining, bleaching, and deodorizing to remove natural gossypol."
+    }
+  ]
+}

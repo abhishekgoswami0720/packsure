@@ -1,0 +1,404 @@
+{
+  "additives": [
+    {
+      "ins": "102",
+      "aliases": ["tartrazine", "fd&c yellow 5", "yellow 5", "e102", "ci 19140"],
+      "name": "Tartrazine",
+      "class": "Synthetic Food Colour",
+      "description": "Bright lemon-yellow azo dye used in soft drinks, confectioneries, chips, and instant noodles to give an artificial vibrant color.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted with strict quantitative limits in specified food categories.",
+      "abroad_status": {
+        "EU": "Requires mandatory warning label: 'May have an adverse effect on activity and attention in children'",
+        "UK": "Voluntary phase-out recommended following the Southampton Study"
+      },
+      "health_considerations": "Linked to hyperactivity and behavioral changes in sensitive children. Known to trigger allergic reactions, asthma, and urticaria in aspirin-intolerant individuals."
+    },
+    {
+      "ins": "110",
+      "aliases": ["sunset yellow fcf", "yellow 6", "e110", "orange yellow s"],
+      "name": "Sunset Yellow FCF",
+      "class": "Synthetic Food Colour",
+      "description": "Petroleum-derived orange azo dye used to give foods an orange or apricot hue.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted with limits in specified processed foods.",
+      "abroad_status": {
+        "EU": "Requires warning: 'May have an adverse effect on activity and attention in children'"
+      },
+      "health_considerations": "Can induce hives, rhinitis, and hyperactivity in pediatric consumers."
+    },
+    {
+      "ins": "122",
+      "aliases": ["carmoisine", "azorubine", "e122", "red 10"],
+      "name": "Carmoisine",
+      "class": "Synthetic Food Colour",
+      "description": "Synthetic red azo dye used in jams, jellies, and desserts.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted in specified foods with maximum limit of 100 mg/kg.",
+      "abroad_status": {
+        "US": "Not approved by the FDA for food use",
+        "EU": "Requires mandatory child attention warning label"
+      },
+      "health_considerations": "Southampton dye associated with behavioral hyperactivity; can provoke intolerance in asthmatics."
+    },
+    {
+      "ins": "124",
+      "aliases": ["ponceau 4r", "cochineal red a", "e124"],
+      "name": "Ponceau 4R",
+      "class": "Synthetic Food Colour",
+      "description": "Strawberry red synthetic dye used in sweets, beverages, and dessert mixes.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted in specific food groups with limits.",
+      "abroad_status": {
+        "US": "Banned for food use by the FDA"
+      },
+      "health_considerations": "Allergenic potential and histamine liberator; banned in the United States."
+    },
+    {
+      "ins": "127",
+      "aliases": ["erythrosine", "fd&c red 3", "e127"],
+      "name": "Erythrosine",
+      "class": "Synthetic Food Colour",
+      "description": "Cherry-pink synthetic dye commonly used in canned cherries, baked decorations, and candies.",
+      "safety_rating": "high_risk",
+      "fssai_status": "Permitted with strict restrictions.",
+      "abroad_status": {
+        "US": "Banned by the FDA in foods and ingested drugs in 2025 due to animal thyroid tumor studies",
+        "EU": "Restricted exclusively to cocktail cherries and candied cherries"
+      },
+      "health_considerations": "Associated with thyroid hormone disruption and thyroid tumors in animal studies."
+    },
+    {
+      "ins": "129",
+      "aliases": ["allura red ac", "fd&c red 40", "e129"],
+      "name": "Allura Red AC",
+      "class": "Synthetic Food Colour",
+      "description": "Dark red azo dye used widely in global confectionery, gelatin, and sodas.",
+      "safety_rating": "caution",
+      "fssai_status": "Not among India's 8 permitted coal-tar colours.",
+      "abroad_status": {
+        "EU": "Requires mandatory warning label regarding children's attention"
+      },
+      "health_considerations": "Associated with gut inflammation and mild behavioral changes in clinical pediatric trials."
+    },
+    {
+      "ins": "150d",
+      "aliases": ["caramel iv", "ammonia sulphite caramel", "e150d"],
+      "name": "Caramel IV (Sulphite Ammonia)",
+      "class": "Food Colour",
+      "description": "Dark brown coloring synthesized by heat treatment of carbohydrates with ammonium and sulfite compounds. Ubiquitous in colas, soy sauce, and gravies.",
+      "safety_rating": "moderate",
+      "fssai_status": "Permitted in beverages and sauces.",
+      "abroad_status": {
+        "US": "California Proposition 65 listing for 4-MEI byproduct threshold"
+      },
+      "health_considerations": "Manufacturing process can produce trace levels of 4-Methylimidazole (4-MEI), a suspected animal carcinogen monitored by food safety authorities."
+    },
+    {
+      "ins": "171",
+      "aliases": ["titanium dioxide", "e171", "ci 77891"],
+      "name": "Titanium Dioxide",
+      "class": "Food Colour / Opacifier",
+      "description": "White mineral pigment used to make salad dressings, coffee creamers, chewing gum, and cake frostings look brightly opaque white.",
+      "safety_rating": "high_risk",
+      "fssai_status": "Currently permitted in chewing gum and specific confections under FSSAI standards.",
+      "abroad_status": {
+        "EU": "Banned as a food additive across the entire European Union since 2022 (EFSA concluded genotoxicity cannot be ruled out)"
+      },
+      "health_considerations": "Nanoparticles can accumulate in systemic organs; European Food Safety Authority (EFSA) determined it can no longer be considered safe due to potential DNA damage."
+    },
+    {
+      "ins": "200",
+      "aliases": ["sorbic acid", "e200"],
+      "name": "Sorbic Acid",
+      "class": "Preservative",
+      "description": "Naturally derived or synthetic antimicrobial agent that inhibits mold and yeast growth.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted across dairy, cheese, baked goods.",
+      "abroad_status": {
+        "EU": "Permitted (GRAS/EFSA approved)"
+      },
+      "health_considerations": "Generally well tolerated, metabolizes naturally like fatty acids."
+    },
+    {
+      "ins": "202",
+      "aliases": ["potassium sorbate", "e202"],
+      "name": "Potassium Sorbate",
+      "class": "Preservative",
+      "description": "Potassium salt of sorbic acid used to inhibit molds in cheese, dips, syrups, and packaged bread.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted within designated limits.",
+      "abroad_status": {
+        "EU": "Permitted"
+      },
+      "health_considerations": "Extensively studied and considered safe at regulatory levels; rare contact dermatitis in sensitive individuals."
+    },
+    {
+      "ins": "211",
+      "aliases": ["sodium benzoate", "benzoate of soda", "e211"],
+      "name": "Sodium Benzoate",
+      "class": "Preservative",
+      "description": "A widely used chemical preservative that halts bacterial and fungal spoilage in acidic foods like fruit juices, carbonated soft drinks, pickles, and sauces.",
+      "safety_rating": "moderate",
+      "fssai_status": "Permitted Class II preservative.",
+      "abroad_status": {
+        "EU": "Permitted with strict limits",
+        "US": "FDA GRAS with 0.1% limit"
+      },
+      "health_considerations": "When combined with Vitamin C (Ascorbic Acid, INS 300) in beverages under heat or light, it can react to form trace amounts of Benzene, a known carcinogen. May trigger allergies in asthmatics."
+    },
+    {
+      "ins": "220",
+      "aliases": ["sulphur dioxide", "sulfur dioxide", "e220"],
+      "name": "Sulphur Dioxide",
+      "class": "Preservative / Antioxidant",
+      "description": "Inorganic gas dissolved in dried fruits, wines, and fruit pulps to prevent enzymatic browning and bacterial decay.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted with mandatory allergen declaration.",
+      "abroad_status": {
+        "EU": "Mandatory allergen declaration when exceeding 10 mg/kg"
+      },
+      "health_considerations": "Known severe bronchospasm trigger in asthmatic individuals. Must be declared as a major allergen."
+    },
+    {
+      "ins": "320",
+      "aliases": ["bha", "butylated hydroxyanisole", "e320"],
+      "name": "Butylated Hydroxyanisole (BHA)",
+      "class": "Synthetic Antioxidant",
+      "description": "Synthetic phenolic antioxidant used to prevent vegetable oils, potato chips, and butter from turning rancid.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted in fats and oils up to 200 mg/kg.",
+      "abroad_status": {
+        "EU": "Classified under review for endocrine disruption potential"
+      },
+      "health_considerations": "Listed as a reasonably anticipated human carcinogen by the US National Toxicology Program; exhibits mild endocrine-disrupting activity in animal models."
+    },
+    {
+      "ins": "321",
+      "aliases": ["bht", "butylated hydroxytoluene", "e321"],
+      "name": "Butylated Hydroxytoluene (BHT)",
+      "class": "Synthetic Antioxidant",
+      "description": "Lipophilic organic compound added to packaging and oil-rich snacks to preserve freshness.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted in edible oils and fats with limits.",
+      "abroad_status": {
+        "EU": "Under active endocrine evaluation"
+      },
+      "health_considerations": "Can accumulate in fatty tissues; suspected mild endocrine disruptor."
+    },
+    {
+      "ins": "322",
+      "aliases": ["lecithin", "soy lecithin", "soya lecithin", "sunflower lecithin", "e322"],
+      "name": "Lecithin",
+      "class": "Emulsifier",
+      "description": "Natural phospholipid extracted from soybeans or sunflower seeds, essential for blending cocoa butter and solids in chocolate and bakery goods.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted without quantitative limit (GMP).",
+      "abroad_status": {
+        "EU": "Permitted (GRAS)"
+      },
+      "health_considerations": "Safe natural food component. Individuals with severe soy allergies must note source."
+    },
+    {
+      "ins": "330",
+      "aliases": ["citric acid", "e330"],
+      "name": "Citric Acid",
+      "class": "Acidity Regulator / Antioxidant",
+      "description": "Weak organic acid found naturally in citrus fruits, produced commercially via Aspergillus fermentation to impart a sour tang and preserve beverages.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted under Good Manufacturing Practice (GMP).",
+      "abroad_status": {
+        "EU": "Permitted (GRAS)"
+      },
+      "health_considerations": "Safe metabolic intermediate in the Krebs cycle. High chronic intake in acidic sodas can cause tooth enamel erosion."
+    },
+    {
+      "ins": "407",
+      "aliases": ["carrageenan", "e407"],
+      "name": "Carrageenan",
+      "class": "Thickener / Stabiliser",
+      "description": "Polysaccharide extracted from red edible seaweeds, used to give body and creaminess to plant-based milks, ice creams, and processed meats.",
+      "safety_rating": "caution",
+      "fssai_status": "Permitted in dairy products and desserts.",
+      "abroad_status": {
+        "EU": "Permitted for general foods, but prohibited in infant formulas"
+      },
+      "health_considerations": "Numerous gastrointestinal studies suggest food-grade carrageenan may trigger gut inflammation, alter the microbiome, and worsen irritable bowel syndrome (IBS)."
+    },
+    {
+      "ins": "412",
+      "aliases": ["guar gum", "e412"],
+      "name": "Guar Gum",
+      "class": "Thickener / Stabiliser",
+      "description": "Natural galactomannan polysaccharide extracted from guar beans (Cyamopsis tetragonoloba), common in sauces, dressings, and baked goods.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted GMP.",
+      "abroad_status": {
+        "EU": "Permitted"
+      },
+      "health_considerations": "Beneficial soluble dietary fiber; excessive consumption may cause mild bloating or gas."
+    },
+    {
+      "ins": "415",
+      "aliases": ["xanthan gum", "e415"],
+      "name": "Xanthan Gum",
+      "class": "Thickener / Emulsifier",
+      "description": "Polysaccharide fermented by Xanthomonas campestris, used widely in gluten-free baking and dressings for smooth texture.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted GMP.",
+      "abroad_status": {
+        "EU": "Permitted"
+      },
+      "health_considerations": "Safe natural stabilizer; fermented soluble fiber."
+    },
+    {
+      "ins": "443",
+      "aliases": ["bvo", "brominated vegetable oil"],
+      "name": "Brominated Vegetable Oil (BVO)",
+      "class": "Emulsifier / Clouding Agent",
+      "description": "Vegetable oil bonded with elemental bromine, formerly used to keep citrus flavor oils in suspension in sodas.",
+      "safety_rating": "high_risk",
+      "fssai_status": "Not permitted in any food in India.",
+      "abroad_status": {
+        "US": "FDA revoked authorization in 2024",
+        "EU": "Banned across the European Union"
+      },
+      "health_considerations": "Bromine bioaccumulates in adipose tissue and organ lipids; linked to thyroid and neurological toxicity."
+    },
+    {
+      "ins": "466",
+      "aliases": ["carboxymethyl cellulose", "sodium cmc", "cellulose gum", "e466"],
+      "name": "Sodium Carboxymethyl Cellulose",
+      "class": "Emulsifier / Thickener",
+      "description": "Chemically modified cellulose used as a bulking agent and texture stabilizer in ice creams, pastries, and low-calorie diet foods.",
+      "safety_rating": "moderate",
+      "fssai_status": "Permitted across multiple processed categories.",
+      "abroad_status": {
+        "EU": "Permitted with ongoing re-evaluation by EFSA"
+      },
+      "health_considerations": "Recent Nature and Cell Host & Microbe clinical studies show dietary emulsifiers like CMC can degrade the protective intestinal mucosal layer and promote colitis."
+    },
+    {
+      "ins": "500",
+      "aliases": ["sodium carbonates", "baking soda", "sodium bicarbonate", "e500"],
+      "name": "Sodium Carbonates",
+      "class": "Raising Agent / Acidity Regulator",
+      "description": "Classic leavening agent used in baked cookies, biscuits, and batters to release CO2 bubbles.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted GMP.",
+      "abroad_status": {
+        "EU": "Permitted (GRAS)"
+      },
+      "health_considerations": "Safe mineral leavener; contributes to dietary sodium."
+    },
+    {
+      "ins": "621",
+      "aliases": ["monosodium glutamate", "msg", "e621", "ajinomoto"],
+      "name": "Monosodium Glutamate (MSG)",
+      "class": "Flavour Enhancer",
+      "description": "Sodium salt of glutamic acid, an amino acid that triggers the savory 'umami' taste receptors on the tongue.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted in specific food categories under GMP. Not permitted in infant foods.",
+      "abroad_status": {
+        "US": "FDA designated GRAS",
+        "EU": "Permitted with group ADI limit"
+      },
+      "health_considerations": "Global scientific consensus (FSSAI, FDA, EFSA, WHO) has debunked the 'Chinese Restaurant Syndrome' myth. Highly sensitive individuals may experience transient headaches at very high bolus doses."
+    },
+    {
+      "ins": "627",
+      "aliases": ["disodium guanylate", "e627"],
+      "name": "Disodium Guanylate",
+      "class": "Flavour Enhancer",
+      "description": "Nucleotide salt that works synergistically with MSG to amplify savory umami flavors in chips and instant noodles.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted with limits.",
+      "abroad_status": {
+        "EU": "Permitted"
+      },
+      "health_considerations": "Metabolizes to purines; individuals with gout or uric acid stones should moderate intake."
+    },
+    {
+      "ins": "631",
+      "aliases": ["disodium inosinate", "e631"],
+      "name": "Disodium Inosinate",
+      "class": "Flavour Enhancer",
+      "description": "Purine nucleotide flavor enhancer, usually derived from tapioca or fish/meat, combined with glutamate to heighten savoriness.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted with limits.",
+      "abroad_status": {
+        "EU": "Permitted"
+      },
+      "health_considerations": "Safe for general population; strict vegetarians should verify sourcing if not marked with green dot."
+    },
+    {
+      "ins": "924",
+      "aliases": ["potassium bromate", "e924"],
+      "name": "Potassium Bromate",
+      "class": "Flour Treatment Agent",
+      "description": "Oxidizing chemical formerly used by commercial bakeries to make bread rise higher and bleach flour white.",
+      "safety_rating": "high_risk",
+      "fssai_status": "Completely BANNED in India since 2016 following CSE study.",
+      "abroad_status": {
+        "EU": "Banned since 1990",
+        "UK": "Banned",
+        "CA": "Banned",
+        "US": "Permitted (FDA requires warning on flour bags)"
+      },
+      "health_considerations": "Classified by IARC as a Group 2B possible human carcinogen; nephrotoxic and thyroid toxin."
+    },
+    {
+      "ins": "951",
+      "aliases": ["aspartame", "equal", "nutrasweet", "e951"],
+      "name": "Aspartame",
+      "class": "Artificial Non-Nutritive Sweetener",
+      "description": "Low-calorie artificial sweetener roughly 200 times sweeter than sucrose, composed of aspartic acid and phenylalanine.",
+      "safety_rating": "moderate",
+      "fssai_status": "Permitted with mandatory warning: 'Contains Phenylalanine - Not recommended for Phenylketonurics'.",
+      "abroad_status": {
+        "WHO/IARC": "Classified in 2023 as Group 2B (Possibly carcinogenic to humans), with JECFA reaffirming ADI of 40 mg/kg bw"
+      },
+      "health_considerations": "Contraindicated for individuals with phenylketonuria (PKU). Emerging research points to glucose intolerance and microbiome alterations with heavy chronic intake."
+    },
+    {
+      "ins": "952",
+      "aliases": ["cyclamate", "sodium cyclamate", "e952"],
+      "name": "Cyclamate",
+      "class": "Artificial Sweetener",
+      "description": "Early synthetic non-caloric sweetener 30–50 times sweeter than table sugar.",
+      "safety_rating": "high_risk",
+      "fssai_status": "Removed from India's permitted additive list in 2016.",
+      "abroad_status": {
+        "US": "Banned by the FDA since 1970 due to bladder tumor concerns in rodents"
+      },
+      "health_considerations": "Banned in multiple major jurisdictions over carcinogenicity concerns."
+    },
+    {
+      "ins": "955",
+      "aliases": ["sucralose", "splenda", "e955"],
+      "name": "Sucralose",
+      "class": "Artificial Non-Nutritive Sweetener",
+      "description": "Chlorinated carbohydrate approximately 600 times sweeter than sucrose, resistant to heat degradation in baking.",
+      "safety_rating": "moderate",
+      "fssai_status": "Permitted with mandatory front-of-pack advisory for non-caloric sweetener.",
+      "abroad_status": {
+        "EU": "Permitted with ADI 15 mg/kg",
+        "US": "FDA Approved"
+      },
+      "health_considerations": "Passes mostly unabsorbed; clinical trials indicate potential reduction in beneficial gut Bifidobacteria and altered insulin sensitivity when paired with carbohydrates."
+    },
+    {
+      "ins": "965",
+      "aliases": ["maltitol", "maltitol syrup", "e965"],
+      "name": "Maltitol",
+      "class": "Sugar Alcohol / Polyol",
+      "description": "Hydrogenated maltose used in 'sugar-free' chocolates and protein bars. Imparts 75–90% of sugar's sweetness with half the calories.",
+      "safety_rating": "moderate",
+      "fssai_status": "Permitted in sugar-free confectioneries with laxative effect advisory.",
+      "abroad_status": {
+        "EU": "Mandatory warning: 'Excessive consumption may produce laxative effects'"
+      },
+      "health_considerations": "High glycemic index among sugar alcohols (GI ~35–52 for syrup). Causes severe osmotic bloating, cramps, and diarrhea in sensitive guts."
+    }
+  ]
+}

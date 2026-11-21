@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-bright": "#fef9f0", "error": "#ba1a1a", "inverse-primary": "#ffb68f", "secondary": "#5f5e5b", "surface-variant": "#e7e2d9", "secondary-container": "#e2dfda", "surface-container-highest": "#e7e2d9", "surface": "#fef9f0", "on-error": "#ffffff", "tertiary-fixed-dim": "#d7c3b6", "primary-fixed-dim": "#ffb68f", "inverse-surface": "#32302b", "on-primary-fixed-variant": "#743409", "on-tertiary-container": "#4e4037", "on-primary-container": "#6f3106", "inverse-on-surface": "#f5f0e7", "surface-dim": "#ded9d1", "primary-container": "#f49a68", "surface-container-high": "#ece8df", "tertiary": "#6b5b51", "primary": "#924b20", "on-surface-variant": "#54433b", "secondary-fixed": "#e5e2dd", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "on-secondary-fixed-variant": "#474743", "outline-variant": "#d9c2b7", "outline": "#87736a", "surface-tint": "#924b20", "on-tertiary-fixed-variant": "#52443b", "background": "#fef9f0", "on-background": "#1d1c16", "on-secondary": "#ffffff", "on-surface": "#1d1c16", "tertiary-container": "#c0aca0", "surface-container-low": "#f8f3ea", "on-primary": "#ffffff", "primary-fixed": "#ffdbca", "error-container": "#ffdad6", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#1c1c19", "secondary-fixed-dim": "#c8c6c1", "on-secondary-container": "#63635f", "on-primary-fixed": "#331100", "tertiary-fixed": "#f4ded1", "surface-container": "#f2ede4", "on-tertiary-fixed": "#241912" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "margin": "1.25rem", "gutter": "1rem", "space-lg": "1.25rem", "space-sm": "0.5rem", "space-md": "1rem", "space-xl": "1.75rem" }, "fontFamily": { "label-md": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "headline-xl-mobile": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "headline-sm": ["Inter"], "metric-display": ["Inter"], "label-sm": ["Inter"], "headline-xl": ["Inter"], "label-lg": ["Inter"], "body-sm": ["Inter"] }, "fontSize": { "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}], "headline-md": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600"}], "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}], "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.025em", "fontWeight": "700"}], "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}], "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "headline-sm": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "metric-display": ["30px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "label-sm": ["10px", {"lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700"}], "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "700"}], "label-lg": ["14px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600"}], "body-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "400"}] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#fef9f0;color:#1d1c16;font-family:'Inter',sans-serif;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><h1 class="font-headline-sm text-headline-sm text-on-surface tracking-tight font-bold">Voice &amp; Lens Assistant</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Help &amp; Instructions" class="w-11 h-11 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[22px]">help_outline</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 bg-surface"><div class="flex flex-col w-full pb-safe">
+<!-- Mode Sub-bar / Lens Status Indicator -->
+<div class="px-margin pt-space-xs pb-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs bg-surface-container px-space-md py-1.5 rounded-full shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-md text-label-md text-on-surface">Multimodal Live Lens</span>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container px-space-sm py-1 rounded-full text-secondary">
+<button class="w-7 h-7 rounded-full bg-surface text-on-surface font-label-sm text-label-sm flex items-center justify-center shadow-xs transition-transform active:scale-95" id="zoom-1x">1x</button>
+<button class="w-7 h-7 rounded-full text-secondary font-label-sm text-label-sm flex items-center justify-center transition-colors" id="zoom-2x">2x</button>
+<button class="w-7 h-7 rounded-full text-secondary font-label-sm text-label-sm flex items-center justify-center transition-colors" id="zoom-macro">
+<span class="material-symbols-outlined text-[14px]">macro_auto</span>
+</button>
+</div>
+</div>
+<!-- Multimodal AR Viewport (Live Package Analysis) -->
+<div class="px-margin relative">
+<div class="relative w-full h-[320px] rounded-xl overflow-hidden shadow-md bg-inverse-surface">
+<!-- Simulated Camera Stream Frame -->
+<img class="w-full h-full object-cover opacity-85 transition-transform duration-700 hover:scale-105" data-alt="An artisanal organic almond milk cardboard carton packaging on a warm rustic marble counter under soft diffused kitchen daylight, neutral cream and terracotta tones, ultra high resolution food photography, macro packaging details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKX-0Hrdso1H1jehlIzyLZnGC5ZKsOelDn7dfcLPg-rubxKsqD5QT_W--ela4jEqPuBXs3GOZxy3eC-dYuo-is4gAFl8o2nEtDoiSY_aaQK4VK2ckr-RAL0BXNHQCPK5xh49LKj22EKPtOEUvDhMc2w9rDPNcUjuBpUqRBVc003SdBk5mMH6PG5Quhe4KkihhvTixoRDlWcFC6SujN5ks7da2163CnjTknrn0E15Q"/>
+<!-- Gentle Camera Vignette & Editorial Framing -->
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-inverse-surface/30 pointer-events-none"></div>
+<!-- AR HUD Reticle & Corner Accents -->
+<div class="absolute inset-4 pointer-events-none">
+<div class="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-primary-container rounded-tl-lg opacity-80"></div>
+<div class="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-primary-container rounded-tr-lg opacity-80"></div>
+<div class="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-primary-container rounded-bl-lg opacity-80"></div>
+<div class="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-primary-container rounded-br-lg opacity-80"></div>
+</div>
+<!-- Live Floating Acoustic Prompt Pill -->
+<div class="absolute top-3 inset-x-3 flex justify-center pointer-events-auto">
+<div class="flex items-center gap-space-xs bg-inverse-surface/80 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-primary-container text-[16px] animate-pulse">graphic_eq</span>
+<span class="font-label-md text-label-md text-inverse-on-surface truncate">Listening... “Read the MRP and verify unit price”</span>
+</div>
+</div>
+<!-- Dynamic Vision Tag 1: MRP & Unit Price Anchor -->
+<div class="absolute top-16 left-4 group cursor-pointer transition-transform hover:scale-102">
+<div class="flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-md px-2.5 py-1.5 rounded-full shadow-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface">MRP: ₹149.00</span>
+<span class="text-outline-variant font-body-sm text-body-sm">•</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">₹0.37/g</span>
+</div>
+<!-- Hairline Anchor Dot -->
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container mx-auto mt-0.5 shadow-xs"></div>
+</div>
+<!-- Dynamic Vision Tag 2: INS Additive Anchor -->
+<div class="absolute bottom-20 right-4 group cursor-pointer transition-transform hover:scale-102">
+<div class="flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-md px-2.5 py-1.5 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary">science</span>
+<span class="font-label-sm text-label-sm text-on-surface">INS 322 (Lecithin)</span>
+<span class="bg-surface-container px-1.5 py-0.5 rounded text-on-surface-variant font-label-sm text-label-sm">Emulsifier</span>
+</div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container mx-auto mt-0.5 shadow-xs"></div>
+</div>
+<!-- Dynamic Vision Tag 3: Batch Code & Compliance -->
+<div class="absolute bottom-4 left-4 group cursor-pointer">
+<div class="flex items-center gap-1.5 bg-inverse-surface/85 backdrop-blur-md text-inverse-on-surface px-2.5 py-1 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[13px] text-primary-container">verified</span>
+<span class="font-label-sm text-label-sm">Batch #PH-2024-09 • 6M Shelf Life</span>
+</div>
+</div>
+<!-- Camera Live Status Badging (Right Top) -->
+<div class="absolute top-12 right-3 flex items-center gap-1 bg-surface-container-lowest/90 px-2 py-0.5 rounded-full shadow-xs">
+<span class="material-symbols-outlined text-[13px] text-primary">auto_awesome</span>
+<span class="font-label-sm text-label-sm text-on-surface">99.2% OCR</span>
+</div>
+</div>
+</div>
+<!-- Suggested Prompt Chips (Quick Prompts Carousel) -->
+<div class="mt-space-md w-full">
+<div class="px-margin flex items-center justify-between mb-space-xs">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Suggested Prompts</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-0.5 cursor-pointer">
+        Swipe <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</span>
+</div>
+<div class="flex gap-2 overflow-x-auto px-margin no-scrollbar py-1 scroll-smooth">
+<button class="shrink-0 flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high px-3 py-1.5 rounded-full text-on-surface font-label-md text-label-md transition-colors active:scale-95 shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">record_voice_over</span>
+        Read ingredients aloud
+      </button>
+<button class="shrink-0 flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high px-3 py-1.5 rounded-full text-on-surface font-label-md text-label-md transition-colors active:scale-95 shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">bubble_chart</span>
+        Explain INS 330 impact on gut
+      </button>
+<button class="shrink-0 flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high px-3 py-1.5 rounded-full text-on-surface font-label-md text-label-md transition-colors active:scale-95 shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">straighten</span>
+        Check net weight font height
+      </button>
+<button class="shrink-0 flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high px-3 py-1.5 rounded-full text-on-surface font-label-md text-label-md transition-colors active:scale-95 shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">eco</span>
+        Is palm oil present?
+      </button>
+<button class="shrink-0 flex items-center gap-1.5 bg-surface-container hover:bg-surface-container-high px-3 py-1.5 rounded-full text-on-surface font-label-md text-label-md transition-colors active:scale-95 shadow-xs">
+<span class="material-symbols-outlined text-[16px] text-primary">compare_arrows</span>
+        Compare with Oat Milk
+      </button>
+</div>
+</div>
+<!-- Voice Interaction & Real-time Dialogue Hub -->
+<div class="px-margin mt-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<!-- Voice Header & Subtle Acoustic Waveform Visualizer -->
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">neurology</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Ask PackSure</h2>
+<p class="font-body-sm text-body-sm text-secondary">Multimodal Voice Analysis</p>
+</div>
+</div>
+<!-- Dynamic Sound Waveform Graphic -->
+<div class="flex items-end gap-1 h-6 px-2 py-1 bg-surface-container rounded-full">
+<span class="w-1 bg-primary-container rounded-full animate-bounce h-3"></span>
+<span class="w-1 bg-primary rounded-full animate-bounce h-5" style="animation-delay: 0.15s;"></span>
+<span class="w-1 bg-primary-container rounded-full animate-bounce h-2" style="animation-delay: 0.3s;"></span>
+<span class="w-1 bg-primary rounded-full animate-bounce h-4" style="animation-delay: 0.45s;"></span>
+<span class="w-1 bg-primary-container rounded-full animate-bounce h-6" style="animation-delay: 0.2s;"></span>
+<span class="w-1 bg-primary rounded-full animate-bounce h-3" style="animation-delay: 0.35s;"></span>
+</div>
+</div>
+<!-- Real-time Dialogue Bubbles -->
+<div class="space-y-space-sm pt-space-xs">
+<!-- User Query -->
+<div class="flex items-start gap-2.5 justify-end">
+<div class="bg-secondary-container text-on-surface rounded-2xl rounded-tr-xs px-space-md py-2.5 max-w-[85%] shadow-xs">
+<div class="font-label-sm text-label-sm text-secondary mb-0.5">You asked</div>
+<p class="font-body-md text-body-md text-on-surface leading-snug">Does this have any hidden sugars or maltodextrin?</p>
+</div>
+<div class="w-7 h-7 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[16px]">person</span>
+</div>
+</div>
+<!-- Assistant Multi-Modal Response -->
+<div class="flex items-start gap-2.5">
+<div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-on-primary-container text-[16px]">arrow_back_ios_new</span>
+</div>
+<div class="bg-surface-container-low text-on-surface rounded-2xl rounded-tl-xs p-space-md max-w-[90%] shadow-xs">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm text-primary font-bold">PackSure AI • Verified via OCR</span>
+<span class="font-label-sm text-label-sm text-secondary">Just now</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+              Yes, Elena. <strong class="text-on-surface font-semibold">Harvest Crunch</strong> contains <span class="bg-primary-fixed px-1.5 py-0.5 rounded text-on-primary-fixed font-medium">Maltodextrin</span> at position #3 and <span class="bg-primary-fixed px-1.5 py-0.5 rounded text-on-primary-fixed font-medium">Invert Syrup</span> at position #5. Added sugars make up <strong class="text-primary font-bold">14.8g per 100g</strong>.
+            </p>
+<!-- Quick Macro Pill Highlight -->
+<div class="mt-space-sm pt-space-xs flex flex-wrap gap-1.5">
+<div class="bg-surface-container px-2 py-1 rounded-md text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-error">warning</span> High Glycemic Impact
+              </div>
+<div class="bg-surface-container px-2 py-1 rounded-md text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">nutrition</span> 29.6% Daily Recommended Sugar
+              </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Panel & Voice Controls -->
+<div class="mt-space-lg pt-space-sm flex items-center justify-between">
+<!-- Secondary Input Actions: Keyboard Text & Voice Mute Toggle -->
+<div class="flex items-center gap-space-xs">
+<button aria-label="Type a prompt" class="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 shadow-xs" id="btn-keyboard">
+<span class="material-symbols-outlined text-[20px]">keyboard</span>
+</button>
+<button aria-label="Mute or unmute voice readback" class="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 shadow-xs" id="btn-audio-toggle">
+<span class="material-symbols-outlined text-[20px]">volume_up</span>
+</button>
+</div>
+<!-- Primary Radiant Peach Voice Command Button -->
+<div class="relative flex items-center justify-center">
+<!-- Ambient Glowing Rings -->
+<div class="absolute w-16 h-16 rounded-full bg-primary-container opacity-40 animate-ping"></div>
+<div class="absolute w-14 h-14 rounded-full bg-primary-container opacity-60"></div>
+<!-- Tap to speak button -->
+<button aria-label="Hold or tap to speak" class="relative z-10 w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-lg transition-transform active:scale-90" id="mic-trigger">
+<span class="material-symbols-outlined text-[26px]">mic</span>
+</button>
+</div>
+<!-- Camera Freeze / Recapture Action -->
+<div class="flex items-center gap-space-xs">
+<button aria-label="Re-scan current frame" class="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 shadow-xs" id="btn-refresh">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+</button>
+<button aria-label="Export audit report" class="w-11 h-11 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors active:scale-95 shadow-xs" id="btn-share">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Metrology, Legal & Health Safety Advisory Note -->
+<div class="px-margin my-space-md">
+<div class="bg-surface-container-low px-space-md py-space-sm rounded-lg flex items-start gap-2">
+<span class="material-symbols-outlined text-outline text-[16px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-secondary leading-snug">
+        AI voice interpretation is an advisory tool. Always refer to physical packaging text for medical, allergen, or statutory metrology determinations.
+      </p>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive feedback for voice assistant micro-interactions
+  (function() {
+    const micBtn = document.getElementById('mic-trigger');
+    const audioBtn = document.getElementById('btn-audio-toggle');
+    const zoom1x = document.getElementById('zoom-1x');
+    const zoom2x = document.getElementById('zoom-2x');
+    const zoomMacro = document.getElementById('zoom-macro');
+    
+    let isListening = true;
+    let isMuted = false;
+
+    if (micBtn) {
+      micBtn.addEventListener('click', () => {
+        isListening = !isListening;
+        if (isListening) {
+          micBtn.classList.add('bg-primary');
+          micBtn.classList.remove('bg-inverse-surface');
+        } else {
+          micBtn.classList.remove('bg-primary');
+          micBtn.classList.add('bg-inverse-surface');
+        }
+      });
+    }
+
+    if (audioBtn) {
+      audioBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        const icon = audioBtn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.textContent = isMuted ? 'volume_off' : 'volume_up';
+        }
+      });
+    }
+
+    const zoomBtns = [zoom1x, zoom2x, zoomMacro];
+    zoomBtns.forEach(btn => {
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        zoomBtns.forEach(b => {
+          if (b) {
+            b.classList.remove('bg-surface', 'text-on-surface', 'shadow-xs');
+            b.classList.add('text-secondary');
+          }
+        });
+        btn.classList.add('bg-surface', 'text-on-surface', 'shadow-xs');
+        btn.classList.remove('text-secondary');
+      });
+    });
+  })();
+</script></main></body></html>
