@@ -99,7 +99,13 @@ def gemini_parse_label_image(image_bytes: bytes) -> dict | None:
             "Return valid JSON only."
         )
 
-        part_img = types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg")
+        mime_type = "image/jpeg"
+        if image_bytes.startswith(b"\x89PNG"):
+            mime_type = "image/png"
+        elif image_bytes.startswith(b"RIFF") and b"WEBP" in image_bytes[:16]:
+            mime_type = "image/webp"
+
+        part_img = types.Part.from_bytes(data=image_bytes, mime_type=mime_type)
 
         for model_name in [DEFAULT_MODEL, "gemini-3.8-flash"]:
             try:

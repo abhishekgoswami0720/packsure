@@ -399,6 +399,34 @@
         "EU": "Mandatory warning: 'Excessive consumption may produce laxative effects'"
       },
       "health_considerations": "High glycemic index among sugar alcohols (GI ~35–52 for syrup). Causes severe osmotic bloating, cramps, and diarrhea in sensitive guts."
+    },
+    {
+      "ins": "150a",
+      "aliases": ["caramel i", "plain caramel", "caustic caramel", "e150a", "caramel colour"],
+      "name": "Plain Caramel (Caramel I)",
+      "class": "Food Colour",
+      "description": "Natural or heat-synthesized brown food color produced by controlled heating of carbohydrates. Gives energy drinks, colas, and sauces their amber-brown color.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted GMP.",
+      "abroad_status": {
+        "EU": "Permitted (E150a)",
+        "US": "GRAS"
+      },
+      "health_considerations": "Generally recognized as safe; lacks 4-MEI chemical compounds present in ammonia-treated caramel III/IV."
+    },
+    {
+      "ins": "101",
+      "aliases": ["riboflavin", "riboflavins", "vitamin b2", "e101"],
+      "name": "Riboflavins",
+      "class": "Food Colour / Vitamin",
+      "description": "Yellow-orange micronutrient (Vitamin B2) also used as a natural colorant in energy drinks and fortified cereals.",
+      "safety_rating": "safe",
+      "fssai_status": "Permitted GMP.",
+      "abroad_status": {
+        "EU": "Permitted (E101)",
+        "US": "FDA Approved"
+      },
+      "health_considerations": "Essential water-soluble B-vitamin; safe at normal dietary levels."
     }
   ]
 }

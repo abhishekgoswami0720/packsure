@@ -61,6 +61,61 @@
         ],
         "clean_score": 94
       }
+    },
+    {
+      "category": "Energy & Sports Drinks",
+      "target_ids": ["red_bull_energy_drink", "9002490100070"],
+      "recommended": {
+        "id": "delulu_activate_energy",
+        "name": "Delulu Activate Clean Energy Drink",
+        "brand": "Delulu",
+        "rating": 4.0,
+        "clean_score": 88,
+        "why_clean": "Zero added sugar, plant caffeine from green tea with L-theanine and pink salt electrolytes. No artificial sweeteners or caramel colors.",
+        "key_improvements": [
+          "Zero added sugar (0g vs 27.5g per 250ml can)",
+          "Clean plant caffeine from green tea + L-theanine",
+          "No synthetic taurine, caramel color or artificial acid regulators",
+          "Electrolyte balanced with natural pink Himalayan salt"
+        ],
+        "image_url": "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=400"
+      }
+    },
+    {
+      "category": "Energy & Sports Drinks",
+      "target_ids": ["red_bull_energy_drink", "9002490100070"],
+      "recommended": {
+        "id": "fastandup_energy_gel",
+        "name": "Fast&Up Energy Gel (Instant Energy Boost)",
+        "brand": "Fast&Up",
+        "rating": 4.2,
+        "clean_score": 85,
+        "why_clean": "Informed-Sport certified fast energy with pure complex carbohydrates and clean hydration without massive refined sucrose spikes.",
+        "key_improvements": [
+          "No sucrose/fructose sugar crash",
+          "Certified clean sports nutrition",
+          "Portable, easy stomach absorption"
+        ],
+        "image_url": "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=400"
+      }
+    },
+    {
+      "category": "Personal Care",
+      "target_ids": ["nivea_soft_cream", "mamaearth_onion_shampoo"],
+      "recommended": {
+        "id": "minimalist_niacinamide_serum",
+        "name": "Minimalist 10% Niacinamide Face Serum with Zinc",
+        "brand": "Minimalist",
+        "rating": 4.5,
+        "clean_score": 95,
+        "why_clean": "Zero fragrance, zero parabens, zero mineral oils, backed by clinical grade active ingredients with transparent sourcing.",
+        "key_improvements": [
+          "100% Fragrance free & dye free",
+          "No paraffinum liquidum or petroleum derivatives",
+          "Non-comedogenic aloe-based formulation"
+        ],
+        "image_url": "https://images.unsplash.com/photo-1608248597359-5613589b34a0?w=400"
+      }
     }
   ]
 }

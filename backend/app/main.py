@@ -37,6 +37,21 @@ from .truth_service import (
     get_clean_alternatives,
     lookup_barcode,
     search_catalogue,
+    correct_product_data,
+    get_cache_coverage_report,
+)
+from .consumer_service import (
+    get_categories,
+    get_favorites,
+    add_favorite,
+    remove_favorite,
+    is_favorite,
+    get_history,
+    add_history,
+    clear_history,
+    submit_feedback,
+    get_profile,
+    update_profile,
 )
 
 app = FastAPI(
@@ -147,7 +162,163 @@ def get_by_barcode(code: str):
     result = lookup_barcode(clean_code)
     if not result:
         raise HTTPException(404, f"Product with barcode '{clean_code}' not found in catalogue. Please scan or photograph the label.")
+    add_history(clean_code, method="barcode")
     return result
+
+
+@app.get("/api/truth/categories")
+def list_categories():
+    """Returns curated category list with product counts."""
+    return get_categories()
+
+
+class ProductCorrectionInput(BaseModel):
+    barcode: str
+    name: Optional[str] = None
+    brand: Optional[str] = None
+    category: Optional[str] = None
+    ingredients_text: Optional[str] = None
+    nutrition_per_100g: Optional[dict] = None
+    serving_size_g: Optional[float] = None
+    net_quantity: Optional[str] = None
+    mrp_inr: Optional[float] = None
+    actor: str = "consumer"
+
+
+@app.post("/api/truth/product/correct")
+def api_correct_product(body: ProductCorrectionInput):
+    """Submits verified user/inspector corrections to product data with conflict tracking and source provenance."""
+    clean_code = body.barcode.strip()
+    if not clean_code:
+        raise HTTPException(400, "Barcode is required for correction.")
+    corrections = {}
+    if body.name is not None:
+        corrections["name"] = body.name.strip()
+    if body.brand is not None:
+        corrections["brand"] = body.brand.strip()
+    if body.category is not None:
+        corrections["category"] = body.category.strip()
+    if body.ingredients_text is not None:
+        corrections["ingredients_text"] = body.ingredients_text.strip()
+    if body.nutrition_per_100g is not None:
+        corrections["nutrition_per_100g"] = body.nutrition_per_100g
+    if body.serving_size_g is not None:
+        corrections["serving_size_g"] = body.serving_size_g
+    if body.net_quantity is not None:
+        corrections["net_quantity"] = body.net_quantity.strip()
+    if body.mrp_inr is not None:
+        corrections["mrp_inr"] = body.mrp_inr
+
+    try:
+        updated_report = correct_product_data(clean_code, corrections, actor=body.actor)
+        return {
+            "status": "success",
+            "message": "Product information updated and logged in multi-source audit trail.",
+            "product": updated_report
+        }
+    except Exception as e:
+        raise HTTPException(500, f"Error correcting product: {str(e)}")
+
+
+@app.get("/api/truth/sources/coverage")
+def api_get_source_coverage():
+    """Returns database coverage statistics, source breakdown, missing fields percentages, and official citations."""
+    return get_cache_coverage_report()
+
+
+class FavoriteInput(BaseModel):
+    product_id: str
+
+
+@app.get("/api/consumer/favorites")
+def api_get_favorites():
+    """Lists consumer favorites with full intelligence cards."""
+    return {"favorites": get_favorites()}
+
+
+@app.post("/api/consumer/favorites")
+def api_add_favorite(body: FavoriteInput):
+    """Adds a product to user favorites."""
+    success = add_favorite(body.product_id)
+    return {"status": "success" if success else "already_present", "product_id": body.product_id}
+
+
+@app.delete("/api/consumer/favorites/{product_id}")
+def api_remove_favorite(product_id: str):
+    """Removes a product from user favorites."""
+    success = remove_favorite(product_id)
+    return {"status": "success" if success else "not_found", "product_id": product_id}
+
+
+@app.get("/api/consumer/favorites/check/{product_id}")
+def api_check_favorite(product_id: str):
+    """Checks whether a product is in user favorites."""
+    return {"product_id": product_id, "is_favorite": is_favorite(product_id)}
+
+
+class HistoryInput(BaseModel):
+    product_id: str
+    method: str = "barcode"
+
+
+@app.get("/api/consumer/history")
+def api_get_history(limit: int = 20):
+    """Retrieves user scan and lookup history."""
+    return {"history": get_history(limit=limit)}
+
+
+@app.post("/api/consumer/history")
+def api_add_history(body: HistoryInput):
+    """Logs product into user history."""
+    add_history(body.product_id, method=body.method)
+    return {"status": "success", "product_id": body.product_id}
+
+
+@app.delete("/api/consumer/history")
+def api_clear_history():
+    """Clears history."""
+    clear_history()
+    return {"status": "success", "message": "History cleared"}
+
+
+class FeedbackInput(BaseModel):
+    product_id: str
+    purchase_intent: Optional[str] = None
+    helpful: Optional[bool] = None
+    comment: str = ""
+
+
+@app.post("/api/consumer/feedback")
+def api_submit_feedback(body: FeedbackInput):
+    """Submits user purchase intent and review feedback."""
+    return submit_feedback(
+        product_id=body.product_id,
+        purchase_intent=body.purchase_intent,
+        helpful=body.helpful,
+        comment=body.comment
+    )
+
+
+class ProfileInput(BaseModel):
+    name: Optional[str] = None
+    diet: Optional[str] = None
+    goals: Optional[list[str]] = None
+    allergens: Optional[list[str]] = None
+    daily_sugar_limit_g: Optional[float] = None
+    daily_sodium_limit_mg: Optional[float] = None
+
+
+@app.get("/api/consumer/profile")
+def api_get_profile():
+    """Gets personalized health goals and dietary restrictions."""
+    return get_profile()
+
+
+@app.post("/api/consumer/profile")
+def api_update_profile(body: ProfileInput):
+    """Updates user dietary preferences."""
+    updates = {k: v for k, v in body.model_dump().items() if v is not None}
+    return update_profile(updates)
 
 
 @app.get("/api/truth/search")
@@ -258,8 +429,8 @@ async def scan_product(
     image: Optional[UploadFile] = File(None),
 ):
     """Multi-modal scan endpoint supporting barcode, images, and text."""
-    # 1. If barcode provided and found, return immediately
-    if barcode.strip():
+    # 1. If barcode provided WITHOUT image and already in database, return immediately
+    if barcode.strip() and not image:
         hit = lookup_barcode(barcode.strip())
         if hit:
             return hit
@@ -315,8 +486,17 @@ async def scan_product(
                 except Exception:
                     pass
 
+        # If user uploaded an image but nothing was extracted and no ingredients text provided
+        if not extracted_text and not parsed_nutrition:
+            raise HTTPException(
+                422,
+                "Could not detect readable ingredients or nutrition facts from the uploaded packaging image. "
+                "Please ensure the packaging label is well-lit, clearly in focus, or enter ingredients manually."
+            )
+
     prod_name = name.strip() or ("Scanned Product" + (f" ({barcode})" if barcode else ""))
-    return analyze_product_data(
+    source = "ocr_extracted" if image else "manual_entry"
+    analyzed = analyze_product_data(
         name=prod_name,
         brand=brand.strip(),
         category=category.strip() or "Packaged Food",
@@ -326,7 +506,39 @@ async def scan_product(
         serving_size_g=serving_size_g,
         product_id=barcode.strip(),
         raw_label_text=extracted_text,
+        primary_source=source,
     )
+
+    # If barcode provided and data extracted from label photo, persist to cache
+    if barcode.strip() and (extracted_text or parsed_nutrition):
+        try:
+            from .schema import TruthLensProductRecord, DataSource, StandardNutrition100g, FieldProvenance
+            from .product_cache import save_product_to_cache
+            import datetime as dt
+            now_iso = dt.datetime.now(dt.timezone.utc).isoformat()
+            clean_b = barcode.strip()
+            rec = TruthLensProductRecord(
+                barcode=clean_b,
+                id=clean_b,
+                name=prod_name,
+                brand=brand.strip(),
+                category=category.strip() or "Packaged Food",
+                ingredients_text=extracted_text,
+                nutrition_per_100g=StandardNutrition100g(**parsed_nutrition),
+                serving_size_g=serving_size_g,
+                primary_source=DataSource.OCR_EXTRACTED,
+                retrieved_at=now_iso,
+                provenance={
+                    "name": FieldProvenance(source=DataSource.OCR_EXTRACTED, retrieved_at=now_iso, notes="Extracted via label OCR"),
+                    "ingredients_text": FieldProvenance(source=DataSource.OCR_EXTRACTED, retrieved_at=now_iso, notes="Extracted via label OCR"),
+                    "nutrition_per_100g": FieldProvenance(source=DataSource.OCR_EXTRACTED, retrieved_at=now_iso, notes="Extracted via label OCR"),
+                }
+            )
+            save_product_to_cache(rec)
+        except Exception:
+            pass
+
+    return analyzed
 
 
 # ------------------------------------------------------------------ Comparison & Alternatives

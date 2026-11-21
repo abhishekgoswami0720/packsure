@@ -111,6 +111,7 @@ def classify_nova(ingredients_text: str, matched_additives: list[dict],
     # Cosmetic additive classes that systematically indicate NOVA Group 4
     cosmetic_classes = {
         "synthetic food colour", "food colour / opacifier", "food colour",
+        "food colour / vitamin",
         "artificial non-nutritive sweetener", "artificial sweetener", "sugar alcohol / polyol",
         "flavour enhancer", "emulsifier", "emulsifier / thickener", "emulsifier / clouding agent"
     }
@@ -120,10 +121,11 @@ def classify_nova(ingredients_text: str, matched_additives: list[dict],
         if a.get("class", "").lower() in cosmetic_classes
     ]
 
-    # Industrial markers (maltodextrin, high fructose corn syrup, protein isolates)
+    # Industrial markers (maltodextrin, high fructose corn syrup, protein isolates, synthetic flavourings/stimulants)
     industrial_isolate_pattern = re.compile(
         r"\b(maltodextrin|high fructose corn syrup|hfcs|soy protein isolate|whey protein isolate|"
-        r"hydrolysed vegetable protein|hvp|inulin extract|modified starch|dextrose monohydrate)\b",
+        r"hydrolysed vegetable protein|hvp|inulin extract|modified starch|dextrose monohydrate|"
+        r"flavourings?|artificial flavour|taurine|caramel\s*i|colours?)\b",
         re.I
     )
     has_industrial_isolates = bool(industrial_isolate_pattern.search(raw_lower))
@@ -139,7 +141,7 @@ def classify_nova(ingredients_text: str, matched_additives: list[dict],
         if has_industrial_fats:
             reasons.append("Contains refined industrial fats (palm oil, palmolein, or hydrogenated fat)")
         if has_industrial_isolates:
-            reasons.append("Contains industrial food isolates or high-fructose/maltodextrin hydrolysates")
+            reasons.append("Contains industrial food isolates, flavourings, or synthetic ingredients")
         confidence = "high"
     elif any(k in raw_lower for k in ("beans", "fish", "meat", "vegetables", "fruit", "cheese", "bread")) and any(k in raw_lower for k in ("salt", "brine", "syrup", "oil")):
         group = 3
@@ -178,22 +180,40 @@ def classify_nova(ingredients_text: str, matched_additives: list[dict],
 
 def calculate_truth_score(norm: dict, nova_group: int, matched_additives: list[dict],
                           has_industrial_fats: bool, has_hidden_sugars: bool,
-                          inconsistencies_count: int = 0) -> dict:
-    """Calculates transparent 0-100 TruthScore with clear point breakdown."""
+                          inconsistencies_count: int = 0, is_liquid: bool = False,
+                          ingredients_text: str = "") -> dict:
+    """Calculates transparent 0-100 TruthScore with clear point breakdown and 5-point scale."""
     score = 100
     factors = []
+    raw_lower = (ingredients_text or "").lower()
 
     # Nutrition Penalties
     sugar = norm.get("total_sugars_g", norm.get("sugar_g"))
     if sugar is not None:
-        if sugar > 25.0:
-            ded = 20
-            score -= ded
-            factors.append(f"-{ded} pts: Very high sugar ({sugar:g}g / 100g)")
-        elif sugar > 15.0:
-            ded = 12
-            score -= ded
-            factors.append(f"-{ded} pts: High sugar ({sugar:g}g / 100g)")
+        if is_liquid:
+            if sugar > 10.0:
+                ded = 35
+                score -= ded
+                factors.append(f"-{ded} pts: High liquid sugar ({sugar:g}g / 100ml) — excessive free sugars")
+            elif sugar > 5.0:
+                ded = 20
+                score -= ded
+                factors.append(f"-{ded} pts: Moderate liquid sugar ({sugar:g}g / 100ml)")
+        else:
+            if sugar > 25.0:
+                ded = 20
+                score -= ded
+                factors.append(f"-{ded} pts: Very high sugar ({sugar:g}g / 100g)")
+            elif sugar > 15.0:
+                ded = 12
+                score -= ded
+                factors.append(f"-{ded} pts: High sugar ({sugar:g}g / 100g)")
+
+    # Synthetic stimulants in sugary beverages
+    if is_liquid and ("taurine" in raw_lower or "caffeine" in raw_lower):
+        ded = 15
+        score -= ded
+        factors.append(f"-{ded} pts: Concentrated synthetic stimulant formulation (caffeine/taurine)")
 
     sat_fat = norm.get("saturated_fat_g")
     if sat_fat is not None:
@@ -214,7 +234,7 @@ def calculate_truth_score(norm: dict, nova_group: int, matched_additives: list[d
 
     # Processing & Additives Penalties
     if nova_group == 4:
-        ded = 15
+        ded = 20
         score -= ded
         factors.append(f"-{ded} pts: Ultra-Processed Food (NOVA Group 4)")
     elif nova_group == 1:
@@ -255,17 +275,26 @@ def calculate_truth_score(norm: dict, nova_group: int, matched_additives: list[d
 
     if final_score >= 80:
         grade = "A (Clean & Wholesome)"
+        rating_label = "Excellent"
     elif final_score >= 60:
         grade = "B (Moderate Quality)"
+        rating_label = "Good"
     elif final_score >= 40:
         grade = "C (Processed / Caution)"
+        rating_label = "Moderate"
     elif final_score >= 20:
         grade = "D (Ultra-Processed / High Sugars)"
+        rating_label = "Poor"
     else:
         grade = "E (Avoid Frequent Intake)"
+        rating_label = "Poor"
+
+    score_out_of_5 = round(max(1.0, min(5.0, final_score / 20.0)), 1)
 
     return {
         "score": final_score,
+        "score_out_of_5": score_out_of_5,
+        "rating_label": rating_label,
         "grade": grade,
         "breakdown": factors,
     }

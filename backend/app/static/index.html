@@ -25,56 +25,576 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Barcode Scanner Library for Live Camera Feed -->
+  <!-- Barcode Scanner Libraries for Live Camera Feed (Native BarcodeDetector + ZXing + Html5Qrcode) -->
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <script src="https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js"></script>
   <style>
     /* -------------------------------------------------------------
        GOOGLE STITCH WARM EDITORIAL INTELLIGENCE DESIGN SYSTEM
     -------------------------------------------------------------- */
+    /* TRUTHLENS PURPLE THEME & REFERENCE APP STYLES */
     :root {
-      --bg: #FEF9F0;
+      --bg: #F8F9FA;
       --surface: #FFFFFF;
-      --surface-container-low: #F8F3EA;
-      --surface-container: #F2EDE4;
-      --surface-container-high: #ECE8DF;
-      --surface-container-highest: #E7E2D9;
-      --hairline: #E7E2D9;
-      --ink: #1D1C16;
-      --ink-secondary: #54433B;
-      --ink-tertiary: #87736A;
+      --surface-container-low: #F3F4F6;
+      --surface-container: #E5E7EB;
+      --surface-container-high: #D1D5DB;
+      --surface-container-highest: #9CA3AF;
+      --hairline: #E5E7EB;
+      --ink: #111827;
+      --ink-secondary: #4B5563;
+      --ink-tertiary: #9CA3AF;
       
-      /* TruthLens Consumer Brand (Deep Forest Green) */
-      --brand: #1B4332;
-      --brand-strong: #143628;
-      --brand-soft: #E8F1EC;
+      /* TruthLens Brand Purple */
+      --brand: #7C3AED;
+      --brand-strong: #6D28D9;
+      --brand-soft: #F5F3FF;
+      --brand-gradient: linear-gradient(135deg, #7C3AED 0%, #6366F1 100%);
       
-      /* PackSure Enforcement Brand (Warm Terra-Cotta / Metrology Bronze) */
+      /* PackSure Enforcement Brand */
       --enforce: #924B20;
       --enforce-strong: #743409;
       --enforce-soft: #FFDBCA;
       --enforce-container: #F49A68;
       
-      /* Semantic Status Colors */
-      --success: #2D6A4F;
-      --success-soft: #D8F3DC;
-      --warning: #D97706;
+      --success: #10B981;
+      --success-soft: #D1FAE5;
+      --warning: #F59E0B;
       --warning-soft: #FEF3C7;
-      --error: #BA1A1A;
-      --error-soft: #FFDAD6;
-      --danger: #DC2626;
+      --error: #EF4444;
+      --error-soft: #FEE2E2;
+      --danger: #EF4444;
       --danger-soft: #FEE2E2;
       
-      --radius: 16px;
-      --radius-sm: 10px;
-      --radius-xs: 6px;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --radius-xs: 8px;
       --radius-full: 9999px;
       
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.02);
-      --shadow: 0 4px 18px -2px rgba(29, 28, 22, 0.06), 0 2px 6px -1px rgba(0,0,0,0.03);
-      --shadow-lg: 0 12px 32px -4px rgba(29, 28, 22, 0.1), 0 4px 12px -2px rgba(0,0,0,0.04);
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow: 0 4px 14px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 28px rgba(124, 58, 237, 0.12);
       
       --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-display: 'Plus Jakarta Sans', var(--font);
+    }
+
+    /* Horizontal Category Scroll Chips */
+    .cat-chips-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 0 14px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-chips-scroll::-webkit-scrollbar { display: none; }
+    
+    .cat-chip {
+      padding: 8px 16px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .cat-chip:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .cat-chip.active {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
+    }
+
+    /* Carousels */
+    .carousel-section {
+      margin-bottom: 26px;
+    }
+    .carousel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .carousel-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .carousel-row {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .carousel-row::-webkit-scrollbar { display: none; }
+
+    /* Product Cards */
+    .ref-card {
+      min-width: 155px;
+      max-width: 165px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius);
+      padding: 12px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .ref-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+      border-color: var(--brand);
+    }
+    .ref-card-img-wrap {
+      height: 110px;
+      background: var(--surface-container-low);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .ref-card-img-wrap img {
+      max-height: 90px;
+      max-width: 90%;
+      object-fit: contain;
+    }
+    .ref-card-heart {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s;
+    }
+    .ref-card-heart:hover { transform: scale(1.15); }
+    .ref-card-heart.fav { color: #EF4444; }
+    .ref-card-cat {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 3px;
+    }
+    .ref-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 32px;
+    }
+    .ref-card-rating {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ref-card-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .ref-card-badge.rating-poor { background: #FEE2E2; color: #DC2626; }
+    .ref-card-badge.rating-moderate { background: #FEF3C7; color: #D97706; }
+    .ref-card-badge.rating-good { background: #E0F2FE; color: #0284C7; }
+    .ref-card-badge.rating-excellent { background: #DCFCE7; color: #16A34A; }
+
+    /* Bottom Sheet Preview Modal */
+    .sheet-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fadeInOverlay 0.2s ease-out;
+    }
+    .sheet-overlay.active { display: flex; }
+    @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+
+    .bottom-sheet {
+      background: var(--surface);
+      width: 100%;
+      max-width: 520px;
+      border-radius: 24px 24px 0 0;
+      padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+      box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);
+      animation: slideUpSheet 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    @keyframes slideUpSheet {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .sheet-handle {
+      width: 44px;
+      height: 4px;
+      background: var(--surface-container-high);
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .preview-img {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      background: var(--surface-container-low);
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .preview-details {
+      flex: 1;
+    }
+    .preview-details .cat {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand);
+      text-transform: uppercase;
+    }
+    .preview-details h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-top: 2px;
+    }
+    .preview-rating-card {
+      background: var(--surface-container-low);
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      border: 1px solid var(--hairline);
+    }
+    .preview-score-group {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .preview-score-num {
+      font-size: 32px;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: var(--ink);
+      line-height: 1;
+    }
+    .preview-score-denom {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-tertiary);
+    }
+    .preview-score-badge {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+    .preview-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-purple {
+      background: var(--brand);
+      color: #fff;
+      font-weight: 700;
+      border-radius: 14px;
+      padding: 12px 20px;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+      transition: all 0.2s;
+    }
+    .btn-purple:hover {
+      background: var(--brand-strong);
+      transform: translateY(-1px);
+    }
+    .btn-tia {
+      background: var(--brand-soft);
+      color: var(--brand);
+      font-weight: 700;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 14px;
+      border: 1px solid var(--brand);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-tia:hover {
+      background: #EDE9FE;
+    }
+
+    /* Segmented Indicator Bars */
+    .segmented-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0 4px;
+      gap: 2px;
+      position: relative;
+    }
+    .segmented-bar-segment {
+      flex: 1;
+      height: 100%;
+    }
+    .seg-green { background: #10B981; }
+    .seg-yellow { background: #FBBF24; }
+    .seg-orange { background: #F97316; }
+    .seg-red { background: #EF4444; }
+
+    .segmented-pip {
+      position: absolute;
+      top: -3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid var(--ink);
+      transform: translateX(-50%);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      transition: left 0.3s ease-out;
+    }
+
+    /* Nutrient Accordion Items */
+    .intel-accordion {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 14px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .intel-accordion:hover { border-color: var(--brand); }
+    .intel-accordion-header {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .intel-accordion-body {
+      padding: 0 16px 14px;
+      display: none;
+      font-size: 13px;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+    }
+    .intel-accordion.open .intel-accordion-body { display: block; }
+    .intel-accordion.open .intel-accordion-arrow { transform: rotate(180deg); }
+    .intel-accordion-arrow { transition: transform 0.2s; font-size: 12px; }
+
+    /* Tabs Nav (Basic Info / For You) */
+    .detail-tabs {
+      display: flex;
+      background: var(--surface-container-low);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 18px;
+    }
+    .detail-tab-btn {
+      flex: 1;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .detail-tab-btn.active {
+      background: var(--surface);
+      color: var(--brand);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* 100g vs Serving Toggle */
+    .serving-toggle-box {
+      display: inline-flex;
+      background: var(--surface-container-low);
+      border-radius: 20px;
+      padding: 3px;
+      border: 1px solid var(--hairline);
+    }
+    .serving-toggle-btn {
+      padding: 4px 12px;
+      border-radius: 16px;
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .serving-toggle-btn.active {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    /* Elevated Center Scan Button in Mobile Nav */
+    .nav-scan-elevated {
+      position: relative;
+      top: -14px;
+      background: var(--brand);
+      color: #fff !important;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.4);
+      flex: 0 0 52px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .nav-scan-elevated:hover { transform: scale(1.08); }
+    .nav-scan-elevated svg { width: 24px; height: 24px; }
+
+    /* Sticky Bottom Feedback Bar */
+    .sticky-feedback-bar {
+      position: sticky;
+      bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--hairline);
+      border-radius: 16px;
+      padding: 12px 16px;
+      margin: 20px 0 10px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      z-index: 50;
+      flex-wrap: wrap;
+    }
+    .feedback-btn {
+      padding: 6px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--hairline);
+      background: var(--surface-container-low);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .feedback-btn:hover {
+      border-color: var(--brand);
+      color: var(--brand);
+    }
+    .feedback-btn.selected {
+      background: var(--brand);
+      color: #fff;
+      border-color: var(--brand);
+    }
+
+    /* Floating TIA Assistant Button */
+    .floating-tia-btn {
+      position: fixed;
+      bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+      right: 20px;
+      background: var(--brand-gradient);
+      color: #fff;
+      border-radius: var(--radius-full);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 6px 20px rgba(124, 58, 237, 0.35);
+      cursor: pointer;
+      z-index: 90;
+      transition: transform 0.2s;
+    }
+    .floating-tia-btn:hover { transform: scale(1.05); }
+
+    /* Toast Notification */
+    .toast-msg {
+      position: fixed;
+      bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #111827;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      z-index: 2000;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -719,83 +1239,98 @@
   <main class="app-workspace">
 
     <!-- VIEW 1: CONSUMER HOME DASHBOARD (Stitch Screen 1) -->
+        <!-- VIEW 1: CONSUMER HOME DASHBOARD -->
     <section id="view-consumer-home" class="app-view active">
-      <div class="hero-banner">
-        <h2>Unmask Packaged Foods in India</h2>
-        <p>Real food intelligence backed by FSSAI traffic lights, NOVA ultra-processed food classification, 50+ hidden sugar aliases, and deceptive marketing claim verification.</p>
-        <div style="display: flex; gap: 12px; margin-top: 18px; flex-wrap: wrap;">
-          <button class="btn btn-white" onclick="switchView('scanner')">
+      <!-- Purple Gradient Hero with Search Bar -->
+      <div style="background: var(--brand-gradient); border-radius: 20px; padding: 24px 20px; color: #fff; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(124, 58, 237, 0.25);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+          <div>
+            <h2 style="font-family: var(--font-display); font-size: 22px; font-weight: 800; line-height: 1.2;">Unmask Packaged Foods</h2>
+            <p style="font-size: 13px; opacity: 0.9; margin-top: 4px;">Know what's really inside with TruthLens intelligence</p>
+          </div>
+          <button onclick="switchView('profile')" style="background: rgba(255,255,255,0.2); border: none; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; font-size: 18px;" title="User Profile">
+            👤
+          </button>
+        </div>
+
+        <!-- Reference Search Bar: "Search to find what fits you" -->
+        <div style="position: relative; display: flex; align-items: center;">
+          <input type="text" id="homeSearchInput" class="form-control" placeholder="Search to find what fits you (Red Bull, Parle-G, Maggi)..." style="background: #fff; color: var(--ink); border-radius: 14px; padding: 14px 44px 14px 40px; font-size: 14px; font-weight: 500; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.08);" onfocus="switchView('search')" onkeyup="handleHomeSearch(event)">
+          <span style="position: absolute; left: 14px; color: var(--ink-tertiary); font-size: 16px;">🔍</span>
+          <button onclick="switchView('scanner')" style="position: absolute; right: 8px; background: var(--brand-soft); border: none; border-radius: 10px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: var(--brand); cursor: pointer;" title="Open Scanner">
             <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 012-2h2m12 0h2a2 2 0 012 2v2m0 10v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"></path></svg>
-            Scan Product Now
-          </button>
-          <button class="btn btn-secondary" onclick="switchView('voice-lens')" style="background: rgba(255,255,255,0.2); color: #fff;">
-            <span>🎙️</span> Open Voice Lens
           </button>
         </div>
       </div>
 
-      <!-- Daily Intake Summary & Pantry Watch Widgets -->
-      <div class="grid-2" style="margin-bottom: 24px;">
-        <div class="card" style="margin-bottom: 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <b style="font-size: 14px;">Today's Consumption Metrics</b>
-            <button class="btn btn-secondary" onclick="switchView('daily-log')" style="padding: 4px 10px; font-size: 11px;">View Diary →</button>
-          </div>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-            <div style="background: var(--surface-container-low); padding: 12px; border-radius: 12px;">
-              <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">ADDED SUGAR</span>
-              <div style="font-size: 20px; font-weight: 800; color: var(--warning); margin-top: 4px;" id="homeSummarySugar">21.8g</div>
-              <small style="font-size: 10px; color: var(--ink-secondary);">of 25g limit</small>
-            </div>
-            <div style="background: var(--surface-container-low); padding: 12px; border-radius: 12px;">
-              <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">SODIUM</span>
-              <div style="font-size: 20px; font-weight: 800; color: var(--success); margin-top: 4px;" id="homeSummarySodium">612mg</div>
-              <small style="font-size: 10px; color: var(--ink-secondary);">of 2000mg limit</small>
-            </div>
-            <div style="background: var(--surface-container-low); padding: 12px; border-radius: 12px;">
-              <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">UPF INTAKE</span>
-              <div style="font-size: 20px; font-weight: 800; color: var(--danger); margin-top: 4px;" id="homeSummaryUpf">33%</div>
-              <small style="font-size: 10px; color: var(--ink-secondary);">NOVA 4 items</small>
-            </div>
-          </div>
-        </div>
+      <!-- Category Shortcut Chips -->
+      <div class="cat-chips-scroll" id="homeCategoryChips">
+        <button class="cat-chip active" onclick="filterHomeCategory('all', this)">✨ All</button>
+        <button class="cat-chip" onclick="filterHomeCategory('food', this)">🍲 Food</button>
+        <button class="cat-chip" onclick="filterHomeCategory('personal_care', this)">🧴 Personal Care</button>
+        <button class="cat-chip" onclick="filterHomeCategory('recent_scans', this)">🕒 Recent Scans</button>
+        <button class="cat-chip" onclick="filterHomeCategory('Energy & Sports Drinks', this)">⚡ Energy Drinks</button>
+        <button class="cat-chip" onclick="filterHomeCategory('Biscuits & Cookies', this)">🍪 Biscuits</button>
+        <button class="cat-chip" onclick="filterHomeCategory('Dairy & Spreads', this)">🥛 Dairy</button>
+        <button class="cat-chip" onclick="filterHomeCategory('Snacks & Chips', this)">🍿 Snacks</button>
+      </div>
 
-        <div class="card" style="margin-bottom: 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <b style="font-size: 14px;">Pantry Expiry Watch</b>
-            <span class="badge badge-score-c">2 Nearing Expiry</span>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--surface-container-low); border-radius: 10px;">
-              <div>
-                <b style="font-size: 13px;">Silk & Pure Almond Milk</b>
-                <p style="font-size: 11px; color: var(--ink-secondary);">Opened 4 days ago</p>
-              </div>
-              <span style="font-size: 11px; font-weight: 700; color: var(--warning);">Expires in 3 days</span>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--surface-container-low); border-radius: 10px;">
-              <div>
-                <b style="font-size: 13px;">Epigamia Natural Greek Yogurt</b>
-                <p style="font-size: 11px; color: var(--ink-secondary);">Best before 25-Nov</p>
-              </div>
-              <span style="font-size: 11px; font-weight: 700; color: var(--warning);">Expires in 4 days</span>
-            </div>
-          </div>
+      <!-- CAROUSEL 1: Top Scanned Food -->
+      <div class="carousel-section" id="sectionTopFood">
+        <div class="carousel-header">
+          <h3 class="carousel-title">Top Scanned Food</h3>
+          <span style="font-size: 12px; font-weight: 700; color: var(--brand); cursor: pointer;" onclick="switchView('categories')">See All →</span>
+        </div>
+        <div class="carousel-row" id="rowTopFood">
+          <!-- Populated by JS -->
         </div>
       </div>
 
-      <!-- Quick Search Bar -->
-      <div style="margin-bottom: 20px;">
-        <input type="text" id="homeSearchInput" class="form-control" placeholder="Search Indian food brands (Parle-G, Maggi, Bournvita, Amul, Epigamia, Whole Truth)..." onkeyup="handleHomeSearch(event)">
+      <!-- CAROUSEL 2: Top Scanned Beauty & Personal Care -->
+      <div class="carousel-section" id="sectionTopBeauty">
+        <div class="carousel-header">
+          <h3 class="carousel-title">Top Scanned Beauty</h3>
+          <span style="font-size: 12px; font-weight: 700; color: var(--brand); cursor: pointer;" onclick="filterHomeCategory('personal_care')">Explore →</span>
+        </div>
+        <div class="carousel-row" id="rowTopBeauty">
+          <!-- Populated by JS -->
+        </div>
       </div>
 
-      <!-- Verified Indian Product Catalogue -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-        <h3 style="font-size: 18px; font-weight: 800;">Popular Packaged Foods</h3>
-        <button class="btn btn-secondary" onclick="switchView('compare')">Compare Foods →</button>
+      <!-- CAROUSEL 3: Healthy Picks -->
+      <div class="carousel-section" id="sectionHealthyPicks">
+        <div class="carousel-header">
+          <h3 class="carousel-title">Healthy Picks 🌱</h3>
+          <span style="font-size: 12px; font-weight: 700; color: var(--success);">Clean Label</span>
+        </div>
+        <div class="carousel-row" id="rowHealthyPicks">
+          <!-- Populated by JS -->
+        </div>
       </div>
-      <div class="grid-4" id="homeProductGrid">
-        <!-- Rendered via loadPopularProducts() -->
+
+      <!-- CAROUSEL 4: Recently Scanned -->
+      <div class="carousel-section" id="sectionRecentScans">
+        <div class="carousel-header">
+          <h3 class="carousel-title">Recently Scanned 🕒</h3>
+          <span style="font-size: 12px; font-weight: 700; color: var(--ink-secondary); cursor: pointer;" onclick="switchView('profile')">Full History →</span>
+        </div>
+        <div class="carousel-row" id="rowRecentScans">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Data Transparency & Coverage Banner -->
+      <div class="card" style="padding: 14px 18px; margin-top: 24px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%); border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: space-between; border-radius: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 24px;">📊</span>
+          <div>
+            <b style="font-size: 13px; color: var(--ink);">Multi-Source Open Architecture</b>
+            <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 2px;">Open Food Facts v3 · FSSAI · Codex GSFA · JECFA</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary" onclick="openDataCoverageModal()" style="font-size: 11px; padding: 6px 12px; border-radius: var(--radius-full);">
+          Coverage & Citations
+        </button>
       </div>
     </section>
 
@@ -822,10 +1357,11 @@
         </div>
 
         <!-- Live Camera Viewfinder -->
-        <div class="scanner-viewfinder" id="scannerViewportWrap" style="position: relative; overflow: hidden; border-radius: 16px; background: #000; height: 260px; max-width: 520px; margin: 0 auto 16px;">
-          <!-- HTML5 QR / Barcode Video mounts here -->
-          <div id="barcodeReader" style="width: 100%; height: 100%;"></div>
-          <video id="barcodeNativeVideo" autoplay playsinline muted style="display: none; width: 100%; height: 100%; object-fit: cover;"></video>
+        <div class="scanner-viewfinder" id="scannerViewportWrap" style="position: relative; overflow: hidden; border-radius: 16px; background: #000; height: 280px; max-width: 520px; margin: 0 auto 16px;">
+          <!-- HTML5 / Native Video Viewport -->
+          <video id="barcodeNativeVideo" autoplay playsinline muted style="display: block; width: 100%; height: 100%; object-fit: cover;"></video>
+          <div id="barcodeReader" style="display: none; width: 100%; height: 100%;"></div>
+          <canvas id="barcodeCanvas" style="display: none;"></canvas>
 
           <!-- Animated Green Laser Scan Line -->
           <div class="scan-laser" id="scannerLaserBar"></div>
@@ -835,39 +1371,33 @@
           <div class="scan-reticle-corner reticle-br"></div>
 
           <!-- Dynamic Status Badge Overlay -->
-          <div id="scannerOverlayStatus" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); color: #fff; padding: 4px 14px; border-radius: 9999px; font-size: 11px; font-weight: 700; z-index: 5; pointer-events: none; white-space: nowrap; border: 1px solid rgba(255,255,255,0.2);">
-            Align barcode inside frame
+          <div id="scannerOverlayStatus" style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); color: #fff; padding: 5px 16px; border-radius: 9999px; font-size: 11px; font-weight: 700; z-index: 5; pointer-events: none; white-space: nowrap; border: 1px solid rgba(255,255,255,0.2);">
+            Align barcode inside camera frame
+          </div>
+
+          <!-- In-Viewport Camera Permission Prompt (if denied or blocked) -->
+          <div id="cameraPermissionPrompt" style="display: none; position: absolute; inset: 0; background: rgba(17,24,39,0.95); color: #fff; padding: 24px; text-align: center; flex-direction: column; justify-content: center; align-items: center; gap: 12px; z-index: 10;">
+            <span style="font-size: 32px;">📷</span>
+            <b style="font-size: 14px;">Camera Access Required</b>
+            <p id="cameraPermissionErrorMsg" style="font-size: 12px; color: #9ca3af; max-width: 280px; line-height: 1.4;">
+              Enable camera permissions in your browser to scan barcodes live, or use the manual search below.
+            </p>
+            <button class="btn btn-brand" onclick="startCameraScanner()" style="padding: 8px 16px; font-size: 12px;">Try Camera Again</button>
           </div>
         </div>
 
-        <!-- Controls: Quick Chips & Manual Entry -->
+        <!-- Controls: Manual Entry & Direct Label Scan Fallback -->
         <div style="max-width: 520px; margin: 0 auto;">
-          <!-- 1-Click Instant Test Products -->
-          <div style="margin-bottom: 12px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span style="font-size: 11px; font-weight: 700; color: var(--ink-tertiary); text-transform: uppercase;">Instant 1-Click Test Products:</span>
-              <span style="font-size: 10px; color: var(--brand); font-weight: 700;">Verified Open Database</span>
-            </div>
-            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901719101013')" style="padding: 4px 10px; font-size: 11px;">🍪 Parle-G</button>
-              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901058852230')" style="padding: 4px 10px; font-size: 11px;">🍜 Maggi</button>
-              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901233010123')" style="padding: 4px 10px; font-size: 11px;">🥛 Bournvita</button>
-              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8908013210041')" style="padding: 4px 10px; font-size: 11px;">🥜 Whole Truth PB</button>
-              <button class="btn btn-secondary" onclick="handleBarcodeScanned('8901262010058')" style="padding: 4px 10px; font-size: 11px;">🧈 Amul Butter</button>
-            </div>
-          </div>
-
-          <!-- Manual Barcode Input Fallback -->
-          <div style="display: flex; gap: 8px; margin-bottom: 14px;">
-            <input type="text" id="manualBarcodeInput" class="form-control" placeholder="Or enter barcode numbers (e.g. 8901719101013)" style="font-size: 13px;" onkeypress="if(event.key==='Enter') handleManualBarcodeSubmit()">
-            <button class="btn btn-brand" onclick="handleManualBarcodeSubmit()" style="white-space: nowrap; padding: 8px 16px;">Scan Barcode</button>
-          </div>
+          <!-- Manual Barcode Input -->
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <input type="text" id="manualBarcodeInput" class="form-control" placeholder="Enter barcode number (EAN-13, EAN-8, UPC)..." style="font-size: 13px;" onkeypress="if(event.key==='Enter') handleManualBarcodeSubmit()">
+            <button class="btn btn-brand" onclick="handleManualBarcodeSubmit()" style="white-space: nowrap; padding: 8px 16px;">Look Up</button>
           </div>
 
           <!-- Direct photo scan trigger if product has no barcode -->
           <div style="text-align: center; border-top: 1px dashed var(--hairline); padding-top: 10px;">
-            <button onclick="toggleDirectPhotoOption()" style="background: none; border: none; font-size: 12px; font-weight: 600; color: var(--ink-secondary); cursor: pointer; text-decoration: underline;">
-              Product has no barcode? Upload label photo directly →
+            <button onclick="toggleDirectPhotoOption()" style="background: none; border: none; font-size: 12px; font-weight: 600; color: var(--brand); cursor: pointer; text-decoration: underline;">
+              Product has no barcode? Upload packaging photo directly →
             </button>
           </div>
         </div>
@@ -933,84 +1463,180 @@
 
 
     <!-- VIEW 3: PRODUCT INTELLIGENCE OVERVIEW (Stitch Screen 3) -->
+        <!-- VIEW 3: PRODUCT INTELLIGENCE OVERVIEW (REFERENCE EXPERIENCE) -->
     <section id="view-intelligence" class="app-view">
-      <div style="margin-bottom: 14px;">
-        <button class="btn btn-secondary" onclick="navigateHome()" style="padding: 6px 12px; font-size: 12px;">← Back to Home</button>
+      <!-- Top Action Bar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <button class="btn btn-secondary" onclick="navigateHome()" style="padding: 6px 14px; font-size: 12px; border-radius: var(--radius-full);">
+          ← Back
+        </button>
+        <span class="badge" id="intelCategoryBadge" style="background: var(--surface-container-low); color: var(--ink); font-size: 11px;">Category</span>
+        <div style="display: flex; gap: 8px;">
+          <button id="intelFavBtn" onclick="toggleFavoriteCurrent()" class="btn btn-secondary" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 16px;" title="Favorite">
+            🤍
+          </button>
+          <button onclick="shareProductReport()" class="btn btn-secondary" style="width: 36px; height: 36px; padding: 0; border-radius: 50%; font-size: 16px;" title="Share">
+            🔗
+          </button>
+        </div>
       </div>
 
-      <!-- Hero Product Card -->
-      <div class="card" style="padding: 0; overflow: hidden;">
-        <div style="background: var(--surface-container-low); padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--hairline);">
-          <span class="badge" style="background: var(--brand-soft); color: var(--brand);" id="intelSourceBadge">Verified Product</span>
-          <div style="display: flex; gap: 8px;">
-            <button class="btn btn-secondary" onclick="switchView('sugar-breakdown')" style="padding: 5px 10px; font-size: 11px;">Sugars Breakdown</button>
-            <button class="btn btn-secondary" onclick="switchView('additive-decoder')" style="padding: 5px 10px; font-size: 11px;">INS Decoder</button>
-            <button class="btn btn-brand" onclick="openVoiceLensWithContext()" style="padding: 5px 12px; font-size: 11px;">🎙️ Ask Voice Lens</button>
+      <!-- Product Hero Card -->
+      <div class="card" style="padding: 20px; text-align: center; margin-bottom: 16px;">
+        <div id="intelImageWrap" style="height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;"></div>
+        <h2 id="intelProdName" style="font-family: var(--font-display); font-size: 22px; font-weight: 800; line-height: 1.25; margin-bottom: 4px;">-</h2>
+        <p id="intelProdBrandCategory" style="font-size: 13px; font-weight: 600; color: var(--ink-secondary); margin-bottom: 14px;">-</p>
+        <div id="intelNovaTagWrap" style="display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;"></div>
+      </div>
+
+      <!-- Reference Detail Tabs: Basic Info vs For You -->
+      <div class="detail-tabs">
+        <button class="detail-tab-btn active" id="tabBtnBasic" onclick="switchDetailTab('basic')">Basic Info</button>
+        <button class="detail-tab-btn" id="tabBtnForYou" onclick="switchDetailTab('foryou')">For You 🎯</button>
+      </div>
+
+      <!-- Prominent Rating Card -->
+      <div class="card" style="padding: 18px 20px; margin-bottom: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="display: flex; align-items: baseline; gap: 6px;">
+              <span id="intelRatingNum" style="font-size: 34px; font-weight: 900; font-family: var(--font-display); color: var(--ink); line-height: 1;">1.5</span>
+              <span style="font-size: 15px; font-weight: 700; color: var(--ink-tertiary);">Out of 5</span>
+            </div>
+            <button onclick="openHowCalculatedModal()" style="background: none; border: none; font-size: 12px; font-weight: 700; color: var(--brand); cursor: pointer; padding: 0; margin-top: 6px; display: flex; align-items: center; gap: 4px;">
+              How it's calculated <span>&gt;</span>
+            </button>
+          </div>
+          <span class="preview-score-badge rating-poor" id="intelRatingBadge" style="font-size: 14px; padding: 6px 14px;">POOR</span>
+        </div>
+      </div>
+
+      <!-- Data Provenance & Verification Badge -->
+      <div class="card" style="padding: 12px 16px; margin-bottom: 12px; background: var(--surface-container-low); border: 1px solid var(--hairline); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span id="intelSourceIcon" style="font-size: 20px;">🛡️</span>
+          <div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <b id="intelSourceLabel" style="font-size: 12px; color: var(--ink);">Verified Indian Catalogue (TruthLens Audited)</b>
+              <span id="intelSourceChip" class="badge" style="font-size: 9px; padding: 2px 6px; background: #e0f2fe; color: #0369a1;">Audited</span>
+            </div>
+            <small id="intelRetrievedTime" style="font-size: 10px; color: var(--ink-secondary); display: block;">Retrieved: Just now</small>
+          </div>
+        </div>
+        <div style="display: flex; gap: 6px;">
+          <button class="btn btn-secondary" onclick="openReviewCorrectModal()" style="padding: 4px 10px; font-size: 11px; border-radius: var(--radius-full); display: flex; align-items: center; gap: 4px;">
+            ✏️ Review & Correct
+          </button>
+          <button class="btn btn-secondary" onclick="openDataCoverageModal()" style="padding: 4px 8px; font-size: 11px; border-radius: var(--radius-full);" title="Data Coverage & Citations">
+            📊 Sources
+          </button>
+        </div>
+      </div>
+
+      <!-- Conflicts Alert (if user has corrected and differences were tracked) -->
+      <div id="intelConflictsCard" style="display: none; margin-bottom: 14px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 12px 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; cursor: pointer;" onclick="toggleConflictsList()">
+          <span style="font-size: 12px; font-weight: 700; color: #b45309; display: flex; align-items: center; gap: 6px;">
+            ⚠️ <span>Human Review Applied · Conflicting Values Logged</span>
+          </span>
+          <span id="intelConflictsArrow" style="font-size: 12px; color: #b45309;">▼</span>
+        </div>
+        <div id="intelConflictsList" style="display: none; margin-top: 8px; font-size: 11px; color: var(--ink);">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- TAB CONTENT: BASIC INFO -->
+      <div id="tabContentBasic">
+        <!-- Section: What should concern you? -->
+        <div style="margin-bottom: 20px;">
+          <h3 style="font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <span>⚠️ What should concern you?</span>
+          </h3>
+          <div id="concernAccordionContainer">
+            <!-- Populated dynamically -->
           </div>
         </div>
 
-        <div style="padding: 24px; text-align: center;">
-          <div id="intelImageWrap" style="height: 120px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center;"></div>
-          <h2 id="intelProdName" style="font-family: var(--font-display); font-size: 24px; font-weight: 800; letter-spacing: -0.4px;">-</h2>
-          <p id="intelProdBrandCategory" style="font-size: 13px; font-weight: 600; color: var(--ink-secondary); margin-bottom: 20px;">-</p>
-
-          <div class="score-circle-gauge" id="intelScoreGauge">
-            <div class="val" id="intelScoreNum">--</div>
-            <div class="lbl">TruthScore</div>
+        <!-- Section: What you'll like -->
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 6px;">
+              <span>👍 What you'll like</span>
+            </h3>
+            <!-- 100g vs Serving Toggle Switch -->
+            <div class="serving-toggle-box">
+              <button class="serving-toggle-btn active" id="toggleBtn100g" onclick="toggleNutritionServing('100g')">100g / ml</button>
+              <button class="serving-toggle-btn" id="toggleBtnServing" onclick="toggleNutritionServing('serving')">Per Serving</button>
+            </div>
           </div>
-          <p id="intelScoreGrade" style="font-size: 14px; font-weight: 800;">-</p>
-          <div id="intelNovaBadgeWrap" style="margin-top: 8px;"></div>
+          <div id="likeAccordionContainer">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Table Modal Triggers -->
+        <div style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+          <button class="btn btn-secondary" onclick="openAllNutrientsModal()" style="flex: 1; justify-content: center; font-size: 12px;">
+            📋 All Nutrients Table
+          </button>
+          <button class="btn btn-secondary" onclick="openAllIngredientsModal()" style="flex: 1; justify-content: center; font-size: 12px;">
+            🧪 All Ingredients List
+          </button>
         </div>
       </div>
 
-      <!-- Deceptive Claim Buster Card -->
-      <div class="card" id="intelClaimsCard">
-        <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
-          <span>🚨 Deceptive Claim Buster</span>
-        </h3>
-        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Comparing front packaging marketing against back-of-pack formulation realities.</p>
-        <div id="intelClaimsList"></div>
-      </div>
-
-      <!-- FSSAI Traffic Light Nutrition Grid -->
-      <div class="card">
-        <h3 style="font-size: 17px; font-weight: 800; margin-bottom: 4px;">FSSAI Traffic Light Nutrition</h3>
-        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Standardized per 100g / 100ml against national statutory thresholds.</p>
-        <div class="grid-3" id="intelTrafficGrid"></div>
-      </div>
-
-      <!-- INS Additives & Hidden Sugars Summary -->
-      <div class="grid-2">
-        <div class="card" style="margin-bottom: 0;">
-          <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">INS Additives Detected</h3>
-          <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Chemical numbers decoded into safety ratings & abroad bans.</p>
-          <div id="intelAdditivesList"></div>
-        </div>
-
-        <div class="card" style="margin-bottom: 0;">
-          <h3 style="font-size: 16px; font-weight: 800; margin-bottom: 4px;">Hidden Sugars & Industrial Fats</h3>
-          <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 12px;">Unmasking maltodextrin, invert syrup, palmolein and trans fats.</p>
-          <div id="intelSugarsFatsList"></div>
+      <!-- TAB CONTENT: FOR YOU -->
+      <div id="tabContentForYou" style="display: none;">
+        <div class="card" style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="font-size: 16px; font-weight: 800;">Personalized Fit Evaluation</h3>
+            <button class="btn btn-secondary" onclick="switchView('profile')" style="padding: 4px 10px; font-size: 11px;">Edit Goals ⚙️</button>
+          </div>
+          <div id="forYouEvaluationList">
+            <!-- Populated dynamically -->
+          </div>
         </div>
       </div>
 
-      <!-- Clean Alternatives Engine -->
-      <div class="card" style="margin-top: 20px; border: 2px solid var(--success);">
-        <h3 style="font-size: 17px; font-weight: 800; color: var(--success); margin-bottom: 4px;">🌱 Clean Label Alternatives</h3>
-        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Healthier, minimally processed substitutes in this food category.</p>
-        <div id="intelAlternativesList"></div>
+      <!-- SECTION: Better Rated Options (Clean Alternatives) -->
+      <div class="card" style="border: 2px solid var(--brand-soft); margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <h3 style="font-size: 16px; font-weight: 800; color: var(--ink);">🌱 Better Rated Options</h3>
+          <span style="font-size: 11px; font-weight: 700; color: var(--brand);">Clean Substitutes</span>
+        </div>
+        <div id="betterRatedOptionsList" style="display: flex; flex-direction: column; gap: 10px;">
+          <!-- Populated dynamically -->
+        </div>
       </div>
 
-      <!-- PackSure Statutory Metrology Summary -->
-      <div class="card" style="border: 2px solid var(--enforce);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <h3 style="font-size: 17px; font-weight: 800; color: var(--enforce);">⚖️ PackSure Legal Metrology Compliance</h3>
-          <span class="badge" id="intelMetrologyVerdictBadge">Checked under Rule 6</span>
+      <!-- FEEDBACK PANEL 1: Was this helpful to you? -->
+      <div class="card" style="text-align: center; padding: 18px; margin-bottom: 16px;">
+        <p style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 12px;">Was this helpful to you?</p>
+        <div style="display: flex; justify-content: center; gap: 16px;">
+          <button class="btn btn-secondary" id="btnHelpfulYes" onclick="submitHelpfulFeedback(true)" style="padding: 8px 24px; border-radius: var(--radius-full);">
+            👍 Yes
+          </button>
+          <button class="btn btn-secondary" id="btnHelpfulNo" onclick="submitHelpfulFeedback(false)" style="padding: 8px 24px; border-radius: var(--radius-full);">
+            👎 No
+          </button>
         </div>
-        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">
-          Verification of mandatory statutory declarations under the Legal Metrology (Packaged Commodities) Rules, 2011.
-        </p>
-        <div id="intelMetrologyChecksList"></div>
+      </div>
+
+      <!-- FEEDBACK PANEL 2: Sticky "Would you buy this product?" -->
+      <div class="sticky-feedback-bar">
+        <span style="font-size: 13px; font-weight: 800; color: var(--ink);">Would you buy this product?</span>
+        <div style="display: flex; gap: 8px;">
+          <button class="feedback-btn" id="fbBuyYes" onclick="submitPurchaseIntent('yes')">Yes</button>
+          <button class="feedback-btn" id="fbBuyNo" onclick="submitPurchaseIntent('no')">No</button>
+          <button class="feedback-btn" id="fbBuyAlready" onclick="submitPurchaseIntent('already_bought')">Already Bought</button>
+        </div>
+      </div>
+
+      <!-- FLOATING TIA ASSISTANT BUTTON -->
+      <div class="floating-tia-btn" onclick="openTiaAssistant()">
+        <span>✨</span>
+        <span>Ask TIA</span>
       </div>
     </section>
 
@@ -1647,6 +2273,113 @@
     </div>
   </div>
 
+  <!-- Modal: Human Review & Data Correction -->
+  <div id="modalReviewCorrect" class="modal-overlay" style="display: none;" onclick="if(event.target===this) closeReviewCorrectModal()">
+    <div class="modal-dialog" style="max-width: 520px; max-height: 85vh; overflow-y: auto; text-align: left; padding: 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 17px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px;">
+          <span>✏️ Review & Correct Product Label</span>
+        </h3>
+        <button onclick="closeReviewCorrectModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--ink-secondary);">&times;</button>
+      </div>
+      <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 16px;">
+        Found a discrepancy between the packaging and our database? Submit verified label corrections. All edits are logged in an immutable audit trail with conflict preservation.
+      </p>
+
+      <form id="formReviewCorrect" onsubmit="submitReviewCorrection(event)">
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label class="form-label" style="font-size: 11px; font-weight: 700; color: var(--ink-secondary);">Barcode (GTIN / EAN)</label>
+          <input type="text" id="correctBarcode" class="form-control" readonly style="background: var(--surface-container-low); font-weight: 700;">
+        </div>
+
+        <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700;">Product Name</label>
+            <input type="text" id="correctName" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700;">Brand</label>
+            <input type="text" id="correctBrand" class="form-control">
+          </div>
+        </div>
+
+        <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700;">Category</label>
+            <input type="text" id="correctCategory" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-label" style="font-size: 11px; font-weight: 700;">Serving Size (g/ml)</label>
+            <input type="number" step="0.1" id="correctServing" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label" style="font-size: 11px; font-weight: 700;">Ingredients Statement (As on pack)</label>
+          <textarea id="correctIngredients" class="form-control" rows="3" style="font-size: 12px; line-height: 1.4;"></textarea>
+        </div>
+
+        <h4 style="font-size: 13px; font-weight: 800; margin-bottom: 10px; color: var(--ink);">Nutrition Facts (per 100g / 100ml)</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+          <div class="form-group">
+            <label style="font-size: 10px; font-weight: 700; color: var(--ink-secondary);">Energy (kcal)</label>
+            <input type="number" step="0.1" id="correctEnergy" class="form-control" style="font-size: 12px; padding: 6px 10px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 10px; font-weight: 700; color: var(--ink-secondary);">Total Sugars (g)</label>
+            <input type="number" step="0.1" id="correctSugar" class="form-control" style="font-size: 12px; padding: 6px 10px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 10px; font-weight: 700; color: var(--ink-secondary);">Added Sugars (g)</label>
+            <input type="number" step="0.1" id="correctAddedSugar" class="form-control" style="font-size: 12px; padding: 6px 10px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 10px; font-weight: 700; color: var(--ink-secondary);">Saturated Fat (g)</label>
+            <input type="number" step="0.1" id="correctSatFat" class="form-control" style="font-size: 12px; padding: 6px 10px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 10px; font-weight: 700; color: var(--ink-secondary);">Sodium (mg)</label>
+            <input type="number" step="1" id="correctSodium" class="form-control" style="font-size: 12px; padding: 6px 10px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 10px; font-weight: 700; color: var(--ink-secondary);">Protein (g)</label>
+            <input type="number" step="0.1" id="correctProtein" class="form-control" style="font-size: 12px; padding: 6px 10px;">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" style="font-size: 11px; font-weight: 700;">Your Role / Identifier</label>
+          <input type="text" id="correctActor" class="form-control" placeholder="e.g. consumer_reviewer or inspector_badge_id" value="consumer">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" class="btn btn-secondary" onclick="closeReviewCorrectModal()">Cancel</button>
+          <button type="submit" class="btn btn-brand" id="btnSubmitCorrection">💾 Save & Re-Analyze</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Data Coverage & Source Transparency -->
+  <div id="modalDataCoverage" class="modal-overlay" style="display: none;" onclick="if(event.target===this) closeDataCoverageModal()">
+    <div class="modal-dialog" style="max-width: 500px; max-height: 85vh; overflow-y: auto; text-align: left; padding: 22px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 17px; font-weight: 800; color: var(--ink); display: flex; align-items: center; gap: 8px;">
+          <span>📊 Multi-Source Data Transparency</span>
+        </h3>
+        <button onclick="closeDataCoverageModal()" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--ink-secondary);">&times;</button>
+      </div>
+
+      <div id="dataCoverageContent">
+        <p style="font-size: 12px; color: var(--ink-secondary); margin-bottom: 14px;">Loading real-time catalogue metrics...</p>
+      </div>
+
+      <div style="margin-top: 18px; text-align: right;">
+        <button class="btn btn-secondary" onclick="closeDataCoverageModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- =============================================================
        5. JAVASCRIPT APPLICATION CORE (FULL API BINDING)
@@ -1669,37 +2402,39 @@
       AppState.role = role;
       document.body.className = 'role-' + role;
       
-      document.getElementById('btnRoleConsumer').classList.toggle('active', role === 'consumer');
-      document.getElementById('btnRoleInspector').classList.toggle('active', role === 'inspector');
+      const btnC = document.getElementById('btnRoleConsumer');
+      const btnI = document.getElementById('btnRoleInspector');
+      if (btnC) btnC.classList.toggle('active', role === 'consumer');
+      if (btnI) btnI.classList.toggle('active', role === 'inspector');
       
       const logo = document.getElementById('brandLogo');
       const name = document.getElementById('brandName');
       const tagline = document.getElementById('brandTagline');
       
       if (role === 'consumer') {
-        logo.textContent = 'T';
-        name.textContent = 'TruthLens';
-        tagline.textContent = 'Know what\'s really inside';
+        if (logo) logo.textContent = 'T';
+        if (name) name.textContent = 'TruthLens';
+        if (tagline) tagline.textContent = 'Know what\'s really inside';
         renderDesktopNav([
           { id: 'consumer-home', label: 'Home' },
+          { id: 'search', label: 'Search' },
           { id: 'scanner', label: 'Scanner' },
-          { id: 'additive-decoder', label: 'INS Decoder' },
-          { id: 'daily-log', label: 'Daily Diary' },
-          { id: 'complaints', label: 'Petitions' },
+          { id: 'categories', label: 'Categories' },
+          { id: 'profile', label: 'Profile' },
           { id: 'compare', label: 'Compare' }
         ]);
         renderMobileNav([
           { id: 'consumer-home', label: 'Home', icon: '🏠' },
-          { id: 'scanner', label: 'Scan', icon: '📷' },
-          { id: 'voice-lens', label: 'Voice', icon: '🎙️' },
-          { id: 'daily-log', label: 'Diary', icon: '📓' },
-          { id: 'complaints', label: 'Petitions', icon: '⚖️' }
+          { id: 'search', label: 'Search', icon: '🔍' },
+          { id: 'scanner', label: 'Scan', icon: '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 012-2h2m12 0h2a2 2 0 012 2v2m0 10v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2"></path></svg>', isElevated: true },
+          { id: 'categories', label: 'Categories', icon: '🗂️' },
+          { id: 'profile', label: 'Profile', icon: '👤' }
         ]);
         switchView('consumer-home');
       } else {
-        logo.textContent = 'P';
-        name.textContent = 'PackSure';
-        tagline.textContent = 'Legal Metrology Enforcement Directorate';
+        if (logo) logo.textContent = 'P';
+        if (name) name.textContent = 'PackSure';
+        if (tagline) tagline.textContent = 'Legal Metrology Enforcement Directorate';
         renderDesktopNav([
           { id: 'inspector-dashboard', label: 'Field Hub' },
           { id: 'letter-height', label: 'Rule 7 Height Audit' },
@@ -1712,7 +2447,7 @@
           { id: 'letter-height', label: 'Audit', icon: '📏' },
           { id: 'declaration-ocr', label: 'OCR', icon: '📄' },
           { id: 'review-queue', label: 'Queue', icon: '📋' },
-          { id: 'supervisor-dashboard', label: 'District', icon: '📊' }
+          { id: 'consumer-home', label: 'Exit to App', icon: '🛒' }
         ]);
         switchView('inspector-dashboard');
       }
@@ -1720,6 +2455,7 @@
 
     function renderDesktopNav(links) {
       const container = document.getElementById('desktopNavLinks');
+      if (!container) return;
       container.innerHTML = links.map(l => `
         <span class="nav-tab-link ${AppState.activeView === l.id ? 'active' : ''}" onclick="switchView('${l.id}')">
           ${l.label}
@@ -1729,12 +2465,22 @@
 
     function renderMobileNav(links) {
       const container = document.getElementById('mobileBottomNav');
-      container.innerHTML = links.map(l => `
-        <button class="mob-btn ${AppState.activeView === l.id ? 'active' : ''}" onclick="switchView('${l.id}')">
-          <span style="font-size: 16px;">${l.icon}</span>
-          <span>${l.label}</span>
-        </button>
-      `).join('');
+      if (!container) return;
+      container.innerHTML = links.map(l => {
+        if (l.isElevated) {
+          return `
+            <button class="nav-scan-elevated" onclick="switchView('${l.id}')" title="Scan Product">
+              ${l.icon}
+            </button>
+          `;
+        }
+        return `
+          <button class="mob-btn ${AppState.activeView === l.id ? 'active' : ''}" onclick="switchView('${l.id}')">
+            <span style="font-size: 18px;">${l.icon}</span>
+            <span>${l.label}</span>
+          </button>
+        `;
+      }).join('');
     }
 
     // --- View Navigation ---
@@ -1768,6 +2514,9 @@
         'daily-log': 'Consumer Daily Diary',
         'complaints': 'Consumer Infraction Petitions',
         'compare': 'Product Comparison',
+        'search': 'Search Food & Personal Care',
+        'categories': 'Categories Directory',
+        'profile': 'My Health Profile & Goals',
         'inspector-dashboard': 'Field Inspector Operations Hub',
         'letter-height': 'Rule 7 Letter Height Audit',
         'declaration-ocr': 'Declaration OCR Extraction',
@@ -1786,6 +2535,12 @@
       });
 
       // Lazy Data Fetching on view arrival
+      if (viewId === 'categories') loadCategoriesDirectory();
+      if (viewId === 'profile') loadUserProfile();
+      if (viewId === 'search') {
+        const fi = document.getElementById('fullSearchInput');
+        if (fi) setTimeout(() => fi.focus(), 100);
+      }
       if (viewId === 'additive-decoder' && !AppState.additivesCatalog.length) loadAdditivesCatalog();
       if (viewId === 'inspector-dashboard' || viewId === 'review-queue') loadInspectorDossiers();
       if (viewId === 'supervisor-dashboard') loadSupervisorMetrics();
@@ -1800,44 +2555,109 @@
     }
 
     // --- Consumer Home: Popular Products ---
+    
+    // --- Consumer Home: Reference Carousels & Categories Engine ---
+    let currentFilteredCategory = 'all';
+
     async function loadPopularProducts() {
       try {
         const res = await fetch('/api/truth/popular');
         const data = await res.json();
         AppState.popularProducts = data;
-        renderHomeProducts(data);
+        renderReferenceHomeCarousels(data);
       } catch (err) {
         console.error('Failed to load popular products:', err);
       }
+      loadHomeHistoryCarousel();
+      loadFavoritesState();
     }
 
-    function renderHomeProducts(prods) {
-      const container = document.getElementById('homeProductGrid');
-      if (!prods.length) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--ink-secondary);">No products available.</p>';
-        return;
+    function renderReferenceHomeCarousels(prods) {
+      if (!prods || !prods.length) return;
+
+      // Filter by category if one is active
+      let filtered = prods;
+      if (currentFilteredCategory === 'food') {
+        filtered = prods.filter(p => p.category !== 'Personal Care');
+      } else if (currentFilteredCategory === 'personal_care') {
+        filtered = prods.filter(p => p.category === 'Personal Care');
+      } else if (currentFilteredCategory !== 'all') {
+        filtered = prods.filter(p => (p.category || '').toLowerCase().includes(currentFilteredCategory.toLowerCase()));
       }
-      container.innerHTML = prods.map(p => {
-        const score = p.truth_score ? p.truth_score.score : 50;
-        const grade = p.truth_score ? p.truth_score.grade : 'C';
-        const nova = p.nova ? p.nova.group : 4;
-        const scoreClass = score >= 80 ? 'badge-score-a' : (score >= 60 ? 'badge-score-b' : (score >= 40 ? 'badge-score-c' : 'badge-score-d'));
-        return `
-          <div class="prod-card" onclick="viewProductDetail('${p.id}')">
-            <div class="prod-img-box">
-              ${p.image_url ? `<img src="${p.image_url}" alt="${escapeHtml(p.name)}">` : `<div style="font-size: 32px; font-weight:800; color: var(--brand);">T</div>`}
-            </div>
-            <div>
-              <div class="prod-title" style="font-size: 14px; font-weight: 700; line-height: 1.25; margin-bottom: 4px;">${escapeHtml(p.name)}</div>
-              <div style="font-size: 11px; color: var(--ink-secondary); margin-bottom: 10px;">${escapeHtml(p.brand || '')}</div>
-            </div>
-            <div style="display: flex; gap: 6px; align-items: center; justify-content: space-between; margin-top: auto;">
-              <span class="badge ${scoreClass}">Score ${score} (${grade})</span>
-              <span class="badge badge-nova-${nova}">NOVA ${nova}</span>
-            </div>
+
+      // 1. Top Scanned Food
+      const foodRow = document.getElementById('rowTopFood');
+      const foodProds = filtered.filter(p => p.category !== 'Personal Care');
+      if (foodRow) {
+        foodRow.innerHTML = foodProds.slice(0, 8).map(p => renderRefProductCard(p)).join('');
+      }
+
+      // 2. Top Scanned Beauty & Personal Care
+      const beautyRow = document.getElementById('rowTopBeauty');
+      const beautyProds = prods.filter(p => p.category === 'Personal Care');
+      if (beautyRow) {
+        beautyRow.innerHTML = (beautyProds.length ? beautyProds : prods.slice(0, 4)).map(p => renderRefProductCard(p)).join('');
+      }
+
+      // 3. Healthy Picks
+      const healthyRow = document.getElementById('rowHealthyPicks');
+      const healthyProds = prods.filter(p => {
+        const s = p.truth_score ? p.truth_score.score : 50;
+        const n = p.nova ? p.nova.group : 4;
+        return s >= 70 || n <= 2;
+      });
+      if (healthyRow) {
+        healthyRow.innerHTML = (healthyProds.length ? healthyProds : prods.slice(0, 4)).map(p => renderRefProductCard(p)).join('');
+      }
+    }
+
+    async function loadHomeHistoryCarousel() {
+      try {
+        const res = await fetch('/api/consumer/history?limit=6');
+        const data = await res.json();
+        const historyRow = document.getElementById('rowRecentScans');
+        const sec = document.getElementById('sectionRecentScans');
+        const items = data.history || [];
+        if (historyRow) {
+          if (!items.length) {
+            if (sec) sec.style.display = 'none';
+          } else {
+            if (sec) sec.style.display = 'block';
+            historyRow.innerHTML = items.map(p => renderRefProductCard(p)).join('');
+          }
+        }
+      } catch (e) {}
+    }
+
+    function renderRefProductCard(p) {
+      const score5 = p.truth_score?.score_out_of_5 !== undefined ? p.truth_score.score_out_of_5 : (p.truth_score ? (p.truth_score.score / 20).toFixed(1) : '3.0');
+      const label = p.truth_score?.rating_label || (score5 <= 2.0 ? 'Poor' : (score5 <= 3.5 ? 'Moderate' : 'Good'));
+      const badgeClass = label.toLowerCase() === 'poor' ? 'rating-poor' : (label.toLowerCase() === 'moderate' ? 'rating-moderate' : 'rating-excellent');
+      const isFav = AppState.favoritesSet ? AppState.favoritesSet.has(p.id) : false;
+
+      return `
+        <div class="ref-card" onclick="viewProductDetail('${p.id}')">
+          <button class="ref-card-heart ${isFav ? 'fav' : ''}" onclick="toggleFavoriteFromCard('${p.id}', event)" title="Favorite">
+            ${isFav ? '❤️' : '🤍'}
+          </button>
+          <div class="ref-card-img-wrap">
+            ${p.image_url ? `<img src="${p.image_url}" alt="${escapeHtml(p.name)}">` : `<div style="font-size: 28px; font-weight:800; color: var(--brand);">T</div>`}
           </div>
-        `;
-      }).join('');
+          <div class="ref-card-cat">${escapeHtml(p.category || 'Food')}</div>
+          <div class="ref-card-title">${escapeHtml(p.name)}</div>
+          <div class="ref-card-rating">
+            <span class="ref-card-badge ${badgeClass}">${score5} / 5</span>
+            <span style="font-size: 11px; font-weight: 700; color: var(--ink-secondary);">${label}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterHomeCategory(catId, btnEl) {
+      currentFilteredCategory = catId;
+      document.querySelectorAll('#homeCategoryChips .cat-chip').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      renderReferenceHomeCarousels(AppState.popularProducts);
     }
 
     function handleHomeSearch(e) {
@@ -1847,149 +2667,366 @@
         (p.brand && p.brand.toLowerCase().includes(q)) || 
         (p.category && p.category.toLowerCase().includes(q))
       );
-      renderHomeProducts(filtered);
+      renderReferenceHomeCarousels(filtered);
     }
 
-    // --- Live Camera Barcode Scanner & Smart AI Resolver Engine ---
-    let html5QrScanner = null;
-    let cameraActive = false;
-    let cameraFacingMode = 'environment'; // 'environment' (back) | 'user' (front)
-    let nativeDetectorLoop = null;
-    let nativeVideoStream = null;
-
-    function playScanBeep() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (AudioCtx) {
-          const ctx = new AudioCtx();
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(880, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.12);
-          gain.gain.setValueAtTime(0.3, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
-          osc.stop(ctx.currentTime + 0.13);
-        }
-      } catch (e) {
-        console.warn('AudioContext beep ignored:', e);
+    // --- Search View Implementation ---
+    function handleFullSearch(e) {
+      const q = e.target.value.toLowerCase().trim();
+      const grid = document.getElementById('searchResultsGrid');
+      if (!grid) return;
+      if (!q) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--ink-secondary); padding: 30px;">Type a product name (e.g. Red Bull, Parle-G, Maggi)...</p>';
+        return;
       }
-      if (navigator.vibrate) {
-        try { navigator.vibrate([80, 40, 80]); } catch(e){}
+      const matches = AppState.popularProducts.filter(p => 
+        p.name.toLowerCase().includes(q) || 
+        (p.brand && p.brand.toLowerCase().includes(q)) || 
+        (p.category && p.category.toLowerCase().includes(q)) ||
+        (p.barcode && p.barcode.includes(q))
+      );
+      if (!matches.length) {
+        grid.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+            <p style="font-size: 15px; font-weight: 700; color: var(--ink);">No exact product matches in open database.</p>
+            <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 6px;">Have the package with you? Use camera scanner to analyze ingredients instantly!</p>
+            <button class="btn btn-brand" onclick="switchView('scanner')" style="margin-top: 14px;">📸 Open Scanner</button>
+          </div>
+        `;
+        return;
+      }
+      grid.innerHTML = matches.map(p => `
+        <div class="prod-card" onclick="viewProductDetail('${p.id}')">
+          <div class="prod-img-box">
+            ${p.image_url ? `<img src="${p.image_url}" alt="${escapeHtml(p.name)}">` : `<div style="font-size: 32px; font-weight:800; color: var(--brand);">T</div>`}
+          </div>
+          <div class="prod-title">${escapeHtml(p.name)}</div>
+          <div style="font-size: 11px; color: var(--ink-secondary); margin-bottom: 8px;">${escapeHtml(p.brand || '')} · ${escapeHtml(p.category || '')}</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: auto;">
+            <span class="badge ${p.truth_score?.rating_label === 'Poor' ? 'badge-score-d' : 'badge-score-a'}">${p.truth_score?.score_out_of_5 || '3.5'} / 5</span>
+            <span class="badge badge-nova-${p.nova?.group || 4}">NOVA ${p.nova?.group || 4}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- Categories View Implementation ---
+    async function loadCategoriesDirectory() {
+      try {
+        const res = await fetch('/api/truth/categories');
+        const cats = await res.json();
+        const grid = document.getElementById('categoriesDirectoryGrid');
+        if (!grid) return;
+        grid.innerHTML = cats.map(c => `
+          <div class="card" style="padding: 16px; cursor: pointer; display: flex; align-items: center; gap: 14px; margin-bottom: 0;" onclick="selectCategoryDirectory('${c.name}')">
+            <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--brand-soft); color: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 22px;">
+              ${c.name.includes('Drink') ? '⚡' : (c.name.includes('Care') ? '🧴' : (c.name.includes('Biscuit') ? '🍪' : (c.name.includes('Dairy') ? '🥛' : '🍲')))}
+            </div>
+            <div>
+              <b style="font-size: 14px; color: var(--ink);">${escapeHtml(c.name)}</b>
+              <p style="font-size: 11px; color: var(--ink-secondary);">${c.count} Products</p>
+            </div>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    function selectCategoryDirectory(catName) {
+      currentFilteredCategory = catName;
+      switchView('consumer-home');
+      renderReferenceHomeCarousels(AppState.popularProducts);
+    }
+
+    // --- Bottom Sheet Scan Preview Modal (Video Reference at 15s & 24s) ---
+    function showScanPreviewSheet(product) {
+      AppState.previewProduct = product;
+      const sheet = document.getElementById('scanPreviewSheet');
+      if (!sheet) return;
+
+      const img = document.getElementById('sheetPreviewImg');
+      if (img) img.src = product.image_url || '';
+
+      const cat = document.getElementById('sheetPreviewCat');
+      if (cat) cat.textContent = product.category || 'Packaged Commodity';
+
+      const title = document.getElementById('sheetPreviewTitle');
+      if (title) title.textContent = product.name;
+
+      const scoreNum = document.getElementById('sheetScoreNum');
+      const score5 = product.truth_score?.score_out_of_5 !== undefined ? product.truth_score.score_out_of_5 : ((product.truth_score?.score || 50) / 20).toFixed(1);
+      if (scoreNum) scoreNum.textContent = score5;
+
+      const scoreBadge = document.getElementById('sheetScoreBadge');
+      const label = (product.truth_score?.rating_label || (score5 <= 2.0 ? 'Poor' : (score5 <= 3.5 ? 'Moderate' : 'Good'))).toUpperCase();
+      if (scoreBadge) {
+        scoreBadge.textContent = label;
+        scoreBadge.className = 'preview-score-badge ' + (label === 'POOR' ? 'rating-poor' : (label === 'MODERATE' ? 'rating-moderate' : 'rating-excellent'));
+      }
+
+      const favBtn = document.getElementById('sheetFavBtn');
+      const isFav = AppState.favoritesSet ? AppState.favoritesSet.has(product.id) : false;
+      if (favBtn) favBtn.textContent = isFav ? '❤️' : '🤍';
+
+      sheet.classList.add('active');
+    }
+
+    function closeScanPreviewSheet() {
+      const sheet = document.getElementById('scanPreviewSheet');
+      if (sheet) sheet.classList.remove('active');
+    }
+
+    function openProductFromPreview() {
+      if (AppState.previewProduct) {
+        closeScanPreviewSheet();
+        renderProductIntelligenceScreen(AppState.previewProduct);
+        switchView('intelligence');
+      }
+    }
+
+    function openTiaFromPreview() {
+      if (AppState.previewProduct) {
+        closeScanPreviewSheet();
+        renderProductIntelligenceScreen(AppState.previewProduct);
+        switchView('intelligence');
+        openTiaAssistant();
+      }
+    }
+
+    // =============================================================
+    // REAL LIVE CAMERA & BARCODE SCANNER CONTROLLER (PHASE 2 & 3)
+    // =============================================================
+    let scannerStream = null;
+    let barcodeDetector = null;
+    let zxingReader = null;
+    let isScanningActive = false;
+    let isScanningLocked = false;
+    let scannerAnimFrameId = null;
+    let currentFacingMode = 'environment';
+    let lastScannedBarcode = '';
+    let lastScanTimestamp = 0;
+    let currentBarcodeNotFound = '';
+    let offscreenCanvas = null;
+    let offscreenCtx = null;
+
+    async function initScannerEngines() {
+      // 1. Check native BarcodeDetector API (hardware accelerated)
+      if ('BarcodeDetector' in window) {
+        try {
+          const supported = await BarcodeDetector.getSupportedFormats();
+          const targetFormats = ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code'];
+          const available = targetFormats.filter(f => supported.includes(f));
+          if (available.length > 0) {
+            barcodeDetector = new BarcodeDetector({ formats: available });
+            console.log('Native BarcodeDetector active with formats:', available);
+          }
+        } catch (e) {
+          console.warn('BarcodeDetector initialization warning:', e);
+        }
+      }
+
+      // 2. Initialize ZXing fallback
+      if (typeof ZXing !== 'undefined' && ZXing.BrowserMultiFormatReader) {
+        try {
+          zxingReader = new ZXing.BrowserMultiFormatReader();
+          console.log('ZXing BrowserMultiFormatReader loaded as fallback');
+        } catch (e) {
+          console.warn('ZXing initialization warning:', e);
+        }
       }
     }
 
     async function startCameraScanner() {
-      if (cameraActive) return;
+      if (isScanningActive && scannerStream) return;
+
+      const video = document.getElementById('barcodeNativeVideo');
       const statusEl = document.getElementById('scannerOverlayStatus');
-      const videoEl = document.getElementById('barcodeNativeVideo');
-      const readerEl = document.getElementById('barcodeReader');
+      const toggleLabel = document.getElementById('cameraBtnLabel');
+      const toggleIcon = document.getElementById('cameraBtnIcon');
+      const permPrompt = document.getElementById('cameraPermissionPrompt');
 
-      if (statusEl) statusEl.textContent = 'Starting camera scanner...';
+      if (permPrompt) permPrompt.style.display = 'none';
 
-      // 1. Check if Html5Qrcode library is loaded
-      if (typeof Html5Qrcode !== 'undefined') {
-        try {
-          if (!html5QrScanner) {
-            html5QrScanner = new Html5Qrcode("barcodeReader");
-          }
-          await html5QrScanner.start(
-            { facingMode: cameraFacingMode },
-            {
-              fps: 15,
-              qrbox: { width: 280, height: 160 },
-              aspectRatio: 1.777778
-            },
-            (decodedText, decodedResult) => {
-              console.log('Barcode detected via Html5Qrcode:', decodedText);
-              handleBarcodeScanned(decodedText);
-            },
-            (errorMessage) => {}
-          );
-          cameraActive = true;
-          updateCameraButtons();
-          if (statusEl) statusEl.textContent = 'Align barcode inside frame';
-          return;
-        } catch (err) {
-          console.warn('Html5Qrcode camera startup failed, trying native camera:', err);
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        if (statusEl) statusEl.textContent = '⚠️ Camera not supported in this browser';
+        if (permPrompt) {
+          document.getElementById('cameraPermissionErrorMsg').textContent = 'Your browser does not support camera capture. Please enter the barcode numbers manually below.';
+          permPrompt.style.display = 'flex';
         }
+        return;
       }
 
-      // 2. Fallback to Native MediaDevices + BarcodeDetector
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        try {
-          nativeVideoStream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: cameraFacingMode, width: { ideal: 1280 }, height: { ideal: 720 } }
-          });
-          videoEl.srcObject = nativeVideoStream;
-          videoEl.style.display = 'block';
-          readerEl.style.display = 'none';
-          await videoEl.play();
-          cameraActive = true;
-          updateCameraButtons();
-          if (statusEl) statusEl.textContent = 'Align barcode inside frame';
-
-          if ('BarcodeDetector' in window) {
-            const barcodeDetector = new BarcodeDetector({
-              formats: ['ean_13', 'ean_8', 'upc_a', 'upc_e', 'code_128', 'qr_code']
-            });
-            const scanFrame = async () => {
-              if (!cameraActive) return;
-              try {
-                const barcodes = await barcodeDetector.detect(videoEl);
-                if (barcodes && barcodes.length > 0) {
-                  const detected = barcodes[0].rawValue;
-                  console.log('Native BarcodeDetector hit:', detected);
-                  handleBarcodeScanned(detected);
-                  return;
-                }
-              } catch (e) {}
-              nativeDetectorLoop = requestAnimationFrame(scanFrame);
-            };
-            nativeDetectorLoop = requestAnimationFrame(scanFrame);
-          }
-          return;
-        } catch (err) {
-          console.warn('Native camera access error:', err);
-          if (statusEl) statusEl.textContent = 'Camera permission required or unavailable';
+      if (window.isSecureContext === false && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        if (statusEl) statusEl.textContent = '⚠️ Camera requires secure HTTPS context';
+        if (permPrompt) {
+          document.getElementById('cameraPermissionErrorMsg').textContent = 'Camera access requires a secure HTTPS connection. Please use HTTPS or enter the barcode manually.';
+          permPrompt.style.display = 'flex';
         }
+        return;
       }
 
-      if (statusEl) statusEl.textContent = 'Camera not available. Enter barcode below.';
+      if (statusEl) statusEl.textContent = 'Starting camera stream...';
+
+      try {
+        const constraints = {
+          video: {
+            facingMode: { ideal: currentFacingMode },
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          },
+          audio: false
+        };
+
+        scannerStream = await navigator.mediaDevices.getUserMedia(constraints);
+
+        if (video) {
+          video.srcObject = scannerStream;
+          video.setAttribute('playsinline', 'true');
+          video.style.display = 'block';
+          await video.play();
+        }
+
+        isScanningActive = true;
+        isScanningLocked = false;
+
+        if (statusEl) statusEl.textContent = 'Align barcode inside camera frame';
+        if (toggleLabel) toggleLabel.textContent = 'Pause Camera';
+        if (toggleIcon) toggleIcon.textContent = '⏹';
+
+        // Kick off frame reading loop
+        runBarcodeScanLoop();
+
+      } catch (err) {
+        console.error('Camera startup error:', err);
+        isScanningActive = false;
+        let errMsg = 'Could not access camera.';
+        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+          errMsg = 'Camera permission was denied. Please allow camera permissions in your browser or address bar settings to scan packaging barcodes.';
+        } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+          errMsg = 'No camera found on this device. Please enter the barcode manually below.';
+        } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+          errMsg = 'Camera is currently locked or used by another application. Please close other camera apps and retry.';
+        }
+        if (statusEl) statusEl.textContent = '⚠️ ' + err.name;
+        if (permPrompt) {
+          document.getElementById('cameraPermissionErrorMsg').textContent = errMsg;
+          permPrompt.style.display = 'flex';
+        }
+      }
     }
 
-    async function stopCameraScanner() {
-      cameraActive = false;
-      if (nativeDetectorLoop) {
-        cancelAnimationFrame(nativeDetectorLoop);
-        nativeDetectorLoop = null;
+    function runBarcodeScanLoop() {
+      if (!isScanningActive || !scannerStream) return;
+
+      const video = document.getElementById('barcodeNativeVideo');
+      if (!video || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+        scannerAnimFrameId = requestAnimationFrame(runBarcodeScanLoop);
+        return;
       }
-      if (nativeVideoStream) {
-        nativeVideoStream.getTracks().forEach(t => t.stop());
-        nativeVideoStream = null;
+
+      if (!isScanningLocked) {
+        if (barcodeDetector) {
+          barcodeDetector.detect(video).then(barcodes => {
+            if (barcodes && barcodes.length > 0 && !isScanningLocked) {
+              const raw = barcodes[0].rawValue;
+              if (raw && raw.trim().length >= 4) {
+                onBarcodeDetected(raw.trim());
+                return;
+              }
+            }
+            if (isScanningActive) {
+              scannerAnimFrameId = requestAnimationFrame(runBarcodeScanLoop);
+            }
+          }).catch(err => {
+            scanWithZxingFallback(video);
+          });
+          return;
+        } else {
+          scanWithZxingFallback(video);
+          return;
+        }
       }
-      const videoEl = document.getElementById('barcodeNativeVideo');
-      if (videoEl) {
-        videoEl.srcObject = null;
-        videoEl.style.display = 'none';
+
+      if (isScanningActive) {
+        scannerAnimFrameId = requestAnimationFrame(runBarcodeScanLoop);
       }
-      if (html5QrScanner) {
+    }
+
+    function scanWithZxingFallback(video) {
+      if (!isScanningActive || isScanningLocked) return;
+
+      if (!offscreenCanvas) {
+        offscreenCanvas = document.createElement('canvas');
+      }
+      const vw = video.videoWidth || 640;
+      const vh = video.videoHeight || 480;
+      offscreenCanvas.width = vw;
+      offscreenCanvas.height = vh;
+      if (!offscreenCtx) offscreenCtx = offscreenCanvas.getContext('2d');
+      offscreenCtx.drawImage(video, 0, 0, vw, vh);
+
+      if (window.ZXing && zxingReader) {
         try {
-          await html5QrScanner.stop();
-        } catch (e) {}
+          const lumSrc = new ZXing.HTMLCanvasElementLuminanceSource(offscreenCanvas);
+          const binBmp = new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(lumSrc));
+          const decoded = zxingReader.decode(binBmp);
+          if (decoded && decoded.getText() && !isScanningLocked) {
+            onBarcodeDetected(decoded.getText());
+            return;
+          }
+        } catch (_) {}
       }
-      const readerEl = document.getElementById('barcodeReader');
-      if (readerEl) readerEl.style.display = 'block';
+
+      setTimeout(() => {
+        if (isScanningActive) scannerAnimFrameId = requestAnimationFrame(runBarcodeScanLoop);
+      }, 75);
+    }
+
+    function onBarcodeDetected(code) {
+      const now = Date.now();
+      if (code === lastScannedBarcode && (now - lastScanTimestamp) < 3500) {
+        return;
+      }
+      isScanningLocked = true;
+      lastScannedBarcode = code;
+      lastScanTimestamp = now;
+
+      playScanBeep();
+
+      const viewport = document.getElementById('scannerViewportWrap');
+      if (viewport) {
+        viewport.style.boxShadow = '0 0 0 4px #10b981';
+        setTimeout(() => { if (viewport) viewport.style.boxShadow = 'none'; }, 600);
+      }
+
+      handleBarcodeScanned(code);
+    }
+
+    function stopCameraScanner() {
+      isScanningActive = false;
+      isScanningLocked = false;
+      if (scannerAnimFrameId) {
+        cancelAnimationFrame(scannerAnimFrameId);
+        scannerAnimFrameId = null;
+      }
+      if (scannerStream) {
+        scannerStream.getTracks().forEach(track => track.stop());
+        scannerStream = null;
+      }
+      const video = document.getElementById('barcodeNativeVideo');
+      if (video) {
+        video.pause();
+        video.srcObject = null;
+      }
       const statusEl = document.getElementById('scannerOverlayStatus');
-      if (statusEl) statusEl.textContent = 'Camera paused. Tap Start Camera to resume.';
-      updateCameraButtons();
+      if (statusEl) statusEl.textContent = 'Camera paused';
+      const toggleLabel = document.getElementById('cameraBtnLabel');
+      const toggleIcon = document.getElementById('cameraBtnIcon');
+      if (toggleLabel) toggleLabel.textContent = 'Start Camera';
+      if (toggleIcon) toggleIcon.textContent = '▶';
     }
 
     function toggleCameraScanner() {
-      if (cameraActive) {
+      if (isScanningActive) {
         stopCameraScanner();
       } else {
         startCameraScanner();
@@ -1997,24 +3034,165 @@
     }
 
     async function flipCameraScanner() {
-      cameraFacingMode = cameraFacingMode === 'environment' ? 'user' : 'environment';
-      if (cameraActive) {
-        await stopCameraScanner();
-        await startCameraScanner();
+      currentFacingMode = (currentFacingMode === 'environment') ? 'user' : 'environment';
+      stopCameraScanner();
+      await startCameraScanner();
+    }
+
+    function playScanBeep() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.12);
+      } catch (_) {}
+    }
+
+    function showNotFoundCard(cleanCode) {
+      currentBarcodeNotFound = cleanCode;
+      const card = document.getElementById('barcodeNotFoundAiCard');
+      const badge = document.getElementById('notFoundBarcodeBadge');
+      if (badge) badge.textContent = cleanCode;
+      if (card) card.style.display = 'block';
+    }
+
+    function dismissNotFoundCard() {
+      currentBarcodeNotFound = '';
+      const card = document.getElementById('barcodeNotFoundAiCard');
+      if (card) card.style.display = 'none';
+      isScanningLocked = false;
+    }
+
+    function handleManualBarcodeSubmit() {
+      const input = document.getElementById('manualBarcodeInput');
+      if (!input) return;
+      const code = input.value.trim();
+      if (!code) {
+        showToast('Please enter a barcode number.');
+        return;
+      }
+      handleBarcodeScanned(code);
+    }
+
+    function toggleDirectPhotoOption() {
+      const sec = document.getElementById('directPhotoSection');
+      if (!sec) return;
+      sec.style.display = (sec.style.display === 'none' || !sec.style.display) ? 'block' : 'none';
+      if (sec.style.display === 'block') {
+        sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
 
-    function updateCameraButtons() {
-      const icon = document.getElementById('cameraBtnIcon');
-      const label = document.getElementById('cameraBtnLabel');
-      if (icon && label) {
-        if (cameraActive) {
-          icon.textContent = '⏹';
-          label.textContent = 'Pause Camera';
+    async function handleAiLabelUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        showToast('Please select a valid image file (JPEG, PNG, WebP).');
+        return;
+      }
+
+      const progress = document.getElementById('aiAnalysisProgress');
+      const progressText = document.getElementById('aiProgressText');
+      if (progress) progress.style.display = 'block';
+      if (progressText) progressText.textContent = 'Transcribing packaging label & computing FSSAI metrics with TruthLens AI...';
+
+      const formData = new FormData();
+      formData.append('image', file);
+      if (currentBarcodeNotFound) {
+        formData.append('barcode', currentBarcodeNotFound);
+      }
+
+      try {
+        const res = await fetch('/api/truth/scan', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          const product = await res.json();
+          if (progress) progress.style.display = 'none';
+          dismissNotFoundCard();
+          const directSec = document.getElementById('directPhotoSection');
+          if (directSec) directSec.style.display = 'none';
+
+          renderProductIntelligenceScreen(product);
+          switchView('intelligence');
+          showToast('Product label analyzed successfully! ✨');
         } else {
-          icon.textContent = '▶️';
-          label.textContent = 'Start Camera';
+          let msg = 'Could not extract nutrition or ingredients from image.';
+          try {
+            const errData = await res.json();
+            msg = errData.detail || msg;
+          } catch (_) {}
+          if (progress) progress.style.display = 'none';
+          showToast(`Error: ${msg}`);
         }
+      } catch (err) {
+        console.error('Label upload error:', err);
+        if (progress) progress.style.display = 'none';
+        showToast('Network error while uploading label: ' + err.message);
+      } finally {
+        event.target.value = '';
+      }
+    }
+
+    async function handleDirectPasteAnalyze() {
+      const txt = document.getElementById('directPasteIngredients')?.value.trim();
+      if (!txt) {
+        showToast('Please paste an ingredient statement first.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/truth/scan/manual', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: 'Pasted Ingredient Statement',
+            ingredients_text: txt,
+            category: 'Packaged Food'
+          })
+        });
+
+        if (res.ok) {
+          const product = await res.json();
+          const directSec = document.getElementById('directPhotoSection');
+          if (directSec) directSec.style.display = 'none';
+          renderProductIntelligenceScreen(product);
+          switchView('intelligence');
+          showToast('Ingredients analyzed successfully! 🧪');
+        } else {
+          showToast('Analysis error.');
+        }
+      } catch (err) {
+        showToast('Error: ' + err.message);
+      }
+    }
+
+    async function verifyBackendHealth() {
+      const label = document.getElementById('backendStatusLabel');
+      const dot = document.querySelector('.status-dot');
+      try {
+        const res = await fetch('/api/health');
+        if (res.ok) {
+          const data = await res.json();
+          if (label) label.textContent = `TruthLens API v${data.version || '2.0'} Online (${data.catalog_size || 14} Products · ${data.additives_count || 30}+ Additives)`;
+          if (dot) dot.style.background = 'var(--success)';
+        } else {
+          if (label) label.textContent = 'Backend Unavailable (HTTP ' + res.status + ')';
+          if (dot) dot.style.background = 'var(--danger)';
+        }
+      } catch (_) {
+        if (label) label.textContent = 'Backend Offline';
+        if (dot) dot.style.background = 'var(--danger)';
       }
     }
 
@@ -2022,7 +3200,6 @@
     async function handleBarcodeScanned(code) {
       if (!code) return;
       const cleanCode = String(code).trim();
-      playScanBeep();
       
       const statusEl = document.getElementById('scannerOverlayStatus');
       if (statusEl) statusEl.textContent = `🔍 Checking open database for #${cleanCode}...`;
@@ -2033,306 +3210,863 @@
       try {
         const res = await fetch('/api/truth/barcode/' + encodeURIComponent(cleanCode));
         if (res.ok) {
-          // FOUND IN OPEN DATABASE (FSSAI / Local DB / Open Food Facts)
+          // FOUND IN OPEN DATABASE -> Pop up Bottom Sheet Preview Card!
           const product = await res.json();
           stopCameraScanner();
           dismissNotFoundCard();
-          renderProductIntelligenceScreen(product);
-          switchView('intelligence');
-        } else {
-          // NOT FOUND IN OPEN DATABASE -> Trigger smart AI photo upload card!
+          showScanPreviewSheet(product);
+          if (statusEl) statusEl.textContent = `✓ Found: ${product.name}`;
+        } else if (res.status === 404) {
+          // NOT FOUND IN OPEN DATABASE -> Smart AI Photo Upload Card!
           stopCameraScanner();
           showNotFoundCard(cleanCode);
+          if (statusEl) statusEl.textContent = `Barcode #${cleanCode} not in database`;
+        } else {
+          showToast(`Server returned HTTP ${res.status}`);
+          isScanningLocked = false;
         }
       } catch (err) {
         console.error('Barcode lookup error:', err);
-        showNotFoundCard(cleanCode);
+        showToast('Network error during barcode lookup: ' + err.message);
+        isScanningLocked = false;
       }
     }
 
-    function handleManualBarcodeSubmit() {
-      const input = document.getElementById('manualBarcodeInput');
-      const code = input.value.trim();
-      if (!code) return alert('Please enter a barcode number.');
-      handleBarcodeScanned(code);
-    }
-
-    function showNotFoundCard(barcode) {
-      AppState.scannedNotFoundBarcode = barcode;
-      const card = document.getElementById('barcodeNotFoundAiCard');
-      const badge = document.getElementById('notFoundBarcodeBadge');
-      if (badge) badge.textContent = barcode;
-      if (card) {
-        card.style.display = 'block';
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // --- Open Detailed Product Report by ID ---
+    async function viewProductDetail(productId) {
+      if (!productId) return;
+      let prod = (AppState.popularProducts || []).find(p => p.id === productId || p.barcode === productId);
+      if (!prod) {
+        try {
+          const res = await fetch('/api/truth/products/' + encodeURIComponent(productId));
+          if (res.ok) {
+            prod = await res.json();
+          }
+        } catch (e) {}
       }
-      const statusEl = document.getElementById('scannerOverlayStatus');
-      if (statusEl) statusEl.textContent = `⚠️ #${barcode} not in database. Snap photo below.`;
-    }
-
-    function dismissNotFoundCard() {
-      const card = document.getElementById('barcodeNotFoundAiCard');
-      if (card) card.style.display = 'none';
-      const progress = document.getElementById('aiAnalysisProgress');
-      if (progress) progress.style.display = 'none';
-    }
-
-    function toggleDirectPhotoOption() {
-      const section = document.getElementById('directPhotoSection');
-      if (section) {
-        section.style.display = section.style.display === 'none' ? 'block' : 'none';
-        if (section.style.display === 'block') {
-          section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      }
-    }
-
-    // --- AI Multi-Modal Label Upload (When not in DB) ---
-    async function handleAiLabelUpload(e) {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-
-      const progress = document.getElementById('aiAnalysisProgress');
-      const progressText = document.getElementById('aiProgressText');
-      if (progress) progress.style.display = 'block';
-      if (progressText) progressText.textContent = 'Analyzing label with Gemini Vision AI...';
-
-      const formData = new FormData();
-      formData.append('image', file);
-      if (AppState.scannedNotFoundBarcode) {
-        formData.append('barcode', AppState.scannedNotFoundBarcode);
-      }
-
-      try {
-        if (progressText) progressText.textContent = 'Decoding INS additives & hidden sugars...';
-        const res = await fetch('/api/truth/scan', {
-          method: 'POST',
-          body: formData
-        });
-        if (!res.ok) throw new Error('AI analysis failed. Please try a clearer photo or enter ingredients.');
-        
-        const product = await res.json();
-        dismissNotFoundCard();
-        renderProductIntelligenceScreen(product);
+      if (prod) {
+        renderProductIntelligenceScreen(prod);
         switchView('intelligence');
-      } catch (err) {
-        alert('Could not analyze photo: ' + err.message);
-        if (progress) progress.style.display = 'none';
+      } else {
+        showToast('Product details not found.');
       }
     }
 
-    async function handleDirectPasteAnalyze() {
-      const text = document.getElementById('directPasteIngredients').value.trim();
-      if (!text) return alert('Please enter or paste the ingredient list.');
-      
-      try {
-        const res = await fetch('/api/truth/scan/manual', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: 'Analyzed Packaged Commodity',
-            ingredients_text: text,
-            raw_label_text: text
-          })
-        });
-        if (!res.ok) throw new Error('Analysis failed');
-        const product = await res.json();
-        renderProductIntelligenceScreen(product);
-        switchView('intelligence');
-      } catch (err) {
-        alert('Analysis error: ' + err.message);
-      }
-    }
-
-    // --- Product Intelligence Overview Rendering ---
-    async function viewProductDetail(prodId) {
-      try {
-        let p = AppState.popularProducts.find(x => x.id === prodId);
-        if (!p) {
-          const res = await fetch('/api/truth/products/' + prodId);
-          p = await res.json();
-        }
-        renderProductIntelligenceScreen(p);
-        switchView('intelligence');
-      } catch (err) {
-        alert('Could not load product detail: ' + err.message);
-      }
-    }
-
+    // --- Detailed Product Intelligence Renderer (Video Reference at 32s & 40s) ---
     function renderProductIntelligenceScreen(p) {
       AppState.currentProduct = p;
+      AppState.currentServingMode = '100g';
+
+      // 1. Hero
       document.getElementById('intelProdName').textContent = p.name;
-      document.getElementById('intelProdBrandCategory').textContent = `${p.brand || 'Packaged Food'} · ${p.category || ''}`;
+      document.getElementById('intelProdBrandCategory').textContent = `${p.brand || 'Packaged Commodity'} · ${p.category || ''}`;
       
+      const catBadge = document.getElementById('intelCategoryBadge');
+      if (catBadge) catBadge.textContent = p.category || 'Food';
+
       const imgWrap = document.getElementById('intelImageWrap');
       if (p.image_url) {
-        imgWrap.innerHTML = `<img src="${p.image_url}" style="max-height: 110px; max-width: 160px; object-fit: contain;">`;
+        imgWrap.innerHTML = `<img src="${p.image_url}" style="max-height: 120px; max-width: 170px; object-fit: contain;">`;
       } else {
-        imgWrap.innerHTML = `<div class="brand-mark" style="width: 60px; height: 60px; font-size: 28px;">T</div>`;
+        imgWrap.innerHTML = `<div class="brand-mark" style="width: 64px; height: 64px; font-size: 30px;">T</div>`;
       }
 
-      // TruthScore Gauge
-      const score = p.truth_score ? p.truth_score.score : 50;
-      const grade = p.truth_score ? p.truth_score.grade : 'C';
-      document.getElementById('intelScoreNum').textContent = score;
-      document.getElementById('intelScoreGrade').textContent = `Grade ${grade} — ${p.truth_score?.rationale?.[0] || 'Clean label assessment'}`;
-      
-      const gauge = document.getElementById('intelScoreGauge');
-      if (score >= 80) gauge.style.borderColor = 'var(--success)';
-      else if (score >= 60) gauge.style.borderColor = '#0284C7';
-      else if (score >= 40) gauge.style.borderColor = 'var(--warning)';
-      else gauge.style.borderColor = 'var(--danger)';
-
-      // NOVA Badge
+      // 2. NOVA Tag (Ultra-Processed vs Minimally Processed)
       const nova = p.nova || { group: 4, title: 'Ultra-Processed Food', reasons: [] };
-      document.getElementById('intelNovaBadgeWrap').innerHTML = `
-        <span class="badge badge-nova-${nova.group}">NOVA Group ${nova.group}: ${nova.title}</span>
-        ${nova.reasons ? `<p style="font-size: 11px; color: var(--ink-secondary); margin-top: 6px;">${nova.reasons.join(' · ')}</p>` : ''}
-      `;
-
-      // 1. Deceptive Claims
-      const claimsCard = document.getElementById('intelClaimsCard');
-      const claimsList = document.getElementById('intelClaimsList');
-      if (p.claim_verdicts && p.claim_verdicts.length) {
-        claimsCard.style.display = 'block';
-        claimsList.innerHTML = p.claim_verdicts.map(c => `
-          <div style="padding: 12px 14px; border-radius: 12px; margin-bottom: 8px; background: ${c.status === 'verified_inconsistency' ? 'var(--danger-soft)' : (c.status === 'potential_inconsistency' ? 'var(--warning-soft)' : 'var(--success-soft)')}; border-left: 4px solid ${c.status === 'verified_inconsistency' ? 'var(--danger)' : (c.status === 'potential_inconsistency' ? 'var(--warning)' : 'var(--success)')};">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-              <b style="font-size: 13px;">"${escapeHtml(c.claim)}"</b>
-              <span class="badge" style="background: ${c.status === 'verified_inconsistency' ? 'var(--danger)' : 'var(--warning)'}; color: #fff;">${c.status.replace('_', ' ')}</span>
-            </div>
-            <p style="font-size: 12px; color: var(--ink-secondary);">${escapeHtml(c.explanation)}</p>
-            <small style="font-size: 11px; color: var(--ink-tertiary); font-weight: 600;">Evidence: ${escapeHtml(c.evidence)}</small>
-          </div>
-        `).join('');
-      } else {
-        claimsCard.style.display = 'none';
+      const novaWrap = document.getElementById('intelNovaTagWrap');
+      if (novaWrap) {
+        novaWrap.innerHTML = `
+          <span class="badge ${nova.group === 4 ? 'badge-nova-4' : 'badge-nova-1'}" style="font-size: 12px; padding: 4px 10px;">
+            ${nova.group === 4 ? '🔴 Ultra-Processed (NOVA 4)' : '🟢 Minimally Processed (NOVA 1)'}
+          </span>
+        `;
       }
 
-      // 2. Traffic Lights Grid
-      const tl = p.traffic_lights || {};
-      const trafficGrid = document.getElementById('intelTrafficGrid');
-      const items = [
-        { label: 'Sugars', obj: tl.sugar },
-        { label: 'Sat. Fat', obj: tl.saturated_fat },
-        { label: 'Sodium', obj: tl.sodium },
-      ];
-      trafficGrid.innerHTML = items.map(it => {
-        if (!it.obj) return '';
-        const colorClass = it.obj.status === 'green' ? 'var(--success-soft)' : (it.obj.status === 'amber' ? 'var(--warning-soft)' : 'var(--danger-soft)');
-        const textColor = it.obj.status === 'green' ? 'var(--success)' : (it.obj.status === 'amber' ? 'var(--warning)' : 'var(--danger)');
+      // 3. Rating Card
+      const score5 = p.truth_score?.score_out_of_5 !== undefined ? p.truth_score.score_out_of_5 : ((p.truth_score?.score || 50) / 20).toFixed(1);
+      const ratingLabel = (p.truth_score?.rating_label || (score5 <= 2.0 ? 'Poor' : (score5 <= 3.5 ? 'Moderate' : 'Good'))).toUpperCase();
+      
+      const ratingNum = document.getElementById('intelRatingNum');
+      if (ratingNum) ratingNum.textContent = score5;
+
+      const ratingBadge = document.getElementById('intelRatingBadge');
+      if (ratingBadge) {
+        ratingBadge.textContent = ratingLabel;
+        ratingBadge.className = 'preview-score-badge ' + (ratingLabel === 'POOR' ? 'rating-poor' : (ratingLabel === 'MODERATE' ? 'rating-moderate' : 'rating-excellent'));
+      }
+
+      // Favorite Heart Icon
+      const favBtn = document.getElementById('intelFavBtn');
+      const isFav = AppState.favoritesSet ? AppState.favoritesSet.has(p.id) : false;
+      if (favBtn) favBtn.textContent = isFav ? '❤️' : '🤍';
+
+      // Data Provenance & Verification Badge
+      const srcLabel = document.getElementById('intelSourceLabel');
+      const srcChip = document.getElementById('intelSourceChip');
+      const srcIcon = document.getElementById('intelSourceIcon');
+      const srcTime = document.getElementById('intelRetrievedTime');
+      
+      const pSource = p.primary_source || p.source || 'verified_local';
+      if (pSource === 'verified_local') {
+        if (srcLabel) srcLabel.textContent = 'Verified Indian Catalogue (TruthLens Audited)';
+        if (srcChip) { srcChip.textContent = 'Audited'; srcChip.style.background = '#dcfce7'; srcChip.style.color = '#15803d'; }
+        if (srcIcon) srcIcon.textContent = '🛡️';
+      } else if (pSource === 'user_corrected') {
+        if (srcLabel) srcLabel.textContent = 'Human Reviewed & Corrected';
+        if (srcChip) { srcChip.textContent = 'User Corrected'; srcChip.style.background = '#fef3c7'; srcChip.style.color = '#b45309'; }
+        if (srcIcon) srcIcon.textContent = '✏️';
+      } else if (pSource.includes('openfoodfacts')) {
+        if (srcLabel) srcLabel.textContent = 'Open Food Facts API v3 (Global Open DB)';
+        if (srcChip) { srcChip.textContent = 'OFF API v3'; srcChip.style.background = '#e0f2fe'; srcChip.style.color = '#0369a1'; }
+        if (srcIcon) srcIcon.textContent = '🌐';
+      } else {
+        if (srcLabel) srcLabel.textContent = 'OCR Extracted / Live Scan';
+        if (srcChip) { srcChip.textContent = 'OCR'; srcChip.style.background = '#f3e8ff'; srcChip.style.color = '#7e22ce'; }
+        if (srcIcon) srcIcon.textContent = '📷';
+      }
+
+      if (srcTime) {
+        if (p.retrieved_at) {
+          try {
+            const d = new Date(p.retrieved_at);
+            srcTime.textContent = `Retrieved: ${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
+          } catch (_) {
+            srcTime.textContent = `Retrieved: ${p.retrieved_at}`;
+          }
+        } else {
+          srcTime.textContent = 'Retrieved: Verified Record';
+        }
+      }
+
+      // Check for conflicts
+      const conflictsCard = document.getElementById('intelConflictsCard');
+      const conflictsList = document.getElementById('intelConflictsList');
+      if (p.conflicts && p.conflicts.length > 0) {
+        if (conflictsCard) conflictsCard.style.display = 'block';
+        if (conflictsList) {
+          conflictsList.innerHTML = p.conflicts.map(c => `
+            <div style="padding: 4px 0; border-bottom: 1px dashed #fde68a;">
+              <b>${escapeHtml(c.field_name)}:</b> Was <i>"${typeof c.previous_value === 'object' ? JSON.stringify(c.previous_value) : escapeHtml(String(c.previous_value))}"</i> (${escapeHtml(c.previous_source || '')}) → Updated to <i>"${typeof c.incoming_value === 'object' ? JSON.stringify(c.incoming_value) : escapeHtml(String(c.incoming_value))}"</i>
+            </div>
+          `).join('');
+        }
+      } else {
+        if (conflictsCard) conflictsCard.style.display = 'none';
+      }
+
+      // 4. Populate "What should concern you?" Accordions
+      renderConcernAccordions(p);
+
+      // 5. Populate "What you'll like" Accordions
+      renderLikeAccordions(p);
+
+      // 6. Populate "For You" Tab
+      renderForYouEvaluation(p);
+
+      // 7. Populate Better Rated Options
+      renderBetterRatedOptions(p);
+
+      // Reset feedback buttons
+      resetFeedbackUI();
+    }
+
+    function renderConcernAccordions(p) {
+      const container = document.getElementById('concernAccordionContainer');
+      if (!container) return;
+
+      const norm = p.nutrition_per_100g || {};
+      const nova = p.nova || { group: 4, title: 'Ultra-Processed Food', reasons: [] };
+      const adds = p.additives || [];
+      const sugars = norm.total_sugars_g !== undefined ? norm.total_sugars_g : (norm.sugar_g || 0);
+      const hiddenSugars = p.hidden_sugars || [];
+      const fats = p.industrial_fats || [];
+
+      let html = '';
+
+      // Concern 1: Processing Level (NOVA 4)
+      if (nova.group === 4) {
+        html += `
+          <div class="intel-accordion open">
+            <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🚨</span>
+                <b style="font-size: 14px; color: var(--danger);">Processing Level: Ultra-Processed (NOVA 4)</b>
+              </div>
+              <span class="intel-accordion-arrow">▼</span>
+            </div>
+            <div class="intel-accordion-body">
+              <p>Contains industrially manufactured cosmetic ingredients, fractionated extracts, or synthetic additives designed to maximize shelf life and hyper-palatability.</p>
+              ${nova.reasons ? `<p style="margin-top: 6px; font-weight: 700; color: var(--ink);">${nova.reasons.join(' · ')}</p>` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // Concern 2: Additives List (with INS numbers & authoritative citations)
+      if (adds.length) {
+        html += `
+          <div class="intel-accordion ${adds.length > 2 ? 'open' : ''}">
+            <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🧪</span>
+                <b style="font-size: 14px; color: var(--ink);">Additives (${adds.length} Detected)</b>
+              </div>
+              <span class="intel-accordion-arrow">▼</span>
+            </div>
+            <div class="intel-accordion-body">
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                ${adds.map(a => `
+                  <div style="background: var(--surface-container-low); padding: 8px 12px; border-radius: 10px; border-left: 3px solid ${a.safety_rating === 'caution' ? 'var(--warning)' : 'var(--brand)'};">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <b style="font-size: 13px; color: var(--ink);">INS ${a.ins} — ${escapeHtml(a.name)}</b>
+                      <span class="badge" style="background: #fff; font-size: 10px;">${escapeHtml(a.safety_rating || 'Permitted')}</span>
+                    </div>
+                    <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 2px;">${escapeHtml(a.class || '')}</p>
+                    ${a.abroad_status?.EU ? `<small style="font-size: 10px; color: var(--danger); font-weight: 700; display: block; margin-top: 2px;">⚠️ EU Advisory: ${escapeHtml(a.abroad_status.EU)}</small>` : ''}
+                    ${a.citations?.codex_gsfa ? `<div style="font-size: 10px; color: var(--ink-tertiary); margin-top: 4px;">📜 <b>Codex GSFA:</b> ${escapeHtml(a.citations.codex_gsfa)}</div>` : ''}
+                    ${a.citations?.jecfa ? `<div style="font-size: 10px; color: var(--ink-tertiary); margin-top: 2px;">🔬 <b>FAO/WHO JECFA:</b> ${escapeHtml(a.citations.jecfa)}</div>` : ''}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Concern 3: Total Sugars (with Segmented Indicator Bar)
+      if (sugars > 5.0) {
+        const pct = Math.min(100, Math.max(5, (sugars / 30.0) * 100));
+        html += `
+          <div class="intel-accordion open">
+            <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🍬</span>
+                <b style="font-size: 14px; color: var(--danger);">Total Sugars: ${sugars}g / 100g (High)</b>
+              </div>
+              <span class="intel-accordion-arrow">▼</span>
+            </div>
+            <div class="intel-accordion-body">
+              <p>Contains <b>${sugars}g of total sugars</b> per 100g/ml. For a standard pack, this delivers significant free liquid sugars exceeding daily recommended thresholds.</p>
+              <div class="segmented-bar">
+                <div class="segmented-bar-segment seg-green"></div>
+                <div class="segmented-bar-segment seg-yellow"></div>
+                <div class="segmented-bar-segment seg-orange"></div>
+                <div class="segmented-bar-segment seg-red"></div>
+                <div class="segmented-pip" style="left: ${pct}%;"></div>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-tertiary); font-weight: 700;">
+                <span>Low (&lt;5g)</span>
+                <span>Moderate (5-10g)</span>
+                <span>High (&gt;10g)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Concern 4: Disguised Added Sugars
+      if (hiddenSugars.length) {
+        html += `
+          <div class="intel-accordion">
+            <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🔍</span>
+                <b style="font-size: 14px; color: var(--ink);">Disguised Added Sugars (${hiddenSugars.length} Found)</b>
+              </div>
+              <span class="intel-accordion-arrow">▼</span>
+            </div>
+            <div class="intel-accordion-body">
+              <p>Sugar aliases identified in the ingredient statement:</p>
+              <ul style="margin: 6px 0 0 16px;">
+                ${hiddenSugars.map(s => `
+                  <li style="margin-bottom: 4px;">
+                    <b>${escapeHtml(s.name)}</b> (GI: ${s.gi || 'High'}) — ${escapeHtml(s.risk || '')}
+                    ${s.citation ? `<div style="font-size: 10px; color: var(--ink-tertiary); margin-top: 1px;">📚 ${escapeHtml(s.citation)}</div>` : ''}
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+      }
+
+      // Concern 5: Industrial Palm Oils & Fats
+      if (fats.length) {
+        html += `
+          <div class="intel-accordion">
+            <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">🛢️</span>
+                <b style="font-size: 14px; color: var(--danger);">Industrial Palm Oil / Refined Fats</b>
+              </div>
+              <span class="intel-accordion-arrow">▼</span>
+            </div>
+            <div class="intel-accordion-body">
+              <p>Formulated with refined palm oil or hydrogenated vegetable fats which are high in saturated palmitic acid and linked to elevated LDL cholesterol.</p>
+              <div style="font-size: 10px; color: var(--ink-tertiary); margin-top: 4px;">🏛️ Source: FSSAI Food Safety and Standards (Prohibition and Restrictions on Sales) Regulations & WHO REPLACE Protocol</div>
+            </div>
+          </div>
+        `;
+      }
+
+      // Concern 6: Regulatory Compliance & Statutory Citations
+      const nonCompliant = p.compliance?.checks ? p.compliance.checks.filter(c => c.status === 'FAIL') : [];
+      if (nonCompliant.length > 0) {
+        html += `
+          <div class="intel-accordion open">
+            <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 16px;">⚖️</span>
+                <b style="font-size: 14px; color: var(--danger);">Regulatory Label Violations (${nonCompliant.length} Detected)</b>
+              </div>
+              <span class="intel-accordion-arrow">▼</span>
+            </div>
+            <div class="intel-accordion-body">
+              <p>Statutory labelling discrepancies detected under Legal Metrology Act & FSSAI Labelling Regulations:</p>
+              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+                ${nonCompliant.map(c => `
+                  <div style="background: #fef2f2; border: 1px solid #fee2e2; border-radius: 8px; padding: 6px 10px; font-size: 11px;">
+                    <b style="color: var(--danger);">${escapeHtml(c.rule_name)}:</b> ${escapeHtml(c.observation)}
+                    ${c.statutory_citation ? `<div style="font-size: 10px; color: var(--ink-tertiary); margin-top: 2px;">📜 Citation: ${escapeHtml(c.statutory_citation)}</div>` : ''}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html || '<p style="font-size: 13px; color: var(--success); font-weight: 700; padding: 10px;">✓ No major nutritional concerns detected.</p>';
+    }
+
+    function renderLikeAccordions(p) {
+      const container = document.getElementById('likeAccordionContainer');
+      if (!container) return;
+
+      const norm = p.nutrition_per_100g || {};
+      const servingMultiplier = AppState.currentServingMode === 'serving' && p.serving_size_g ? (p.serving_size_g / 100.0) : 1.0;
+      const unitLabel = AppState.currentServingMode === 'serving' ? `per serving (${p.serving_size_g || 100}g)` : 'per 100g/ml';
+
+      const energy = Math.round((norm.energy_kcal || 0) * servingMultiplier);
+      const protein = +((norm.protein_g || 0) * servingMultiplier).toFixed(1);
+      const fiber = +((norm.fiber_g || 0) * servingMultiplier).toFixed(1);
+      const fat = +((norm.fat_g || 0) * servingMultiplier).toFixed(1);
+      const satFat = +((norm.saturated_fat_g || 0) * servingMultiplier).toFixed(1);
+      const sodium = Math.round((norm.sodium_mg || 0) * servingMultiplier);
+
+      container.innerHTML = `
+        <div class="intel-accordion open">
+          <div class="intel-accordion-header" onclick="toggleAccordion(this)">
+            <b style="font-size: 14px;">⚡ Energy & Macronutrients (${unitLabel})</b>
+            <span class="intel-accordion-arrow">▼</span>
+          </div>
+          <div class="intel-accordion-body">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; margin-bottom: 10px;">
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 12px;">
+                <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">ENERGY</span>
+                <div style="font-size: 18px; font-weight: 800; color: var(--ink);">${energy} kcal</div>
+              </div>
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 12px;">
+                <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">PROTEIN</span>
+                <div style="font-size: 18px; font-weight: 800; color: ${protein >= 5.0 ? 'var(--success)' : 'var(--ink)'};">${protein}g</div>
+              </div>
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 12px;">
+                <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">FIBRE</span>
+                <div style="font-size: 18px; font-weight: 800; color: ${fiber >= 3.0 ? 'var(--success)' : 'var(--ink)'};">${fiber}g</div>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center;">
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 12px;">
+                <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">TOTAL FAT</span>
+                <div style="font-size: 16px; font-weight: 800; color: var(--ink);">${fat}g</div>
+              </div>
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 12px;">
+                <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">SAT. FAT</span>
+                <div style="font-size: 16px; font-weight: 800; color: ${satFat > 5.0 ? 'var(--danger)' : 'var(--ink)'};">${satFat}g</div>
+              </div>
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 12px;">
+                <span style="font-size: 11px; color: var(--ink-tertiary); font-weight: 700;">SODIUM</span>
+                <div style="font-size: 16px; font-weight: 800; color: ${sodium > 600 ? 'var(--danger)' : 'var(--ink)'};">${sodium}mg</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleNutritionServing(mode) {
+      AppState.currentServingMode = mode;
+      document.getElementById('toggleBtn100g').classList.toggle('active', mode === '100g');
+      document.getElementById('toggleBtnServing').classList.toggle('active', mode === 'serving');
+      if (AppState.currentProduct) {
+        renderLikeAccordions(AppState.currentProduct);
+      }
+    }
+
+    function toggleAccordion(headerEl) {
+      const parent = headerEl.closest('.intel-accordion');
+      if (parent) parent.classList.toggle('open');
+    }
+
+    function switchDetailTab(tabId) {
+      document.getElementById('tabBtnBasic').classList.toggle('active', tabId === 'basic');
+      document.getElementById('tabBtnForYou').classList.toggle('active', tabId === 'foryou');
+      document.getElementById('tabContentBasic').style.display = tabId === 'basic' ? 'block' : 'none';
+      document.getElementById('tabContentForYou').style.display = tabId === 'foryou' ? 'block' : 'none';
+    }
+
+    // --- "For You" Evaluation Engine ---
+    async function renderForYouEvaluation(p) {
+      const container = document.getElementById('forYouEvaluationList');
+      if (!container) return;
+
+      const norm = p.nutrition_per_100g || {};
+      const sugars = norm.total_sugars_g !== undefined ? norm.total_sugars_g : (norm.sugar_g || 0);
+      const protein = norm.protein_g || 0;
+      const isLiquid = (p.category || '').toLowerCase().includes('drink') || (p.name || '').toLowerCase().includes('drink');
+
+      let checks = [];
+      
+      // Diet check
+      const ingLower = (p.ingredients_text || '').toLowerCase();
+      const isNonVeg = ingLower.includes('chicken') || ingLower.includes('egg') || ingLower.includes('fish') || ingLower.includes('gelatin');
+      checks.push({
+        label: 'Vegetarian Friendly',
+        pass: !isNonVeg,
+        detail: !isNonVeg ? '100% Vegetarian ingredient formulation' : 'Contains non-vegetarian derivatives (gelatin/meat extract)'
+      });
+
+      // Sugar check
+      const highSugar = isLiquid ? (sugars > 8.0) : (sugars > 15.0);
+      checks.push({
+        label: 'Low Added Sugar Goal',
+        pass: !highSugar,
+        detail: !highSugar ? `Sugar content (${sugars}g) fits healthy sugar goals` : `Exceeds low-sugar guideline (${sugars}g per 100g/ml)`
+      });
+
+      // Protein check
+      checks.push({
+        label: 'High Protein Fit',
+        pass: protein >= 5.0,
+        detail: protein >= 5.0 ? `Good protein density (${protein}g / 100g)` : `Low protein contribution (${protein}g / 100g)`
+      });
+
+      // Palm oil check
+      const hasPalm = Boolean((p.industrial_fats || []).length) || ingLower.includes('palm');
+      checks.push({
+        label: 'Zero Palm Oil Goal',
+        pass: !hasPalm,
+        detail: !hasPalm ? 'No refined palm oil or palmolein detected' : 'Contains refined industrial palm oil'
+      });
+
+      container.innerHTML = checks.map(c => `
+        <div style="display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--hairline);">
+          <span style="font-size: 20px; line-height: 1;">${c.pass ? '✅' : '⚠️'}</span>
+          <div>
+            <b style="font-size: 14px; color: ${c.pass ? 'var(--success)' : 'var(--danger)'};">${c.label}</b>
+            <p style="font-size: 12px; color: var(--ink-secondary); margin-top: 2px;">${c.detail}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- Better Rated Options Engine ---
+    function renderBetterRatedOptions(p) {
+      const container = document.getElementById('betterRatedOptionsList');
+      if (!container) return;
+
+      const alts = p.alternatives || [];
+      if (!alts.length) {
+        container.innerHTML = '<p style="font-size: 13px; color: var(--ink-secondary);">This product is currently among the top choices in its category.</p>';
+        return;
+      }
+
+      container.innerHTML = alts.map(a => {
+        const rating = a.rating || (a.clean_score ? (a.clean_score / 20).toFixed(1) : '4.2');
         return `
-          <div style="background: ${colorClass}; padding: 14px 12px; border-radius: 12px; text-align: center; border: 1px solid rgba(0,0,0,0.04);">
-            <div style="font-size: 20px; font-weight: 800; color: ${textColor}; line-height: 1;">${it.obj.value}${it.obj.unit}</div>
-            <div style="font-size: 11px; font-weight: 700; color: var(--ink); margin-top: 4px;">${it.label}</div>
-            <div style="font-size: 10px; color: var(--ink-secondary); margin-top: 2px;">${it.obj.status.toUpperCase()} (FSSAI)</div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--surface-container-low); border-radius: 14px; border: 1px solid var(--hairline); cursor: pointer;" onclick="viewProductDetail('${a.id || ''}')">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              ${a.image_url ? `<img src="${a.image_url}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 10px; background: #fff;">` : `<div style="width: 50px; height: 50px; border-radius: 10px; background: var(--brand-soft); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--brand);">🌱</div>`}
+              <div>
+                <b style="font-size: 13px; color: var(--ink); line-height: 1.25; display: block;">${escapeHtml(a.name)}</b>
+                <p style="font-size: 11px; color: var(--ink-secondary); margin-top: 2px;">${escapeHtml(a.brand || '')} · ${escapeHtml(a.why_clean || 'Cleaner formulation')}</p>
+              </div>
+            </div>
+            <div style="text-align: right; flex-shrink: 0; margin-left: 10px;">
+              <span class="ref-card-badge rating-excellent">${rating} / 5</span>
+            </div>
           </div>
         `;
       }).join('');
-
-      // 3. Additives List
-      const adds = p.additives || [];
-      const addsContainer = document.getElementById('intelAdditivesList');
-      if (adds.length) {
-        addsContainer.innerHTML = adds.map(a => `
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;" onclick="openGutBiomeScreen('${a.ins}')">
-            <div>
-              <b style="font-size: 13px;">INS ${a.ins} — ${escapeHtml(a.name)}</b>
-              <p style="font-size: 11px; color: var(--ink-secondary);">${escapeHtml(a.class)}</p>
-            </div>
-            <span class="badge ${a.safety_rating === 'Safe' ? 'badge-score-a' : 'badge-score-c'}">${a.safety_rating}</span>
-          </div>
-        `).join('');
-      } else {
-        addsContainer.innerHTML = '<p style="font-size: 12px; color: var(--success); font-weight: 600;">✓ No chemical additives detected.</p>';
-      }
-
-      // 4. Hidden Sugars & Fats List
-      const sugars = p.hidden_sugars || [];
-      const fats = p.industrial_fats || [];
-      const sfContainer = document.getElementById('intelSugarsFatsList');
-      if (sugars.length || fats.length) {
-        let html = '';
-        sugars.forEach(s => {
-          html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--hairline);">
-              <div>
-                <b style="font-size: 13px;">🍬 ${escapeHtml(s.name)}</b>
-                <p style="font-size: 11px; color: var(--ink-secondary);">Sugar Alias · Glycemic Index: ${s.gi}</p>
-              </div>
-              <span class="badge ${s.gi > 70 ? 'badge-score-d' : 'badge-score-c'}">GI ${s.gi}</span>
-            </div>
-          `;
-        });
-        fats.forEach(f => {
-          html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--hairline);">
-              <div>
-                <b style="font-size: 13px;">🛢️ ${escapeHtml(f.name)}</b>
-                <p style="font-size: 11px; color: var(--ink-secondary);">${escapeHtml(f.type || 'Industrial Oil')}</p>
-              </div>
-              <span class="badge badge-score-d">Saturated Palm Fat</span>
-            </div>
-          `;
-        });
-        sfContainer.innerHTML = html;
-      } else {
-        sfContainer.innerHTML = '<p style="font-size: 12px; color: var(--success); font-weight: 600;">✓ No industrial palm oils or high-GI hidden sugar syrups detected.</p>';
-      }
-
-      // 5. Clean Alternatives
-      loadCleanAlternatives(p.id, p.category);
-
-      // 6. Legal Metrology Compliance Summary
-      const comp = p.compliance || {};
-      const verdictBadge = document.getElementById('intelMetrologyVerdictBadge');
-      verdictBadge.textContent = (comp.verdict || 'Compliant').toUpperCase();
-      verdictBadge.className = 'badge ' + (comp.verdict === 'compliant' ? 'badge-score-a' : (comp.verdict === 'needs_review' ? 'badge-score-c' : 'badge-score-d'));
-
-      const checks = comp.checks || [];
-      document.getElementById('intelMetrologyChecksList').innerHTML = checks.map(c => `
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--hairline); font-size: 12px;">
-          <span>${c.label}</span>
-          <span style="font-weight: 700; color: ${c.status === 'pass' ? 'var(--success)' : (c.status === 'warn' ? 'var(--warning)' : 'var(--danger)')};">
-            ${c.status === 'pass' ? '✓ PASS' : (c.status === 'warn' ? '⚠ REVIEW' : '✕ FAIL')}
-          </span>
-        </div>
-      `).join('');
-
-      // Populate Sugar Breakdown screen
-      populateSugarBreakdownScreen(p);
     }
 
-    async function loadCleanAlternatives(prodId, category) {
-      const container = document.getElementById('intelAlternativesList');
+    // --- Feedback Submissions ---
+    async function submitPurchaseIntent(intent) {
+      if (!AppState.currentProduct) return;
+      document.querySelectorAll('.sticky-feedback-bar .feedback-btn').forEach(b => b.classList.remove('selected'));
+      const btn = document.getElementById(intent === 'yes' ? 'fbBuyYes' : (intent === 'no' ? 'fbBuyNo' : 'fbBuyAlready'));
+      if (btn) btn.classList.add('selected');
+
       try {
-        const res = await fetch('/api/truth/alternatives', {
+        await fetch('/api/consumer/feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ product_id: prodId, category: category || '' })
+          body: JSON.stringify({
+            product_id: AppState.currentProduct.id,
+            purchase_intent: intent
+          })
+        });
+        showToast('Purchase preference saved: ' + intent.replace('_', ' '));
+      } catch (e) {}
+    }
+
+    async function submitHelpfulFeedback(helpful) {
+      if (!AppState.currentProduct) return;
+      document.getElementById('btnHelpfulYes').style.background = helpful ? 'var(--brand)' : '';
+      document.getElementById('btnHelpfulYes').style.color = helpful ? '#fff' : '';
+      document.getElementById('btnHelpfulNo').style.background = !helpful ? 'var(--brand)' : '';
+      document.getElementById('btnHelpfulNo').style.color = !helpful ? '#fff' : '';
+
+      try {
+        await fetch('/api/consumer/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product_id: AppState.currentProduct.id,
+            helpful: helpful
+          })
+        });
+        showToast('Thank you for your feedback! 👍');
+      } catch (e) {}
+    }
+
+    function resetFeedbackUI() {
+      document.querySelectorAll('.sticky-feedback-bar .feedback-btn').forEach(b => b.classList.remove('selected'));
+      const bY = document.getElementById('btnHelpfulYes');
+      const bN = document.getElementById('btnHelpfulNo');
+      if (bY) { bY.style.background = ''; bY.style.color = ''; }
+      if (bN) { bN.style.background = ''; bN.style.color = ''; }
+    }
+
+    // --- Favorites Engine ---
+    AppState.favoritesSet = new Set();
+
+    async function loadFavoritesState() {
+      try {
+        const res = await fetch('/api/consumer/favorites');
+        const data = await res.json();
+        AppState.favoritesSet = new Set((data.favorites || []).map(f => f.id));
+      } catch (e) {}
+    }
+
+    async function toggleFavoriteCurrent() {
+      if (!AppState.currentProduct) return;
+      const pid = AppState.currentProduct.id;
+      const isFav = AppState.favoritesSet.has(pid);
+      if (isFav) {
+        await fetch('/api/consumer/favorites/' + encodeURIComponent(pid), { method: 'DELETE' });
+        AppState.favoritesSet.delete(pid);
+        showToast('Removed from Favorites');
+      } else {
+        await fetch('/api/consumer/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id: pid })
+        });
+        AppState.favoritesSet.add(pid);
+        showToast('Saved to Favorites ❤️');
+      }
+      const favBtn = document.getElementById('intelFavBtn');
+      if (favBtn) favBtn.textContent = AppState.favoritesSet.has(pid) ? '❤️' : '🤍';
+      const sheetFav = document.getElementById('sheetFavBtn');
+      if (sheetFav) sheetFav.textContent = AppState.favoritesSet.has(pid) ? '❤️' : '🤍';
+    }
+
+    async function toggleFavoriteFromCard(pid, ev) {
+      if (ev) ev.stopPropagation();
+      const isFav = AppState.favoritesSet.has(pid);
+      if (isFav) {
+        await fetch('/api/consumer/favorites/' + encodeURIComponent(pid), { method: 'DELETE' });
+        AppState.favoritesSet.delete(pid);
+        showToast('Removed from Favorites');
+      } else {
+        await fetch('/api/consumer/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id: pid })
+        });
+        AppState.favoritesSet.add(pid);
+        showToast('Saved to Favorites ❤️');
+      }
+      renderReferenceHomeCarousels(AppState.popularProducts);
+    }
+
+    // --- How Calculated Modal ---
+    function openHowCalculatedModal() {
+      const p = AppState.currentProduct || AppState.previewProduct;
+      if (!p) return;
+      const list = document.getElementById('howCalculatedBreakdownList');
+      const score = p.truth_score ? p.truth_score.score : 50;
+      const breakdown = p.truth_score?.breakdown || [];
+
+      let html = `
+        <div style="background: var(--surface-container-low); padding: 12px 14px; border-radius: 12px; display: flex; justify-content: space-between; font-weight: 800;">
+          <span>Base Clean Food Score:</span>
+          <span style="color: var(--brand);">100 Points</span>
+        </div>
+      `;
+
+      if (breakdown.length) {
+        breakdown.forEach(b => {
+          html += `
+            <div style="background: var(--danger-soft); color: var(--danger); padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 700;">
+              ${escapeHtml(b)}
+            </div>
+          `;
+        });
+      } else {
+        html += `
+          <div style="background: var(--success-soft); color: var(--success); padding: 10px 14px; border-radius: 12px; font-size: 13px; font-weight: 700;">
+            ✓ Zero deductions — pure wholesome formulation!
+          </div>
+        `;
+      }
+
+      html += `
+        <div style="background: var(--ink); color: #fff; padding: 12px 14px; border-radius: 12px; display: flex; justify-content: space-between; font-weight: 900; margin-top: 6px;">
+          <span>Final TruthScore:</span>
+          <span>${score} / 100 (${(score / 20).toFixed(1)} / 5)</span>
+        </div>
+      `;
+
+      if (list) list.innerHTML = html;
+      document.getElementById('howCalculatedModal').classList.add('active');
+    }
+
+    // --- Complete Nutrition & Ingredients Modals ---
+    function openAllNutrientsModal() {
+      const p = AppState.currentProduct;
+      if (!p) return;
+      const norm = p.nutrition_per_100g || {};
+      const wrap = document.getElementById('allNutrientsTableWrap');
+      wrap.innerHTML = `
+        <table class="app-table">
+          <thead>
+            <tr><th>Nutrient</th><th>Per 100g/ml</th><th>Per Serving (${p.serving_size_g || 100}g)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Energy</td><td>${norm.energy_kcal || 0} kcal</td><td>${Math.round((norm.energy_kcal || 0) * (p.serving_size_g || 100) / 100)} kcal</td></tr>
+            <tr><td>Protein</td><td>${norm.protein_g || 0} g</td><td>${((norm.protein_g || 0) * (p.serving_size_g || 100) / 100).toFixed(1)} g</td></tr>
+            <tr><td>Carbohydrates</td><td>${norm.carbohydrates_g || 0} g</td><td>${((norm.carbohydrates_g || 0) * (p.serving_size_g || 100) / 100).toFixed(1)} g</td></tr>
+            <tr><td>Total Sugars</td><td>${norm.total_sugars_g || 0} g</td><td>${((norm.total_sugars_g || 0) * (p.serving_size_g || 100) / 100).toFixed(1)} g</td></tr>
+            <tr><td>Total Fat</td><td>${norm.fat_g || 0} g</td><td>${((norm.fat_g || 0) * (p.serving_size_g || 100) / 100).toFixed(1)} g</td></tr>
+            <tr><td>Saturated Fat</td><td>${norm.saturated_fat_g || 0} g</td><td>${((norm.saturated_fat_g || 0) * (p.serving_size_g || 100) / 100).toFixed(1)} g</td></tr>
+            <tr><td>Sodium</td><td>${norm.sodium_mg || 0} mg</td><td>${Math.round((norm.sodium_mg || 0) * (p.serving_size_g || 100) / 100)} mg</td></tr>
+            <tr><td>Dietary Fibre</td><td>${norm.fiber_g || 0} g</td><td>${((norm.fiber_g || 0) * (p.serving_size_g || 100) / 100).toFixed(1)} g</td></tr>
+          </tbody>
+        </table>
+      `;
+      document.getElementById('allNutrientsModal').classList.add('active');
+    }
+
+    function openAllIngredientsModal() {
+      const p = AppState.currentProduct;
+      if (!p) return;
+      const wrap = document.getElementById('allIngredientsTextWrap');
+      wrap.textContent = p.ingredients_text || 'No ingredient statement declared on label.';
+      document.getElementById('allIngredientsModal').classList.add('active');
+    }
+
+    // --- TIA Assistant (Conversational AI) ---
+    function openTiaAssistant() {
+      document.getElementById('tiaAssistantModal').classList.add('active');
+    }
+
+    async function sendTiaMessage() {
+      const input = document.getElementById('tiaInputText');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      const chat = document.getElementById('tiaChatMessages');
+      chat.innerHTML += `
+        <div style="background: var(--surface-container-low); align-self: flex-end; padding: 10px 14px; border-radius: 14px 14px 2px 14px; font-size: 13px; max-width: 85%;">
+          ${escapeHtml(text)}
+        </div>
+        <div id="tiaThinkingMsg" style="background: var(--brand-soft); color: var(--brand); padding: 8px 12px; border-radius: 12px; font-size: 12px; align-self: flex-start;">
+          ✨ TIA is thinking...
+        </div>
+      `;
+      chat.scrollTop = chat.scrollHeight;
+
+      try {
+        const res = await fetch('/api/truth/voice-assistant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: text,
+            product_context: AppState.currentProduct || {}
+          })
         });
         const data = await res.json();
-        const recs = data.recommendations || [];
-        if (!recs.length) {
-          container.innerHTML = '<p style="font-size: 12px; color: var(--ink-secondary);">This product is already among the cleanest options in its category.</p>';
-          return;
-        }
-        container.innerHTML = recs.map(r => `
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--surface-container-low); border-radius: 12px; margin-bottom: 8px;">
-            <div>
-              <b style="font-size: 13px;">${escapeHtml(r.name)}</b>
-              <p style="font-size: 11px; color: var(--ink-secondary);">${escapeHtml(r.brand || '')} · ${escapeHtml(r.why_better || '')}</p>
-            </div>
-            <span class="badge badge-score-a">Score ${r.truth_score || 85}</span>
+        const think = document.getElementById('tiaThinkingMsg');
+        if (think) think.remove();
+        chat.innerHTML += `
+          <div style="background: var(--brand-soft); color: var(--ink); padding: 12px 14px; border-radius: 14px 14px 14px 2px; font-size: 13px; line-height: 1.5; max-width: 90%;">
+            ${escapeHtml(data.answer || 'I could not process that.')}
           </div>
-        `).join('');
-      } catch (e) {
-        container.innerHTML = '<p style="font-size: 12px; color: var(--ink-secondary);">No alternatives found.</p>';
+        `;
+      } catch (err) {
+        const think = document.getElementById('tiaThinkingMsg');
+        if (think) think.remove();
+        chat.innerHTML += `
+          <div style="background: var(--danger-soft); color: var(--danger); padding: 10px 14px; border-radius: 12px; font-size: 13px;">
+            Could not reach assistant backend. Please try again.
+          </div>
+        `;
+      }
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function sendTiaQuick(q) {
+      const input = document.getElementById('tiaInputText');
+      if (input) {
+        input.value = q;
+        sendTiaMessage();
       }
     }
 
-    // --- Sugar Breakdown Screen (Stitch Screen 5) ---
-    function populateSugarBreakdownScreen(p) {
+    // --- Profile & Diet Management ---
+    let userProfile = {
+      diet: 'vegetarian',
+      goals: ['low_added_sugar', 'no_palm_oil', 'high_protein']
+    };
+
+    async function loadUserProfile() {
+      try {
+        const res = await fetch('/api/consumer/profile');
+        const data = await res.json();
+        userProfile = data;
+        document.getElementById('profileDisplayName').textContent = data.name || 'Health Seeker';
+        document.getElementById('profileDietSummary').textContent = `${data.diet || 'Vegetarian'} · ${data.goals?.length || 3} Health Goals`;
+        setProfileDietUI(data.diet);
+      } catch (e) {}
+
+      // Load favorites in profile
+      loadProfileFavorites();
+      // Load history in profile
+      loadProfileHistory();
+    }
+
+    function setProfileDietUI(diet) {
+      document.getElementById('dietOptVeg').classList.toggle('selected', diet === 'vegetarian');
+      document.getElementById('dietOptVegan').classList.toggle('selected', diet === 'vegan');
+      document.getElementById('dietOptNonVeg').classList.toggle('selected', diet === 'non-vegetarian');
+    }
+
+    function setProfileDiet(diet) {
+      userProfile.diet = diet;
+      setProfileDietUI(diet);
+    }
+
+    function toggleGoal(goal, chk) {
+      if (!userProfile.goals) userProfile.goals = [];
+      if (chk.checked) {
+        if (!userProfile.goals.includes(goal)) userProfile.goals.push(goal);
+      } else {
+        userProfile.goals = userProfile.goals.filter(g => g !== goal);
+      }
+    }
+
+    async function saveUserProfile() {
+      try {
+        await fetch('/api/consumer/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(userProfile)
+        });
+        showToast('Profile health goals saved! ✓');
+      } catch (e) {}
+    }
+
+    async function loadProfileFavorites() {
+      const list = document.getElementById('profileFavoritesList');
+      if (!list) return;
+      try {
+        const res = await fetch('/api/consumer/favorites');
+        const data = await res.json();
+        const favs = data.favorites || [];
+        if (!favs.length) {
+          list.innerHTML = '<p style="grid-column: 1/-1; font-size: 13px; color: var(--ink-secondary);">No favorite products saved yet. Tap the heart on any product to save it!</p>';
+          return;
+        }
+        list.innerHTML = favs.map(p => `
+          <div class="prod-card" onclick="viewProductDetail('${p.id}')">
+            <div class="prod-img-box">${p.image_url ? `<img src="${p.image_url}">` : 'T'}</div>
+            <div class="prod-title">${escapeHtml(p.name)}</div>
+            <span class="badge badge-score-a">Score ${p.truth_score?.score || 80}</span>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    async function loadProfileHistory() {
+      const list = document.getElementById('profileHistoryList');
+      if (!list) return;
+      try {
+        const res = await fetch('/api/consumer/history?limit=15');
+        const data = await res.json();
+        const items = data.history || [];
+        if (!items.length) {
+          list.innerHTML = '<p style="font-size: 13px; color: var(--ink-secondary);">Scan history is empty.</p>';
+          return;
+        }
+        list.innerHTML = items.map(p => `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--surface-container-low); border-radius: 12px; cursor: pointer;" onclick="viewProductDetail('${p.id}')">
+            <div>
+              <b style="font-size: 13px;">${escapeHtml(p.name)}</b>
+              <p style="font-size: 11px; color: var(--ink-secondary);">${escapeHtml(p.brand || '')} · Scanned recently</p>
+            </div>
+            <span class="badge ${p.truth_score?.rating_label === 'Poor' ? 'badge-score-d' : 'badge-score-a'}">${p.truth_score?.score_out_of_5 || '3.5'}/5</span>
+          </div>
+        `).join('');
+      } catch (e) {}
+    }
+
+    async function clearUserScanHistory() {
+      try {
+        await fetch('/api/consumer/history', { method: 'DELETE' });
+        showToast('Scan history cleared');
+        loadProfileHistory();
+        loadHomeHistoryCarousel();
+      } catch (e) {}
+    }
+
+    // --- Global Toast Notification ---
+    function showToast(msg) {
+      const toast = document.getElementById('globalToast');
+      const txt = document.getElementById('toastText');
+      if (toast && txt) {
+        txt.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2600);
+      }
+    }
+
+    function shareProductReport() {
+      if (navigator.share && AppState.currentProduct) {
+        navigator.share({
+          title: `TruthLens: ${AppState.currentProduct.name}`,
+          text: `Check out the TruthScore analysis of ${AppState.currentProduct.name}! Rating: ${AppState.currentProduct.truth_score?.score_out_of_5 || '3.0'}/5`,
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        navigator.clipboard?.writeText(window.location.href);
+        showToast('Product link copied to clipboard! 📋');
+      }
+    }
+
+function populateSugarBreakdownScreen(p) {
       const sugars = p.hidden_sugars || [];
       const tbody = document.getElementById('sugarBreakdownBody');
       if (!sugars.length) {
@@ -2616,6 +4350,186 @@
         loadConsumerPetitions();
       } catch (err) {
         alert('Failed to file petition: ' + err.message);
+      }
+    }
+
+    // --- Human Review, Data Correction & Multi-Source Transparency ---
+    function openReviewCorrectModal() {
+      const p = AppState.currentProduct;
+      if (!p) return;
+      document.getElementById('correctBarcode').value = p.barcode || p.id || '';
+      document.getElementById('correctName').value = p.name || '';
+      document.getElementById('correctBrand').value = p.brand || '';
+      document.getElementById('correctCategory').value = p.category || '';
+      document.getElementById('correctServing').value = p.serving_size_g || '';
+      document.getElementById('correctIngredients').value = p.ingredients_text || '';
+      
+      const n = p.nutrition_per_100g || {};
+      document.getElementById('correctEnergy').value = n.energy_kcal !== undefined ? n.energy_kcal : '';
+      document.getElementById('correctSugar').value = n.total_sugars_g !== undefined ? n.total_sugars_g : '';
+      document.getElementById('correctAddedSugar').value = n.added_sugars_g !== undefined ? n.added_sugars_g : '';
+      document.getElementById('correctSatFat').value = n.saturated_fat_g !== undefined ? n.saturated_fat_g : '';
+      document.getElementById('correctSodium').value = n.sodium_mg !== undefined ? n.sodium_mg : '';
+      document.getElementById('correctProtein').value = n.protein_g !== undefined ? n.protein_g : '';
+      
+      const modal = document.getElementById('modalReviewCorrect');
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeReviewCorrectModal() {
+      const modal = document.getElementById('modalReviewCorrect');
+      if (modal) modal.style.display = 'none';
+    }
+
+    async function submitReviewCorrection(e) {
+      e.preventDefault();
+      const barcode = document.getElementById('correctBarcode').value;
+      if (!barcode) {
+        showToast('Barcode is required to submit a correction.');
+        return;
+      }
+      
+      const nutr = {};
+      const addNum = (id, key) => {
+        const val = document.getElementById(id).value;
+        if (val !== '') nutr[key] = parseFloat(val);
+      };
+      addNum('correctEnergy', 'energy_kcal');
+      addNum('correctSugar', 'total_sugars_g');
+      addNum('correctAddedSugar', 'added_sugars_g');
+      addNum('correctSatFat', 'saturated_fat_g');
+      addNum('correctSodium', 'sodium_mg');
+      addNum('correctProtein', 'protein_g');
+
+      const servingVal = document.getElementById('correctServing').value;
+
+      const payload = {
+        barcode: barcode,
+        name: document.getElementById('correctName').value.trim(),
+        brand: document.getElementById('correctBrand').value.trim(),
+        category: document.getElementById('correctCategory').value.trim(),
+        ingredients_text: document.getElementById('correctIngredients').value.trim(),
+        nutrition_per_100g: Object.keys(nutr).length > 0 ? nutr : undefined,
+        serving_size_g: servingVal !== '' ? parseFloat(servingVal) : undefined,
+        actor: document.getElementById('correctActor').value.trim() || 'consumer'
+      };
+
+      const btn = document.getElementById('btnSubmitCorrection');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
+
+      try {
+        const res = await fetch('/api/truth/product/correct', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.product) {
+          closeReviewCorrectModal();
+          renderProductIntelligenceScreen(data.product);
+          showToast('Product verified & updated in multi-source cache! ✅');
+        } else {
+          showToast('Correction failed: ' + (data.detail || 'Unknown error'));
+        }
+      } catch (err) {
+        showToast('Network error while saving correction: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '💾 Save & Re-Analyze';
+      }
+    }
+
+    async function openDataCoverageModal() {
+      const modal = document.getElementById('modalDataCoverage');
+      const content = document.getElementById('dataCoverageContent');
+      if (modal) modal.style.display = 'flex';
+      if (content) content.innerHTML = '<p style="font-size: 13px; color: var(--ink-secondary);">Fetching real-time coverage metrics...</p>';
+
+      try {
+        const res = await fetch('/api/truth/sources/coverage');
+        const d = await res.json();
+        
+        let sourcesHtml = '';
+        if (d.sources_breakdown) {
+          sourcesHtml = Object.entries(d.sources_breakdown).map(([k, v]) => `
+            <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--hairline);">
+              <span style="text-transform: capitalize; font-weight: 600;">${escapeHtml(k.replace('_', ' '))}</span>
+              <b style="color: var(--brand);">${v} products</b>
+            </div>
+          `).join('');
+        }
+
+        let citationsHtml = '';
+        if (d.official_citation_registry) {
+          citationsHtml = d.official_citation_registry.map(c => `
+            <div style="background: var(--surface-container-low); padding: 8px 10px; border-radius: 8px; margin-bottom: 6px; font-size: 11px;">
+              <b style="color: var(--ink);">${escapeHtml(c.authority)}:</b> ${escapeHtml(c.standard)}
+              <div style="font-size: 10px; color: var(--ink-tertiary); margin-top: 2px;">${escapeHtml(c.scope)}</div>
+            </div>
+          `).join('');
+        }
+
+        if (content) {
+          content.innerHTML = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;">
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 22px; font-weight: 900; color: var(--brand);">${d.total_cached_products || 0}</div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--ink-secondary);">Total Products</div>
+              </div>
+              <div style="background: var(--surface-container-low); padding: 10px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 22px; font-weight: 900; color: var(--brand);">${d.audit_log_entries || 0}</div>
+                <div style="font-size: 11px; font-weight: 700; color: var(--ink-secondary);">Audit Log Entries</div>
+              </div>
+            </div>
+
+            <h4 style="font-size: 12px; font-weight: 800; color: var(--ink); margin-bottom: 8px;">Source Breakdown</h4>
+            <div style="margin-bottom: 14px;">${sourcesHtml}</div>
+
+            <h4 style="font-size: 12px; font-weight: 800; color: var(--ink); margin-bottom: 8px;">Field Completeness Rates</h4>
+            <div style="background: var(--surface-container-low); padding: 10px 12px; border-radius: 10px; margin-bottom: 14px; font-size: 11px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Declared Ingredients:</span> <b>${d.completeness_rates?.ingredients_declared_pct || 0}%</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Full Nutrition Table:</span> <b>${d.completeness_rates?.nutrition_table_pct || 0}%</b>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <span>Serving Size Specified:</span> <b>${d.completeness_rates?.serving_size_declared_pct || 0}%</b>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span>Pack Image Available:</span> <b>${d.completeness_rates?.front_image_pct || 0}%</b>
+              </div>
+            </div>
+
+            <h4 style="font-size: 12px; font-weight: 800; color: var(--ink); margin-bottom: 8px;">Official Citation Registry</h4>
+            <div style="max-height: 160px; overflow-y: auto; margin-bottom: 12px;">${citationsHtml}</div>
+
+            <p style="font-size: 10px; color: var(--ink-tertiary); font-style: italic; line-height: 1.4;">
+              ${escapeHtml(d.disclaimer || '')}
+            </p>
+          `;
+        }
+      } catch (err) {
+        if (content) content.innerHTML = `<p style="font-size: 12px; color: var(--danger);">Failed to load coverage report: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    function closeDataCoverageModal() {
+      const modal = document.getElementById('modalDataCoverage');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function toggleConflictsList() {
+      const list = document.getElementById('intelConflictsList');
+      const arrow = document.getElementById('intelConflictsArrow');
+      if (!list) return;
+      if (list.style.display === 'none') {
+        list.style.display = 'block';
+        if (arrow) arrow.textContent = '▲';
+      } else {
+        list.style.display = 'none';
+        if (arrow) arrow.textContent = '▼';
       }
     }
 
@@ -3095,6 +5009,9 @@
     window.addEventListener('DOMContentLoaded', () => {
       switchRole('consumer');
       loadPopularProducts();
+      loadUserProfile();
+      initScannerEngines();
+      verifyBackendHealth();
     });
   </script>
 
@@ -3338,6 +5255,128 @@
     return { openGuide, chooseLang, next, finish, speakStep, replay, onResult };
   })();
   </script>
+
+
+  <!-- BOTTOM SHEET SCAN PREVIEW MODAL (REFERENCE VIDEO AT 15s & 24s) -->
+  <div class="sheet-overlay" id="scanPreviewSheet" onclick="if(event.target===this) closeScanPreviewSheet()">
+    <div class="bottom-sheet">
+      <div class="sheet-handle"></div>
+      
+      <div class="preview-header">
+        <img src="" id="sheetPreviewImg" class="preview-img" alt="Product">
+        <div class="preview-details">
+          <span class="cat" id="sheetPreviewCat">Category</span>
+          <h3 id="sheetPreviewTitle">Product Title</h3>
+        </div>
+        <button id="sheetFavBtn" onclick="toggleFavoriteCurrent()" style="background: var(--surface-container-low); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px;">
+          🤍
+        </button>
+      </div>
+
+      <!-- Rating Box: e.g. 1.5 Out of 5 with Poor Badge -->
+      <div class="preview-rating-card">
+        <div>
+          <div class="preview-score-group">
+            <span class="preview-score-num" id="sheetScoreNum">1.5</span>
+            <span class="preview-score-denom">Out of 5</span>
+          </div>
+          <button onclick="openHowCalculatedModal()" style="background: none; border: none; font-size: 12px; font-weight: 700; color: var(--brand); cursor: pointer; padding: 0; margin-top: 4px;">
+            How it's calculated &gt;
+          </button>
+        </div>
+        <span class="preview-score-badge rating-poor" id="sheetScoreBadge">POOR</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="preview-actions">
+        <button class="btn-purple" onclick="openProductFromPreview()">
+          View Details
+        </button>
+        <button class="btn-tia" onclick="openTiaFromPreview()">
+          ✨ Ask TIA
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HOW IT'S CALCULATED -->
+  <div class="modal-overlay" id="howCalculatedModal" onclick="closeModalOnOverlay(event, 'howCalculatedModal')">
+    <div class="modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 18px; font-weight: 800;">How TruthScore Is Calculated</h3>
+        <button class="btn btn-secondary" onclick="document.getElementById('howCalculatedModal').classList.remove('active')" style="padding: 4px 10px;">✕</button>
+      </div>
+      <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 16px;">
+        TruthScore starts at <b>100 points</b> (Grade A, 5.0/5) and applies transparent, scientifically backed deductions according to WHO, FSSAI, and NOVA guidelines:
+      </p>
+      <div id="howCalculatedBreakdownList" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px;">
+        <!-- Populated dynamically -->
+      </div>
+      <button class="btn btn-brand" style="width: 100%; justify-content: center;" onclick="document.getElementById('howCalculatedModal').classList.remove('active')">
+        Understood
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: ALL NUTRIENTS TABLE -->
+  <div class="modal-overlay" id="allNutrientsModal" onclick="closeModalOnOverlay(event, 'allNutrientsModal')">
+    <div class="modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 18px; font-weight: 800;">Complete Nutrition Facts</h3>
+        <button class="btn btn-secondary" onclick="document.getElementById('allNutrientsModal').classList.remove('active')" style="padding: 4px 10px;">✕</button>
+      </div>
+      <div id="allNutrientsTableWrap" style="overflow-x: auto; margin-bottom: 16px;"></div>
+      <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="document.getElementById('allNutrientsModal').classList.remove('active')">Close</button>
+    </div>
+  </div>
+
+  <!-- MODAL: ALL INGREDIENTS LIST -->
+  <div class="modal-overlay" id="allIngredientsModal" onclick="closeModalOnOverlay(event, 'allIngredientsModal')">
+    <div class="modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 18px; font-weight: 800;">Full Ingredient Statement</h3>
+        <button class="btn btn-secondary" onclick="document.getElementById('allIngredientsModal').classList.remove('active')" style="padding: 4px 10px;">✕</button>
+      </div>
+      <div id="allIngredientsTextWrap" style="background: var(--surface-container-low); padding: 16px; border-radius: 12px; font-size: 13px; line-height: 1.6; color: var(--ink); margin-bottom: 16px; border: 1px solid var(--hairline);"></div>
+      <button class="btn btn-secondary" style="width: 100%; justify-content: center;" onclick="document.getElementById('allIngredientsModal').classList.remove('active')">Close</button>
+    </div>
+  </div>
+
+  <!-- MODAL: TIA CONVERSATIONAL ASSISTANT -->
+  <div class="modal-overlay" id="tiaAssistantModal" onclick="closeModalOnOverlay(event, 'tiaAssistantModal')">
+    <div class="modal-dialog" style="max-height: 80vh; display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--hairline); padding-bottom: 10px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 22px;">✨</span>
+          <div>
+            <h3 style="font-size: 16px; font-weight: 800; color: var(--brand);">Ask TIA</h3>
+            <p style="font-size: 11px; color: var(--ink-secondary);">Food Intelligence AI Assistant</p>
+          </div>
+        </div>
+        <button class="btn btn-secondary" onclick="document.getElementById('tiaAssistantModal').classList.remove('active')" style="padding: 4px 10px;">✕</button>
+      </div>
+      <div id="tiaChatMessages" style="flex: 1; overflow-y: auto; padding: 10px 0; display: flex; flex-direction: column; gap: 10px; min-height: 200px; max-height: 350px;">
+        <div style="background: var(--brand-soft); padding: 10px 14px; border-radius: 14px; font-size: 13px; color: var(--brand-strong);">
+          👋 Hi! I'm TIA. Ask me anything about this product's ingredients, safety for kids or diabetics, or clean alternatives!
+        </div>
+      </div>
+      <div style="display: flex; gap: 6px; overflow-x: auto; padding: 6px 0 10px; scrollbar-width: none;">
+        <button class="cat-chip" style="font-size: 11px; padding: 4px 10px;" onclick="sendTiaQuick('Is this safe for diabetics?')">Diabetic friendly?</button>
+        <button class="cat-chip" style="font-size: 11px; padding: 4px 10px;" onclick="sendTiaQuick('Why is this Ultra-Processed?')">Why Ultra-Processed?</button>
+        <button class="cat-chip" style="font-size: 11px; padding: 4px 10px;" onclick="sendTiaQuick('What are the healthiest alternatives?')">Healthier options?</button>
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <input type="text" id="tiaInputText" class="form-control" placeholder="Ask a question..." onkeypress="if(event.key==='Enter') sendTiaMessage()">
+        <button class="btn btn-brand" onclick="sendTiaMessage()" style="padding: 8px 16px;">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-msg" id="globalToast">
+    <span id="toastIcon">✓</span>
+    <span id="toastText">Action completed</span>
+  </div>
 
 </body>
 </html>

@@ -293,3 +293,195 @@ def test_additives_and_gut_biome_endpoints():
     biome_407 = client.get("/api/truth/additives/407/biome")
     assert biome_407.status_code == 200
     assert biome_407.json()["name"] == "Carrageenan"
+
+
+def test_categories_endpoint():
+    res = client.get("/api/truth/categories")
+    assert res.status_code == 200
+    data = res.json()
+    assert len(data) >= 5
+    cat_names = [c["name"] for c in data]
+    assert "Food" in cat_names
+    assert "Personal Care" in cat_names
+    assert "Energy & Sports Drinks" in cat_names
+
+
+def test_red_bull_and_alternatives():
+    res = client.get("/api/truth/barcode/9002490100070")
+    assert res.status_code == 200
+    data = res.json()
+    assert "Red Bull" in data["name"]
+    assert data["truth_score"]["score_out_of_5"] == 1.5
+    assert data["truth_score"]["rating_label"] == "Poor"
+    assert data["nova"]["group"] == 4
+    # Clean alternatives
+    alts = data["alternatives"]
+    assert len(alts) >= 1
+    alt_names = [a["name"] for a in alts]
+    assert any("Delulu" in n or "Fast&Up" in n for n in alt_names)
+
+
+def test_consumer_favorites_lifecycle():
+    # 1. Get favorites
+    res = client.get("/api/consumer/favorites")
+    assert res.status_code == 200
+    favs = res.json()["favorites"]
+    assert len(favs) >= 1
+
+    # 2. Add favorite
+    add_res = client.post("/api/consumer/favorites", json={"product_id": "9002490100070"})
+    assert add_res.status_code == 200
+
+    # 3. Check is_favorite
+    chk_res = client.get("/api/consumer/favorites/check/9002490100070")
+    assert chk_res.status_code == 200
+    assert chk_res.json()["is_favorite"] is True
+
+    # 4. Remove favorite
+    del_res = client.delete("/api/consumer/favorites/9002490100070")
+    assert del_res.status_code == 200
+    assert del_res.json()["status"] == "success"
+
+    # 5. Verify removed
+    chk_after = client.get("/api/consumer/favorites/check/9002490100070")
+    assert chk_after.json()["is_favorite"] is False
+
+
+def test_consumer_history_and_feedback():
+    # History
+    h_res = client.get("/api/consumer/history")
+    assert h_res.status_code == 200
+    assert len(h_res.json()["history"]) >= 1
+
+    # Feedback
+    fb_res = client.post("/api/consumer/feedback", json={
+        "product_id": "9002490100070",
+        "purchase_intent": "no",
+        "helpful": True,
+        "comment": "Too much sugar and caffeine"
+    })
+    assert fb_res.status_code == 200
+    assert fb_res.json()["status"] == "success"
+
+
+def test_consumer_profile():
+    # Get profile
+    p_res = client.get("/api/consumer/profile")
+    assert p_res.status_code == 200
+    profile = p_res.json()
+    assert profile["diet"] == "vegetarian"
+
+    # Update profile
+    up_res = client.post("/api/consumer/profile", json={
+        "diet": "vegan",
+        "goals": ["high_protein", "low_added_sugar"]
+    })
+    assert up_res.status_code == 200
+    updated = up_res.json()
+    assert updated["diet"] == "vegan"
+    assert "high_protein" in updated["goals"]
+
+
+def test_multi_source_provenance_and_citations():
+    # 1. Barcode lookup has full provenance & citations
+    res = client.get("/api/truth/barcode/8901719101013")  # Parle-G
+    assert res.status_code == 200
+    data = res.json()
+    assert data["primary_source"] in ("verified_local", "user_corrected")
+    assert "retrieved_at" in data
+    assert "provenance" in data
+    assert "citation_authorities" in data
+    assert len(data["citation_authorities"]) >= 4
+
+    # 2. Additive citations include Codex GSFA & JECFA ADI
+    additives = data.get("additives", [])
+    assert len(additives) >= 1
+    ins_item = next((a for a in additives if a.get("ins") in ("322", "500")), None)
+    assert ins_item is not None
+    assert "citations" in ins_item
+    assert "codex_gsfa" in ins_item["citations"]
+    assert "jecfa" in ins_item["citations"]
+
+
+def test_user_product_correction_and_conflict_preservation():
+    from app.product_cache import save_product_to_cache, get_db_connection
+    from app.schema import TruthLensProductRecord, DataSource, StandardNutrition100g, FieldProvenance
+    import datetime as dt
+
+    test_barcode = "8909999999999"
+    now_iso = dt.datetime.now(dt.timezone.utc).isoformat()
+
+    # 1. Seed initial record
+    initial_record = TruthLensProductRecord(
+        barcode=test_barcode,
+        id="test_prod_999",
+        name="Original Test Name",
+        brand="TestBrand",
+        category="Snacks",
+        ingredients_text="Wheat, Sugar, Salt.",
+        nutrition_per_100g=StandardNutrition100g(energy_kcal=400, total_sugars_g=20.0, sodium_mg=200),
+        primary_source=DataSource.VERIFIED_LOCAL,
+        retrieved_at=now_iso,
+        provenance={"name": FieldProvenance(source=DataSource.VERIFIED_LOCAL, retrieved_at=now_iso, confidence=1.0)}
+    )
+    save_product_to_cache(initial_record)
+
+    try:
+        # 2. Submit user correction
+        correction_payload = {
+            "barcode": test_barcode,
+            "name": "Corrected Test Name (Verified)",
+            "brand": "TestBrand",
+            "category": "Snacks",
+            "ingredients_text": "Whole Wheat, Raw Cane Sugar, Himalayan Rock Salt, Emulsifier INS 322.",
+            "nutrition_per_100g": {
+                "energy_kcal": 410,
+                "total_sugars_g": 18.0,
+                "sodium_mg": 180
+            },
+            "serving_size_g": 30.0,
+            "actor": "qa_inspector_01"
+        }
+        res = client.post("/api/truth/product/correct", json=correction_payload)
+        assert res.status_code == 200
+        res_data = res.json()
+        assert res_data["status"] == "success"
+        prod = res_data["product"]
+        assert prod["name"] == "Corrected Test Name (Verified)"
+        assert prod["provenance"]["name"]["source"] == "user_corrected"
+        assert "qa_inspector_01" in prod["provenance"]["name"]["notes"]
+
+        # Conflicting previous name should be recorded
+        conflicts = prod.get("conflicts", [])
+        assert any(c["field_name"] == "name" for c in conflicts)
+        name_conflict = next(c for c in conflicts if c["field_name"] == "name")
+        assert name_conflict["previous_value"] == "Original Test Name"
+
+        # 3. Lookup via barcode should reflect corrected data and conflicts
+        lookup_res = client.get(f"/api/truth/barcode/{test_barcode}")
+        assert lookup_res.status_code == 200
+        lookup_data = lookup_res.json()
+        assert lookup_data["name"] == "Corrected Test Name (Verified)"
+        assert lookup_data["provenance"]["name"]["source"] == "user_corrected"
+    finally:
+        # Clean up test record from database
+        with get_db_connection() as conn:
+            conn.execute("DELETE FROM product_cache WHERE barcode = ?", (test_barcode,))
+            conn.execute("DELETE FROM audit_log WHERE barcode = ?", (test_barcode,))
+            conn.commit()
+
+
+def test_source_coverage_and_transparency_endpoint():
+    res = client.get("/api/truth/sources/coverage")
+    assert res.status_code == 200
+    report = res.json()
+    assert "total_cached_products" in report
+    assert report["total_cached_products"] >= 14
+    assert "sources_breakdown" in report
+    assert "completeness_rates" in report
+    assert report["completeness_rates"]["ingredients_declared_pct"] > 0
+    assert "disclaimer" in report
+    assert "official_citation_registry" in report
+    assert len(report["official_citation_registry"]) >= 5
+
+
