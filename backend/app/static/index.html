@@ -833,7 +833,9 @@
 
         <!-- Mode 2: Multi-Image Photo OCR -->
         <div id="scannerSectionPhoto" style="display: none;">
-          <div class="scanner-viewfinder">
+          <input type="file" id="scannerCameraCapture" accept="image/*" capture="environment" style="display:none" onchange="handleCameraCapture(event)">
+          <div class="scanner-viewfinder" role="button" tabindex="0" style="cursor:pointer" aria-label="Take a photo of the pack / पैकेट की फ़ोटो लें"
+               onclick="document.getElementById('scannerCameraCapture').click()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
             <div class="scan-laser"></div>
             <div class="scan-reticle-corner reticle-tl"></div>
             <div class="scan-reticle-corner reticle-tr"></div>
@@ -841,8 +843,8 @@
             <div class="scan-reticle-corner reticle-br"></div>
             <div style="text-align: center; color: rgba(255,255,255,0.8); z-index: 4;">
               <span style="font-size: 32px; display: block; margin-bottom: 4px;">📷</span>
-              <b>Optical Packaging Scanner</b>
-              <p style="font-size: 11px; opacity: 0.7;">Align ingredient list or nutrition table inside frame</p>
+              <b style="font-size: 18px;">यहाँ दबाइए — फ़ोटो लीजिए</b>
+              <p style="font-size: 13px; opacity: 0.85;">Tap here to photograph the back of the pack</p>
             </div>
           </div>
           
@@ -1596,7 +1598,7 @@
       <img src="/icon-192.png" alt="TruthLens Logo" class="pwa-drawer-icon" />
       <div class="pwa-drawer-text">
         <h4>Install TruthLens App</h4>
-        <p>Offline food scanning, camera AI, and instant analysis without app store delay.</p>
+        <p>Opens from your home screen like an app, with full-screen camera scanning. Scanning needs an internet connection.</p>
       </div>
       <button class="pwa-close-btn" onclick="dismissPwaDrawer()" aria-label="Close">&times;</button>
     </div>
@@ -1615,7 +1617,7 @@
       <img src="/icon-192.png" style="width: 60px; height: 60px; border-radius: 16px; margin: 0 auto 12px; display: block; box-shadow: 0 4px 12px rgba(27,67,50,0.2);" />
       <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 6px;">Install TruthLens on iPhone</h3>
       <p style="font-size: 13px; color: var(--ink-secondary); margin-bottom: 18px;">
-        Add TruthLens to your Home Screen for full-screen camera scanning and offline capability:
+        Add TruthLens to your Home Screen for full-screen camera scanning (an internet connection is needed to analyse a pack):
       </p>
       <div style="background: var(--surface-container-low); padding: 14px 16px; border-radius: 14px; text-align: left; font-size: 13px; line-height: 1.6; margin-bottom: 20px; border: 1px solid var(--hairline);">
         <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
@@ -1870,6 +1872,22 @@
         `;
       };
       reader.readAsDataURL(file);
+    }
+
+    // One tap: camera photo -> preview -> extraction, no separate button needed.
+    function handleCameraCapture(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const upload = document.getElementById('scannerPhotoUpload');
+      try {
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        upload.files = dt.files;
+      } catch (err) {
+        return alert('Please use "Choose File" below to add the photo.');
+      }
+      handlePhotoSelected({ target: upload });
+      extractTextFromPhotosAction();
     }
 
     async function extractTextFromPhotosAction() {
